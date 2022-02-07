@@ -15,9 +15,11 @@ class UserChecker implements UserCheckerInterface
         if (!$user instanceof AppUser) {
             return;
         }
-        /*if (!$user->isVerified()) {
-            throw new CustomUserMessageAccountStatusException('mail non validé.');
-        }*/
+        if (!$user->isVerified()) {
+            throw new CustomUserMessageAccountStatusException(
+                "Votre compte n'est pas actif, veuillez consulter vos e-mails pour l'activer avant le 
+                {$user->getAccountMustBeVerifiedBefore()->format('d/m/Y à H\hi')}");
+        }
     }
 
     public function checkPostAuth(UserInterface $user): void

@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Trick{% endblock %}
+
+{% block body %}
+    <h1>Trick</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id figure</th>
+                <td>{{ trick.id }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ trick.name }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ trick.description }}</td>
+            </tr>
+            <tr>
+                <th>Slug</th>
+                <td>{{ trick.slug }}</td>
+            </tr>
+            <tr>
+                <th>CreatedAt</th>
+                <td>{{ trick.createdAt ? trick.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>PublishedAt</th>
+                <td>{{ trick.publishedAt ? trick.publishedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Categorie</th>
+                <td>{{ trick.categories.0.label}}</td>
+            </tr>
+            <tr>
+                <th>IsPublished</th>
+                <td>{{ trick.isPublished ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>ImageName</th>
+                <td>{{ trick.imageName }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('trick_index') }}">back to list</a>
+
+    <a href="{{ path('trick_edit', {'id': trick.id}) }}">edit</a>
+
+    {{ include('trick/_delete_form.html.twig') }}
+{% endblock %}

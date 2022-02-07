@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Trick{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col s12 m12 l12">
+            <h1>Ajouter une figure</h1>
+        </div>
+    </div>
+    {{ include('trick/figure_form.html.twig') }}
+</div>
+    <a href="{{ path('trick_index') }}">Retour à la liste</a>
+{% endblock %}

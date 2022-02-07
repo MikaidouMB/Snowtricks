@@ -1,0 +1,23 @@
+{{ form_start(form, {'attr': {'class': 'row'}}) }}
+<div class="input-field col s12 m12 l12">
+    {{ form_widget(form.imageName) }}
+</div>
+
+<div class="input-field col s12 m6 l6">
+    {{ form_widget(form.name, {'attr': {'placeholder': 'Nom de la figure'}}) }}
+    {{ form_label(form.name) }}
+</div>
+
+<div class="input-field col s12 m6 l6">
+    {{ form_widget(form.categories) }}
+    {{ form_label(form.categories) }}
+</div>
+
+<div class="input-field col s12 m12 l12">
+    {{ form_widget(form.description, {'attr': {'class': 'materialize-textarea', 'placeholder': 'Le contenu de l\'article'}}) }}
+</div>
+
+<div class="input-field col s12 m12 l12">
+    <input type="submit" name="" value="Enregistrer" class="btn btn-primary">
+</div>
+{{ form_end(form) }}
