@@ -6,7 +6,7 @@
 parameters:
         app.sender_email: '%env(MAILER_SENDER_EMAIL)%'
         app.sender_name: '%env(MAILER_SENDER_NAME)%'
-        brochures_directory: '%kernel.project_dir%/public/uploads/photos'
+        uploads_directory: '%kernel.project_dir%/public/uploads/photos'
 
 services:
     # default configuration for services in *this* file

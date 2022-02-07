@@ -11,7 +11,6 @@
                 <th>Id</th>
                 <th>Name</th>
                 <th>Description</th>
-                <th>Slug</th>
                 <th>CreatedAt</th>
                 <th>PublishedAt</th>
                 <th>Category</th>
@@ -26,15 +25,14 @@
                 <td>{{ trick.id }}</td>
                 <td>{{ trick.name }}</td>
                 <td>{{ trick.description }}</td>
-                <td>{{ trick.slug }}</td>
                 <td>{{ trick.createdAt ? trick.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ trick.publishedAt ? trick.publishedAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ trick.categories.0.label}}</td>
                 <td>{{ trick.isPublished ? 'Yes' : 'No' }}</td>
                 <td>{{ trick.imageName }}</td>
                 <td>
-                    <a href="{{ path('trick_show', {'id': trick.id}) }}">show</a>
-                    <a href="{{ path('trick_edit', {'id': trick.id}) }}">edit</a>
+                    <a href="{{ path('trick_show', {'id': trick.id}) }}">Voir</a>
+                    <a href="{{ path('trick_edit', {'id': trick.id}) }}">Modifier</a>
                 </td>
             </tr>
         {% else %}
@@ -45,5 +43,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('trick_new') }}">Create new</a>
+    <a href="{{ path('trick_new') }}">Créer une figure</a>
 {% endblock %}
