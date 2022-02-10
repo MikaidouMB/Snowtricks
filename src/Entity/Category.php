@@ -25,9 +25,10 @@ class Category
     private ?string $label;
 
     /**
+     * @return Collection|Trick[]
      * @ORM\ManyToMany(targetEntity="App\Entity\Trick", mappedBy="categories")
      */
-    private $tricks;
+    private Collection $tricks;
 
     public function __construct()
     {

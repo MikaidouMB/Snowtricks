@@ -2,13 +2,13 @@
 
 namespace App\Controller;
 
-use _PHPStan_daf7d5577\Symfony\Component\Finder\Exception\AccessDeniedException;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Service\SendEmail;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Finder\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mime\Address;

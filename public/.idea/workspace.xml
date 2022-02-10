@@ -2,11 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b241893d-1882-49ba-9d2d-e987ea23e1e9" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../.env" beforeDir="false" afterPath="$PROJECT_DIR$/../.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/../composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../config/bundles.php" beforeDir="false" afterPath="$PROJECT_DIR$/../config/bundles.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../symfony.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../symfony.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../templates/trick/_edit_form.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/Controller/TrickController.php" beforeDir="false" afterPath="$PROJECT_DIR$/../src/Controller/TrickController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/Entity/Trick.php" beforeDir="false" afterPath="$PROJECT_DIR$/../src/Entity/Trick.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/Entity/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/../src/Entity/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../templates/trick/_delete_form.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/../templates/trick/_delete_form.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../templates/trick/edit.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/../templates/trick/edit.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../templates/trick/show.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/../templates/trick/show.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,6 +43,7 @@
       <option name="presentableId" value="Default" />
       <updated>1643710763365</updated>
       <workItem from="1643710764601" duration="17000" />
+      <workItem from="1644514565931" duration="25000" />
     </task>
     <servers />
   </component>

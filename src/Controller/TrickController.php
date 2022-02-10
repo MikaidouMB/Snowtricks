@@ -2,9 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\Message;
 use App\Entity\Trick;
 use App\Entity\User;
+use App\Form\MessageType;
 use App\Form\TrickType;
+use App\Repository\MessageRepository;
 use App\Repository\TrickRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -72,19 +75,38 @@ class TrickController extends AbstractController
             return $this->redirectToRoute('trick_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('trick/new.html.twig', [
+        return $this->renderForm('trick/new_message.html.twig', [
             'trick' => $trick,
             'form' => $form,
         ]);
     }
 
+
     /**
-     * @Route("/{id}", name="trick_show", methods={"GET"})
+     * @Route("/{id}", name="trick_show", methods={"GET","POST"})
+     * @param Trick $trick
+     * @param \App\Repository\TrickRepository $trickRepository
+     * @param \App\Repository\MessageRepository $messageRepository
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @return Response
      */
-    public function show(Trick $trick): Response
+    public function show(Trick $trick, TrickRepository $trickRepository, MessageRepository $messageRepository, Request $request, EntityManagerInterface $entityManager): Response
     {
-        return $this->render('trick/show.html.twig', [
-            'trick' => $trick,
+        $message = new Message();
+        $form = $this->createForm(MessageType::class, $message);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $message->setUser($trick->getUser());
+            $message->setTrick($trick);
+            $entityManager->persist($message);
+            $entityManager->flush();
+        }
+            return $this->render('trick/show.html.twig', [
+                'messages'=> $messageRepository->findMessageByTrick($trick),
+                'trick' => $trick,
+                'form' => $form->createView()
         ]);
     }
 

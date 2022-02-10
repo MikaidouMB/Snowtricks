@@ -14,11 +14,25 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class TrickRepository extends ServiceEntityRepository
 {
+    public $findOneBySomeField;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Trick::class);
     }
 
+    /**
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function findOneBySomeField(Trick $trick): ?Trick
+    {
+        return $this->createQueryBuilder('t')
+            ->addSelect('m')
+            ->join("t.message","m")
+            ->getQuery()
+            ->getResult()
+            ;
+    }
     // /**
     //  * @return Trick[] Returns an array of Trick objects
     //  */
@@ -36,15 +50,7 @@ class TrickRepository extends ServiceEntityRepository
     }
     */
 
-    /*
-    public function findOneBySomeField($value): ?Trick
-    {
-        return $this->createQueryBuilder('t')
-            ->andWhere('t.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
+
+
+
 }
