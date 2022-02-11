@@ -112,6 +112,11 @@ class TrickController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="trick_edit", methods={"GET", "POST"})
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \App\Entity\Trick $trick
+     * @param \Doctrine\ORM\EntityManagerInterface $entityManager
+     * @param \Symfony\Component\String\Slugger\SluggerInterface $slugger
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function edit(Request $request, Trick $trick, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
     {
@@ -137,7 +142,6 @@ class TrickController extends AbstractController
                     // ... handle exception if something happens during file upload
                 }
                 $trick->setUser($this->getUser());
-
                 $trick->setImageName($newFilename);
 
                 $entityManager->flush();

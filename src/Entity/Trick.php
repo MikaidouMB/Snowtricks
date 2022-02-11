@@ -20,6 +20,7 @@ class Trick
         ($this->createdAt = new DateTimeImmutable('now'));
         $this->publishedAt = new DateTimeImmutable('now');
         $this->isPublished = true;
+        $this->categories = new ArrayCollection();
     }
     /**
      * @ORM\Id
@@ -71,7 +72,7 @@ class Trick
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Category", inversedBy="tricks")
      */
-    private Collection $categories;
+    private ?Collection $categories;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="tricks")

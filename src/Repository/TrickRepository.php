@@ -22,7 +22,6 @@ class TrickRepository extends ServiceEntityRepository
     }
 
     /**
-     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function findOneBySomeField(Trick $trick): ?Trick
     {

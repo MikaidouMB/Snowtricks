@@ -25,8 +25,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->registeredAt = new DateTimeImmutable('now');
         $this->roles = ['ROLE_USER'];
         $this->accountMustBeVerifiedBefore = (new DateTimeImmutable('now'))->add(new \DateInterval("P1D"));
-        $this->tricks = new ArrayCollection();
-        $this->messages = new ArrayCollection();
+        //$this->tricks = new ArrayCollection();
+        //$this->messages = new ArrayCollection();
 
     }
     /**
@@ -101,12 +101,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\OneToMany(targetEntity=Trick::class, mappedBy="user", orphanRemoval=true)
      */
-    private ArrayCollection $tricks;
+    private Collection $tricks;
 
     /**
      * @ORM\OneToMany(targetEntity=Message::class, mappedBy="user", orphanRemoval=true)
      */
-    private ArrayCollection $messages;
+    private Collection $messages;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
