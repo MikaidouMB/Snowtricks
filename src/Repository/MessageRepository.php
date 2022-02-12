@@ -27,6 +27,7 @@ class MessageRepository extends ServiceEntityRepository
             ->addSelect('m.id')
             ->join('m.trick','t')
             ->andWhere('t.id=' . $trick->getId())
+            ->setMaxResults(4)
             ->getQuery()
             ->getResult()
             ;

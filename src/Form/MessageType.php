@@ -14,7 +14,7 @@ class MessageType extends AbstractType
     {
         $builder
             ->add('content',TextareaType::class, [
-                'label' => 'Laissez un commentaire'
+                'label' => ' '
             ]);
     }
 

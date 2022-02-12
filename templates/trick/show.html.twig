@@ -3,55 +3,45 @@
 {% block title %}Trick{% endblock %}
 
 {% block body %}
-    <div class="container">
-        <h1>Figure</h1>
+    <div class="full-screen-width">
 
-        <table class="table">
-            <tbody>
-            <tr>
-                <th>Id figure</th>
-                <td>{{ trick.id }}</td>
-            </tr>
-            <tr>
-                <th>Name</th>
-                <td>{{ trick.name }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ trick.description }}</td>
-            </tr>
-            <tr>
-                <th>CreatedAt</th>
-                <td>{{ trick.createdAt ? trick.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>PublishedAt</th>
-                <td>{{ trick.publishedAt ? trick.publishedAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Categorie</th>
-                <td>{{ trick.categories.0.label}}</td>
-            </tr>
-            <tr>
-                <th>IsPublished</th>
-                <td>{{ trick.isPublished ? 'Yes' : 'No' }}</td>
-            </tr>
-            <tr>
-                <th>ImageName</th>
-                <td>{{ trick.imageName }}</td>
-            </tr>
-            </tbody>
-        </table>
-        {{ include('trick/_form_message.html.twig', {'button_label': 'Valider'}) }}
-        <a href="{{ path('trick_index') }}">retour à la liste</a>
-
+        <img class="card-img-top" src=" {{ asset('uploads/photos/' ~ trick.imageName) }}" alt="..." />
+    </div>
+    <div class="container mt-3">
+        {{ include('trick/_delete_form.html.twig') }}
+        {{ include('trick/_edit_form.html.twig') }}
+        <div class="row text-center">
+            <div class="container">
+                <div class="row align-items-start">
+                    <div class="col border">
+                        Nom : {{ trick.name }}
+                    </div>
+                    <div class="col border">
+                        Description :  {{ trick.description }}
+                    </div>
+                    <div class="col border">
+                        Créer le : {{ trick.createdAt ? trick.createdAt|date('Y-m-d H:i:s') : '' }}
+                    </div>
+                    <div class="col border">
+                        Publier le :{{ trick.publishedAt ? trick.publishedAt|date('Y-m-d H:i:s') : '' }}
+                    </div>
+                    <div class="col border">
+                        Categorie: {{ trick.categories.0.label}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+        {% if app.user %}
+        {{ include('trick/_form_message.html.twig', {'button_label': 'Laisser un commentaire'}) }}
+        {% endif %}
         <div class="flex-grow-0 py-3 px-4 border-top">
         <div class="position-relative">
             {% for message in messages %}
                 <div class="chat-message-right pb-4">
                     <div>
                         <img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="rounded-circle mr-1" alt="Chris Wood" width="40" height="40">
-                        <div class="text-muted small text-nowrap mt-2">2:33 am</div>
+                        <div class="text-muted small text-nowrap mt-2">{{ message.0.createdAt|date('m-d-Y H:i:s') }}</div>
                     </div>
                     <div class="flex-shrink-1 bg-light rounded py-2 px-3 mr-3">
                         <div class="font-weight-bold mb-1">You</div>
@@ -61,12 +51,13 @@
             {% endfor %}
         </div>
         </div>
+
     </div>
+
         <div class="text-center m-3">
-            {{ include('trick/_delete_form.html.twig') }}
-        </div>
-        <div class="text-center m-3">
-            {{ include('trick/_edit_form.html.twig') }}
+
+            <a href="{{ path('trick_index') }}">retour à la liste</a>
+
         </div>
 
 
