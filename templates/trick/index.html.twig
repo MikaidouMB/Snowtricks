@@ -15,7 +15,7 @@
                 <th>PublishedAt</th>
                 <th>Category</th>
                 <th>IsPublished</th>
-                <th>ImageName</th>
+                <th>Image</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -29,7 +29,7 @@
                 <td>{{ trick.publishedAt ? trick.publishedAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ trick.categories.0.label}}</td>
                 <td>{{ trick.isPublished ? 'Yes' : 'No' }}</td>
-                <td>{{ trick.imageName }}</td>
+                 <td>{{ trick.images.0.name }}</td>
                 <td>
                     <a href="{{ path('trick_show', {'id': trick.id}) }}">Voir</a>
                     <a href="{{ path('trick_edit', {'id': trick.id}) }}">Modifier</a>

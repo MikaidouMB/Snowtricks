@@ -1,23 +1,80 @@
-{{ form_start(form, {'attr': {'class': 'row'}}) }}
-<div class="input-field col s12 m12 l12">
-    {{ form_widget(form.imageName) }}
-</div>
+{% block body %}
 
-<div class="input-field col s12 m6 l6">
-    {{ form_widget(form.name, {'attr': {'placeholder': 'Nom de la figure'}}) }}
-    {{ form_label(form.name) }}
-</div>
+<div class="container">
+      <div class="row">
+          <div class="col-12">
+              {{ form_start(form) }}
+              <div class="input-field col s12 m12 l12">
+                  {{ form_widget(form.videos) }}
+              </div>
+                <button class="btn btn-primary" id="new-bar">New Bar</button>
+              <div class="input-field col s12 m12 l12">
+                  <input type="submit" name="" value="Enregistrer" class="btn btn-primary">
+              </div>
+          </div>
+      </div>
 
-<div class="input-field col s12 m6 l6">
-    {{ form_widget(form.categories) }}
-    {{ form_label(form.categories) }}
 </div>
+    {{ form_end(form) }}
+    {% endblock %}
 
-<div class="input-field col s12 m12 l12">
-    {{ form_widget(form.description, {'attr': {'class': 'materialize-textarea', 'placeholder': 'Le contenu de l\'article'}}) }}
-</div>
+{#
+    <div class="input-field col s12 m12 l12">
+        {{ form_widget(form.images) }}
+    </div>
+=        <div class="input-group mb-3">
 
-<div class="input-field col s12 m12 l12">
-    <input type="submit" name="" value="Enregistrer" class="btn btn-primary">
+         {{ form_widget(form.videos) }}
+            {{ form_label(form.videos) }}
+    <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3">
 </div>
-{{ form_end(form) }}
+<div class="row" id="newTrickVideos">
+    <ul id="video-fields-list" data-prototype="{{ form_widget(form.videos.vars.prototype)|e }}"
+        data-widget-tags="{{ '<li></li>'|e }}" data-widget-counter="{{ form.videos|length }}">
+        {% for video in form.videos %}
+            <li>
+                {{ include("trick/_trick.html.twig",{form: videos}) }}
+            </li>
+        {% endfor %}
+    </ul>
+    <input type="hidden" id="video-counter">
+    <button type="button"  id="add-video" class="add-another-collection-widget btn btn-info" data-list-selector="#video-fields-list">Add a video</button>
+</div>
+</div>
+    #}
+
+   {# <div class="embed-responsive embed-responsive-4by3">
+        <iframe class="embed-responsive-item"
+                src="{{ form_widget(form.videos,
+                    {'attr': {'placeholder': 'Postez un lien vers une vidéo'}}) }}"></iframe>
+    </div><ul class="tags">
+        {% for video in form.videos %}
+            {{ dump(video) }}
+
+            <li>{{ form_row(video) }}</li>
+        {% endfor %}
+    </ul>#}
+
+    {#  <div class="input-field col s12 mb-4 l12">
+        {{ form_widget(form.videos, {'attr': {'placeholder': 'Postez un lien vers une vidéo'}}) }}
+    </div>
+
+
+        <div class="input-field col s12 m6 l6">
+        {{ form_widget(form.name, {'attr': {'placeholder': 'Nom de la figure'}}) }}
+        {{ form_label(form.name) }}
+    </div>
+
+    <div class="input-field col s12 m6 l6">
+        {{ form_widget(form.categories) }}
+        {{ form_label(form.categories) }}
+    </div>
+
+    <div class="input-field col s12 m12 l12">
+        {{ form_widget(form.description, {'attr': {'class': 'materialize-textarea', 'placeholder': 'Description'}}) }}
+    </div>
+    #}
+
+
+
+

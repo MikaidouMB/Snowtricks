@@ -21,17 +21,6 @@ class TrickRepository extends ServiceEntityRepository
         parent::__construct($registry, Trick::class);
     }
 
-    /**
-     */
-    public function findOneBySomeField(Trick $trick): ?Trick
-    {
-        return $this->createQueryBuilder('t')
-            ->addSelect('m')
-            ->join("t.message","m")
-            ->getQuery()
-            ->getResult()
-            ;
-    }
     // /**
     //  * @return Trick[] Returns an array of Trick objects
     //  */

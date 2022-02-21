@@ -4,30 +4,38 @@ namespace App\Form;
 
 use App\Entity\Videos;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\ButtonType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Regex;
 
 class VideoType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options): void
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('videos', CollectionType::class, [
-                // each entry in the array will be an "email" field
-                'entry_type' => Videos::class,
-                'allow_add' => true,
-                'allow_delete' => true,
-                'by_reference' => false,
-                'attr' => [
-                    'placeholder' => "Url d'une vidéo youtube",
+            ->add('link', TextType::class, [
+                'label' => false,
+                'required' => false,
+                'constraints' => [
+                    new Regex([
+                        'pattern' => '#^((?:https?:)?\/\/)?(?:www\.)?((?:youtube\.com|youtu\.be|dai\.ly|dailymotion\.com|vimeo\.com|player\.vimeo\.com))(\/(?:[\w\-]+\?v=|embed\/|video\/|embed\/video\/)?)([\w\-]+)(\S+)?$#',
+                        'message' => 'You can only use youtube, dailymotion or vimeo video url',
+                    ]),
                 ],
-                'entry_options' => ['label' => false]])
-        ;
-        
+            ])
+            ->add('delete', ButtonType::class, [
+                'label_html' => true,
+                'label' => '<i class="fas fa-times"></i>',
+                'attr' => [
+                    'data-action' => 'delete',
+                    'data-target' => '#trick_videos___name__',
+                ],
+            ]);
     }
 
-    public function configureOptions(OptionsResolver $resolver): void
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'data_class' => Videos::class,

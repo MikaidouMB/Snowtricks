@@ -6,13 +6,12 @@ use App\Entity\Category;
 use App\Entity\Trick;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\File;
 
 class TrickType extends AbstractType
 {
@@ -21,23 +20,11 @@ class TrickType extends AbstractType
         $builder
             ->add('name',TextType::class)
             ->add('description',TextareaType::class)
-            ->add('imageName', FileType::class, [
-                'label' => 'Photo',
-                // unmapped means that this field is not associated to any entity property
-                'mapped' => false,
-                // make it optional so you don't have to re-upload the PDF file
-                // every time you edit the Product details
-                'required' => false,
-                // unmapped fields can't define their validation using annotations
-                // in the associated entity, so you can use the PHP constraint classes
-                'constraints' => [
-                    new File([
-                        'maxSize' => '1024k',
-                        'mimeTypes' => [
-                        ],
-                        'mimeTypesMessage' => 'Please upload a valid PDF document',
-                    ])
-                ],
+            ->add('images', FileType::class, [
+                    'label'=>false,
+                    'mapped' => false,
+                    'multiple' => true,
+                    'required' => false
             ])
             ->add('categories', EntityType::class,[
                 'class' => Category::class,
@@ -45,6 +32,16 @@ class TrickType extends AbstractType
                 'multiple' => true,
                 'expanded' => false
             ])
+
+            ->add('videos', CollectionType::class, [
+                'entry_type' => VideoType::class,
+                'prototype' => true,
+                'allow_add' => true,
+                'allow_delete' => true,
+                'by_reference' => false,
+                'required' => false,
+                'label' => false,
+                ])
         ;
     }
 

@@ -21,6 +21,8 @@ class Trick
         $this->publishedAt = new DateTimeImmutable('now');
         $this->isPublished = true;
         $this->categories = new ArrayCollection();
+        $this->images = new ArrayCollection();
+        $this->videos = new ArrayCollection();
     }
     /**
      * @ORM\Id
@@ -65,11 +67,6 @@ class Trick
     private ?bool $isPublished;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private ?string $imageName;
-
-    /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Category", inversedBy="tricks")
      */
     private ?Collection $categories;
@@ -84,6 +81,16 @@ class Trick
      * @ORM\OneToMany(targetEntity=Message::class, mappedBy="trick", orphanRemoval=true)
      */
     private $messages;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Images::class, mappedBy="trick", orphanRemoval=true, cascade={"persist"})
+     */
+    private $images;
+
+    /**
+     * @ORM\OneToMany (targetEntity=Videos::class, mappedBy="trick", orphanRemoval=true, cascade={"persist"} )
+     */
+    private Collection $videos;
 
     public function getId(): ?int
     {
@@ -174,18 +181,6 @@ class Trick
         return $this;
     }
 
-    public function getImageName(): ?string
-    {
-        return $this->imageName;
-    }
-
-    public function setImageName(string $imageName): self
-    {
-        $this->imageName = $imageName;
-
-        return $this;
-    }
-
     /**
      * @return Collection|Category[]
      */
@@ -246,6 +241,66 @@ class Trick
             // set the owning side to null (unless already changed)
             if ($message->getTrick() === $this) {
                 $message->setTrick(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Images[]
+     */
+    public function getImages(): Collection
+    {
+        return $this->images;
+    }
+
+    public function addImage(Images $image): self
+    {
+        if (!$this->images->contains($image)) {
+            $this->images[] = $image;
+            $image->setTrick($this);
+        }
+
+        return $this;
+    }
+
+    public function removeImage(Images $image): self
+    {
+        if ($this->images->removeElement($image)) {
+            // set the owning side to null (unless already changed)
+            if ($image->getTrick() === $this) {
+                $image->setTrick(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Videos[]
+     */
+    public function getVideos(): Collection
+    {
+        return $this->videos;
+    }
+
+    public function addVideo(Videos $video): self
+    {
+        if (!$this->videos->contains($video)) {
+            $this->videos[] = $video;
+            $video->setTrick($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVideo(Videos $video): self
+    {
+        if ($this->videos->removeElement($video)) {
+            // set the owning side to null (unless already changed)
+            if ($video->getTrick() === $this) {
+                $video->setTrick(null);
             }
         }
 

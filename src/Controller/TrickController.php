@@ -2,17 +2,17 @@
 
 namespace App\Controller;
 
+use App\Entity\Images;
 use App\Entity\Message;
 use App\Entity\Trick;
-use App\Entity\User;
+use App\Entity\Videos;
 use App\Form\MessageType;
 use App\Form\TrickType;
+use App\Repository\ImageRepository;
 use App\Repository\MessageRepository;
 use App\Repository\TrickRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\File\Exception\FileException;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -39,43 +39,42 @@ class TrickController extends AbstractController
      * @Route("/new", name="trick_new", methods={"GET", "POST"})
      * @param Request $request
      * @param EntityManagerInterface $entityManager
-     * @param SluggerInterface $slugger
      * @return Response
      */
-    public function new(Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger ): Response
+    public function new(Request $request,
+                        EntityManagerInterface $entityManager
+                      ): Response
     {
         $trick = new Trick();
+
         $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            /** @var UploadedFile $photo */
-            $photo = $form->get('imageName')->getData();
-            if ($photo) {
-                $originalFilename = pathinfo($photo->getClientOriginalName(), PATHINFO_FILENAME);
-                // this is needed to safely include the file name as part of the URL
-                $safeFilename = $slugger->slug($originalFilename);
-                $newFilename = $safeFilename.'-'.uniqid().'.'.$photo->guessExtension();
-
-                // Move the file to the directory where brochures are stored
-                try {
-                    $photo->move(
-                        $this->getParameter('uploads_directory'),
-                        $newFilename
+            $images = $form->get('images')->getData();
+                foreach ($images as $image){
+                    $file = md5(uniqid()) . '.' . $image->guessExtension();
+                    $image->move(
+                        $this->getParameter('images_directory'),
+                        $file
                     );
-                } catch (FileException $e) {
-                    // ... handle exception if something happens during file upload
+                    $img = new Images();
+                    $img->setName($file);
+                    $trick->addImage($img);
                 }
-                $trick->setUser($this->getUser());
-                $trick->setImageName($newFilename);
-            }
+            $video = new Videos();
+            $trick->addVideo($video);
+            dd($trick->addVideo($video));
+                //$fileName = $fileUploader->upload($photo);
+            $trick->setUser($this->getUser());
+            //dd($videos);
             $entityManager->persist($trick);
             $entityManager->flush();
 
             return $this->redirectToRoute('trick_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('trick/new_message.html.twig', [
+        return $this->renderForm('trick/new.html.twig', [
             'trick' => $trick,
             'form' => $form,
         ]);
@@ -87,11 +86,18 @@ class TrickController extends AbstractController
      * @param Trick $trick
      * @param \App\Repository\TrickRepository $trickRepository
      * @param \App\Repository\MessageRepository $messageRepository
+     * @param \App\Repository\ImageRepository $imageRepository
      * @param Request $request
      * @param EntityManagerInterface $entityManager
      * @return Response
      */
-    public function show(Trick $trick, TrickRepository $trickRepository, MessageRepository $messageRepository, Request $request, EntityManagerInterface $entityManager): Response
+    public function show(Trick $trick,
+                         TrickRepository $trickRepository,
+                         MessageRepository $messageRepository,
+                         ImageRepository  $imageRepository,
+                         Request $request,
+                         EntityManagerInterface $entityManager
+    ): Response
     {
         $message = new Message();
         $form = $this->createForm(MessageType::class, $message);
@@ -104,7 +110,10 @@ class TrickController extends AbstractController
             $entityManager->flush();
         }
             return $this->render('trick/show.html.twig', [
-                'messages'=> $messageRepository->findMessageByTrick($trick),
+                'messages'=>$messageRepository->findMessageByTrick($trick),
+                //'messages'=> $messageRepository->findMessageByTrick($trick),
+                'images'=> $imageRepository->findImagesByTrick($trick),
+                //'images'=> dd($imageRepository->findImagesByTrick($trick)),
                 'trick' => $trick,
                 'form' => $form->createView()
         ]);
@@ -115,37 +124,34 @@ class TrickController extends AbstractController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \App\Entity\Trick $trick
      * @param \Doctrine\ORM\EntityManagerInterface $entityManager
-     * @param \Symfony\Component\String\Slugger\SluggerInterface $slugger
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function edit(Request $request, Trick $trick, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
+    public function edit(Request $request, Trick $trick,
+                         EntityManagerInterface $entityManager
+    ): Response
     {
+
         $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            /** @var UploadedFile $photo */
-            $photo = $form->get('imageName')->getData();
-            if ($photo) {
-                $originalFilename = pathinfo($photo->getClientOriginalName(), PATHINFO_FILENAME);
-                // this is needed to safely include the file name as part of the URL
-                $safeFilename = $slugger->slug($originalFilename);
-                $newFilename = $safeFilename . '-' . uniqid() . '.' . $photo->guessExtension();
+            $images = $form->get('images')->getData();
 
-                // Move the file to the directory where brochures are stored
-                try {
-                    $photo->move(
-                        $this->getParameter('uploads_directory'),
-                        $newFilename
-                    );
-                } catch (FileException $e) {
-                    // ... handle exception if something happens during file upload
+            foreach ($images as $image){
+                $file = md5(uniqid()) . '.' . $image->guessExtension();
+
+                $image->move(
+                    $this->getParameter('images_directory'),
+                    $file
+                );
+                $img = new Images();
+                $img->setName($file);
+                $trick->addImage($img);
                 }
-                $trick->setUser($this->getUser());
-                $trick->setImageName($newFilename);
+            $trick->setUser($this->getUser());
+            $entityManager->persist($trick);
+            $entityManager->flush();
 
-                $entityManager->flush();
-            }
             return $this->redirectToRoute('trick_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -156,7 +162,7 @@ class TrickController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="trick_delete", methods={"POST"})
+     * @Route("/{id}", name="trick_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Trick $trick, EntityManagerInterface $entityManager): Response
     {

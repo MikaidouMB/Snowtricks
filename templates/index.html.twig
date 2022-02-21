@@ -30,12 +30,13 @@
     <!-- Section-->
       <section class="py-5">
         {% for trick in tricks %}
-        <div class="container px-4 px-lg-5 mt-5">
+
+          <div class="container px-4 px-lg-5 mt-5">
             <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
                 <div class="col mb-5">
                     <div class="card h-10">
                         <!-- Product image-->
-                        <img class="card-img-top" src=" {{ asset('uploads/photos/' ~ trick.imageName) }}" alt="..." />
+                          <img class="card-img-top" src=" {{ asset('uploads/' ~ trick.images.0.name) }}" alt="..." />
 
                         <div class="card-body p-2">
                             <div class="text-center">
@@ -44,9 +45,9 @@
                                     <a href="{{ path('trick_edit', {'id': trick.id}) }}">
                                         <i class="bi bi-pen left-icon-holder"></i>
                                     </a>
-                                    <form method="post" action="{{ path('trick_delete', {'id': trick.id}) }}"
+                                    <form method="post"
                                           onsubmit="return confirm('Are you sure you want to delete this item?');">
-                                        <input class="bi bi-trash" type="hidden" name="_token" value="{{ csrf_token('delete' ~ trick.id) }}">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ trick.id) }}">
                                         <button class="bi bi-trash">Delete</button>
                                     </form>
                             </div>
