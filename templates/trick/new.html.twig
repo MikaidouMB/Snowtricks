@@ -1,15 +1,37 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Trick{% endblock %}
+{% block title %}Créer figure{% endblock %}
 
 {% block body %}
-<div class="container">
-    <div class="row">
-        <div class="col s12 m12 l12">
-            <h1>Ajouter une figure</h1>
-        </div>
+<div class="container mt-3">
+    {{ form_errors(form) }}
+    <h1>Créer figure</h1>
+
+    <div class="col-12">
+        {{ form_start(form) }}
+        {{ form_widget(form._token) }}
+        {{ form_row(form.nameFigure) }}
+        {{ form_row(form.description) }}
+        {{ form_row(form.images) }}
+        {{ form_row(form.categories) }}
+
+
+        <button type="button" class="btn btn-primary btn-new mb-4" data-collection="#videos">Ajouter</button>
+    <div
+            id="videos"
+            class="row"
+            data-prototype="{{ include("trick/_video.html.twig", {form: form.videos.vars.prototype})|e("html_attr")}}"
+            data-index="{{ form.videos|length > 0 ? form.videos|last.vars.name + 1 : 0 }}">
+        {% for video in form.videos %}
+            <div class="col-4">
+                {{ include("trick/_video.html.twig", {form: video}) }}
+            </div>
+        {% endfor %}
     </div>
-    {{ include('trick/figure_form.html.twig') }}
+        {{ include('trick/figure_form.html.twig') }}
+        {#  {{ include('trick/figure_form.html.twig') }}#}
+    </div>
+    {{ form_end(form, {render_rest:false}) }}
 </div>
     <a href="{{ path('trick_index') }}">Retour à la liste</a>
 {% endblock %}

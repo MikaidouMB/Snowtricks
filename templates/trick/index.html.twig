@@ -16,20 +16,27 @@
                 <th>Category</th>
                 <th>IsPublished</th>
                 <th>Image</th>
+                <th>Videos</th>
                 <th>actions</th>
             </tr>
         </thead>
         <tbody>
+
         {% for trick in tricks %}
             <tr>
                 <td>{{ trick.id }}</td>
-                <td>{{ trick.name }}</td>
+                <td>{{ trick.nameFigure }}</td>
                 <td>{{ trick.description }}</td>
                 <td>{{ trick.createdAt ? trick.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ trick.publishedAt ? trick.publishedAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ trick.categories.0.label}}</td>
+                {#  <td>{{ trick.categories.0.label}}</td>#}
                 <td>{{ trick.isPublished ? 'Yes' : 'No' }}</td>
-                 <td>{{ trick.images.0.name }}</td>
+                 {% for image in trick.images %}
+                     <td>{{ image.name }}</td>
+                 {% endfor %}
+                {% for video in trick.videos %}
+                   <td>{{ video.name }}</td>
+                {% endfor %}
                 <td>
                     <a href="{{ path('trick_show', {'id': trick.id}) }}">Voir</a>
                     <a href="{{ path('trick_edit', {'id': trick.id}) }}">Modifier</a>

@@ -12,11 +12,14 @@ import './styles/app.scss';
 import './bootstrap';
 import {add} from "@hotwired/stimulus";
 
+/*const videosCollectionHolder = document.querySelector("#trick_videos");
+
+let indexVideos = videosCollectionHolder.querySelectorAll("fieldset").length;
+
 const addVideos = () => {
-    const collectionHolder = document.querySelector('#trick_videos')
-    collectionHolder.innerHTML += collectionHolder.dataset.prototype;
-    console.log(collectionHolder.dataset.prototype);
+    console.log(indexVideos);
+   videosCollectionHolder.innerHTML += videosCollectionHolder.dataset.prototype.replace(/___name___/g, indexVideos);
+   indexVideos++;
 };
-document.querySelector('#new-bar').addEventListener('click',addVideos);
-
-
+document.querySelector('#new-bar').addEventListener('click', addVideos);
+*/

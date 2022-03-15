@@ -29,19 +29,22 @@
     </div>
     <!-- Section-->
       <section class="py-5">
-        {% for trick in tricks %}
+
+        {# {% for image in tricks.images %}  {{ dump(tricks.images) }}
+              <img class="card-img-top" src=" {{ asset('uploads/' ~ trick.images.name) }}" alt="..." />
+
+          {% endfor %}#}
+          {% for trick in tricks %}
 
           <div class="container px-4 px-lg-5 mt-5">
             <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
                 <div class="col mb-5">
                     <div class="card h-10">
                         <!-- Product image-->
-                          <img class="card-img-top" src=" {{ asset('uploads/' ~ trick.images.0.name) }}" alt="..." />
-
                         <div class="card-body p-2">
                             <div class="text-center">
                                 <h5 class="fw-bolder"></h5>
-                                <a href="{{ path('trick_show', {'id': trick.id}) }}">{{ trick.name }}</a>
+                                <a href="{{ path('trick_show', {'id': trick.id}) }}">{{ trick.nameFigure }}</a>
                                     <a href="{{ path('trick_edit', {'id': trick.id}) }}">
                                         <i class="bi bi-pen left-icon-holder"></i>
                                     </a>

@@ -11,18 +11,26 @@ use App\Form\TrickType;
 use App\Repository\ImageRepository;
 use App\Repository\MessageRepository;
 use App\Repository\TrickRepository;
+use App\Repository\VideosRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\String\Slugger\SluggerInterface;
 
 /**
  * @Route("/trick")
  */
 class TrickController extends AbstractController
 {
+    private ManagerRegistry $doctrine;
+
+    public function __construct(ManagerRegistry $doctrine) {
+        $this->doctrine = $doctrine;
+    }
+
     /**
      * @Route("/", name="trick_index", methods={"GET"})
      * @param TrickRepository $trickRepository
@@ -41,33 +49,26 @@ class TrickController extends AbstractController
      * @param EntityManagerInterface $entityManager
      * @return Response
      */
-    public function new(Request $request,
-                        EntityManagerInterface $entityManager
-                      ): Response
+    public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $trick = new Trick();
-
         $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $images = $form->get('images')->getData();
-                foreach ($images as $image){
-                    $file = md5(uniqid()) . '.' . $image->guessExtension();
-                    $image->move(
-                        $this->getParameter('images_directory'),
-                        $file
-                    );
-                    $img = new Images();
-                    $img->setName($file);
-                    $trick->addImage($img);
-                }
+            foreach ($images as $image){
+                $file = md5(uniqid()) . '.' . $image->guessExtension();
+                $image->move(
+                    $this->getParameter('images_directory'),
+                    $file
+                );
+                $img = new Images();
+                $img->setName($file);
+                $trick->addImage($img);
+            }
             $video = new Videos();
-            $trick->addVideo($video);
-            dd($trick->addVideo($video));
-                //$fileName = $fileUploader->upload($photo);
             $trick->setUser($this->getUser());
-            //dd($videos);
             $entityManager->persist($trick);
             $entityManager->flush();
 
@@ -111,23 +112,21 @@ class TrickController extends AbstractController
         }
             return $this->render('trick/show.html.twig', [
                 'messages'=>$messageRepository->findMessageByTrick($trick),
-                //'messages'=> $messageRepository->findMessageByTrick($trick),
                 'images'=> $imageRepository->findImagesByTrick($trick),
-                //'images'=> dd($imageRepository->findImagesByTrick($trick)),
                 'trick' => $trick,
                 'form' => $form->createView()
         ]);
     }
 
     /**
-     * @Route("/{id}/edit", name="trick_edit", methods={"GET", "POST"})
+     * @Route("/{id}/edit", name="trick_edit", methods={"GET", "POST", "DELETE"})
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \App\Entity\Trick $trick
      * @param \Doctrine\ORM\EntityManagerInterface $entityManager
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function edit(Request $request, Trick $trick,
-                         EntityManagerInterface $entityManager
+                         EntityManagerInterface $entityManager,VideosRepository $videosRepository
     ): Response
     {
 
@@ -148,6 +147,8 @@ class TrickController extends AbstractController
                 $img->setName($file);
                 $trick->addImage($img);
                 }
+            $video = new Videos();
+
             $trick->setUser($this->getUser());
             $entityManager->persist($trick);
             $entityManager->flush();
@@ -157,20 +158,48 @@ class TrickController extends AbstractController
 
         return $this->renderForm('trick/edit.html.twig', [
             'trick' => $trick,
+            'video' =>$videosRepository->findByVideosTrick($trick),
             'form' => $form,
         ]);
     }
 
     /**
-     * @Route("/{id}", name="trick_delete", methods={"DELETE"})
+     * @Route("/delete/{id}", name="trick_delete_image", methods={"DELETE", "GET", "POST"})
      */
-    public function delete(Request $request, Trick $trick, EntityManagerInterface $entityManager): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$trick->getId(), $request->request->get('_token'))) {
-            $entityManager->remove($trick);
-            $entityManager->flush();
-        }
+   /* public function delete(Request $request, Images $image, EntityManagerInterface $entityManager): Response{
+     //   $data = $this->json_decode($request->getContent(),true);
 
+      //  if ($this->isCsrfTokenValid('delete'.$image->getId(), $data['_token'])) {
+            $nom = $image->getName();
+        //    unlink($this->getParameter('uploads') . '/' . $nom);
+            $entityManager->remove($image);
+
+            $entityManager->flush();
+
+          //  return new JsonResponse(['']);
+                }
+        }
         return $this->redirectToRoute('trick_index', [], Response::HTTP_SEE_OTHER);
     }
+*/
+    /**
+     * @param Images $images
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @return Response
+     * @Route("/delete/{id}/", name="trick_delete_image", methods={"DELETE", "GET", "POST"})
+     */
+    public function deleteImage(Images $images, Request $request,
+                                EntityManagerInterface $entityManager):Response
+    {
+       // if ($this->isCsrfTokenValid('trick_delete_image'.$images->getId(), $request->request->get('_token'))) {
+            $entityManager->remove($images);
+            $entityManager->flush();
+
+
+        return $this->redirectToRoute('trick_index', [], Response::HTTP_SEE_OTHER);
+  //  }            return $this->redirectToRoute('trick_index', [], Response::HTTP_SEE_OTHER);
+
+    }
+
 }

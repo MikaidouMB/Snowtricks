@@ -3,73 +3,79 @@
 {% block title %}Trick{% endblock %}
 
 {% block body %}
-<div class="container">
-    <img class="card-img-top " style="width: 50%"  src=" {{ asset('uploads/' ~ images.0.name) }}" alt="..." />
+    {% if images is not empty %}
 
-    {% for image in images %}
-        <div class="col-xs-6 col-sm-3 ">
-                <img class="img-thumbnail" src="{{ asset('uploads/' ~ image.0.name) }}" alt="..."/>
-                {{ include('trick/_delete_form.html.twig') }}
-                {{ include('trick/_edit_form.html.twig') }}
+        <div class="row d-flex flex-column justify-content-center align-items-center">
+            <img src="{{ asset('uploads/' ~ trick.images.0.name) }}" class="img-fluid"  alt="">
+
+        </div>
+    {% endif %}
+<div class="container-fluid">
+    {% for image in trick.images %}
+        <div class="d-inline-block mt-3" >
+            <img class="card-img-top mt-2" src=" {{ asset('/uploads/' ~ image.name) }}" alt="Image" height="150vw" />
+            <a href= "{{ path('trick_delete_image', {id: image.id}) }}"
+               data-delete data-token ="{{ csrf_token('delete' ~ image.id) }}
+                ">Supprimer</a>
+            <a href="{{ path('trick_edit', {'id': trick.id}) }}">Modifier</a>
         </div>
     {% endfor %}
-    {{ dump(trick.videos) }}
-
     {% for video in trick.videos %}
-        <div class="media-slider mb-3 mx-2">
-            <iframe class="trick-media" id="{{ loop.index + trick.images|length }}" src="{{ video.name }}" width="250" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <iframe class="trick-media" id="{{ loop.index + trick.images|length }}"
+                    src="{{ video.name }}" width="250vw" frameborder="0"
+                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen>
+
+            </iframe>
+        <a href="{{ path('trick_edit', {'id': trick.id}) }}">Modifier</a>
+
+    {% endfor %}
+            <div class="centered">
+                {{ trick.nameFigure }}
+            </div>
+    <div class="container">
+        <div class="row text-center mt-5 m-lg-3" style="border: black 1px solid">
+            <strong>Description</strong> :  {{ trick.description }}
         </div>
-    {% endfor %}</div>
-<div class="container">
-    <div class="row text-center">
-        <div class="row align-items-start">
-            <div class="col border">
-                Nom : {{ trick.name }}
-            </div>
-            <div class="col border">
-                Description :  {{ trick.description }}
-            </div>
-            <div class="col border">
-                Créer le : {{ trick.createdAt ? trick.createdAt|date('Y-m-d H:i:s') : '' }}
-            </div>
-            <div class="col border">
-                Publier le :{{ trick.publishedAt ? trick.publishedAt|date('Y-m-d H:i:s') : '' }}
-            </div>
-            <div class="col border">
-                Categorie: {{ trick.categories.0.label}}
-            </div>
+        <div class="col border text-center mt-5">
+
+            Créer le : <strong>
+                {{ trick.createdAt ? trick.createdAt|date('Y-m-d H:i:s') : '' }}
+            </strong>
         </div>
-    </div>
-    <hr>
-    {% if app.user %}
-        {{ include('trick/_form_message.html.twig', {'button_label': 'Laisser un commentaire'}) }}
-    {% endif %}
-    <div class="flex-grow-0 py-3 px-4 border-top">
-        <div class="position-relative">
-            {% for message in messages %}
-                <div class="chat-message-right pb-4">
-                    <div>
-                        <img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="rounded-circle mr-1" alt="Chris Wood" width="40" height="40">
-                        <div class="text-muted small text-nowrap mt-2">{{ message.0.createdAt|date ('m-d-Y H:i:s') }}</div>
+        <div class="col border text-center">
+        Publié le :<strong>
+                {{ trick.publishedAt ? trick.publishedAt|date('Y-m-d H:i:s') : '' }}
+            </strong>
+        </div>
+        <div class="col border text-center mb-4">
+            Categorie: <strong>{{ trick.categories.0.label}}</strong>
+        </div>
+        <hr>
+        {% if app.user %}
+            {{ include('trick/_form_message.html.twig', {'button_label': 'Laisser un commentaire'}) }}
+        {% endif %}
+        <div class="flex-grow-0 py-3 px-4 border-top">
+            <div class="position-relative">
+                {% for message in messages %}
+                    <div class="chat-message-right pb-4">
+                        <div>
+                            <img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="rounded-circle mr-1" alt="Chris Wood" width="40" height="40">
+                            <div class="text-muted small text-nowrap mt-2">{{ message.0.createdAt|date ('m-d-Y H:i:s') }}</div>
+                        </div>
+                        <div class="flex-shrink-1 bg-light rounded py-2 px-3 mr-3">
+                            <div class="font-weight-bold mb-1">You</div>
+                            <p>{{message.content}}</p>
+                        </div>
                     </div>
-                    <div class="flex-shrink-1 bg-light rounded py-2 px-3 mr-3">
-                        <div class="font-weight-bold mb-1">You</div>
-                        <p>{{message.content}}</p>
-                    </div>
-                </div>
-            {% endfor %}
+                {% endfor %}
+            </div>
         </div>
+
     </div>
+
+
 </div>
-
-
-
-
-        <div class="text-center m-3">
-
-            <a href="{{ path('trick_index') }}">retour à la liste</a>
-
-        </div>
-
+    <div class="text-center m-3"><a href="{{ path('trick_index') }}">retour à la liste</a></div>
 
 {% endblock %}

@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Table;
+use Symfony\Component\Validator\Constraints as Assert;
 
 
 /**
@@ -34,7 +35,7 @@ class Trick
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private ?string $name;
+    private ?string $nameFigure;
 
     /**
      * @ORM\Column(type="text")
@@ -89,24 +90,13 @@ class Trick
 
     /**
      * @ORM\OneToMany (targetEntity=Videos::class, mappedBy="trick", orphanRemoval=true, cascade={"persist"} )
-     */
+     * @Assert\Valid()
+    */
     private Collection $videos;
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name): self
-    {
-        $this->name = $name;
-
-        return $this;
     }
 
     public function getDescription(): ?string
@@ -261,7 +251,6 @@ class Trick
             $this->images[] = $image;
             $image->setTrick($this);
         }
-
         return $this;
     }
 
@@ -288,7 +277,7 @@ class Trick
     public function addVideo(Videos $video): self
     {
         if (!$this->videos->contains($video)) {
-            $this->videos[] = $video;
+            $this->videos->add($video);
             $video->setTrick($this);
         }
 
@@ -303,6 +292,18 @@ class Trick
                 $video->setTrick(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getNameFigure(): ?string
+    {
+        return $this->nameFigure;
+    }
+
+    public function setNameFigure(string $nameFigure): self
+    {
+        $this->nameFigure = $nameFigure;
 
         return $this;
     }

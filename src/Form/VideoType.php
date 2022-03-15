@@ -15,24 +15,25 @@ class VideoType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('link', TextType::class, [
-                'label' => false,
-                'required' => false,
-                'constraints' => [
-                    new Regex([
-                        'pattern' => '#^((?:https?:)?\/\/)?(?:www\.)?((?:youtube\.com|youtu\.be|dai\.ly|dailymotion\.com|vimeo\.com|player\.vimeo\.com))(\/(?:[\w\-]+\?v=|embed\/|video\/|embed\/video\/)?)([\w\-]+)(\S+)?$#',
-                        'message' => 'You can only use youtube, dailymotion or vimeo video url',
-                    ]),
-                ],
-            ])
-            ->add('delete', ButtonType::class, [
-                'label_html' => true,
-                'label' => '<i class="fas fa-times"></i>',
-                'attr' => [
-                    'data-action' => 'delete',
-                    'data-target' => '#trick_videos___name__',
-                ],
-            ]);
+                ->add('name', TextType::class, [
+                 'label' => 'url',
+                 'required' => false,
+                 'constraints' => [
+                     new Regex([
+                         'pattern' => '#^((?:https?:)?\/\/)?(?:www\.)?((?:youtube\.com|youtu\.be|dai\.ly|dailymotion\.com|vimeo\.com|player\.vimeo\.com))(\/(?:[\w\-]+\?v=|embed\/|video\/|embed\/video\/)?)([\w\-]+)(\S+)?$#',
+                         'message' => 'You can only use youtube, dailymotion or vimeo video url',
+                     ]),
+                 ],
+             ])
+            /* ->add('delete', ButtonType::class, [
+                 'label_html' => true,
+                 'label' => 'delete',
+                 'attr' => [
+                     'data-action' => 'delete',
+                     'data-target' => '#trick_videos___name__',
+                 ],
+             ])*/
+            ;
     }
 
     public function configureOptions(OptionsResolver $resolver)

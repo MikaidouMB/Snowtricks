@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Trick;
 use App\Entity\Videos;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -22,19 +23,19 @@ class VideosRepository extends ServiceEntityRepository
     // /**
     //  * @return Videos[] Returns an array of Videos objects
     //  */
-    /*
-    public function findByExampleField($value)
+
+    public function findByVideosTrick(Trick $trick): ?array
     {
         return $this->createQueryBuilder('v')
-            ->andWhere('v.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('v.id', 'ASC')
-            ->setMaxResults(10)
+            ->addSelect('v.name')
+            ->addSelect('v.id')
+            ->join('v.trick','t')
+            ->andWhere('v.id=' . $trick->getId())
+            ->setMaxResults(4)
             ->getQuery()
             ->getResult()
-        ;
+            ;
     }
-    */
 
     /*
     public function findOneBySomeField($value): ?Videos
