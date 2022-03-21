@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Utilisateurs{% endblock %}
+
+{% block body %}
+    <div class="d-flex" id="wrapper">
+        <!-- Sidebar-->
+        <div class="border-end bg-white" id="sidebar-wrapper">
+            <div class="list-group list-group-flush">
+            <a class="nav-link" href="{{ path('trick_index') }}">Liste Tricks</a>
+            </div>
+        </div>
+        <!-- Page content wrapper-->
+        <div id="page-content-wrapper">
+            <h1 class="text-center">Liste Utilisateurs</h1>
+
+            <div class="container">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Date d'enregistrement</th>
+                        {# <th>Photo</th>#}
+                        <th>Figures</th>
+                        <th>Actions</th>
+                        {# Creer figures créée par chaque user #}
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    {% for user in users %}
+                        <tr>
+                            <td>{{ user.id }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>
+                                {% for role in user.roles %}
+                                    {% if role == "ROLE_USER" %}
+                                        Utilisateur
+                                    {% elseif role == "ROLE_EDITOR" %}
+                                        Editeur
+                                    {% elseif role == "ROLE_ADMIN" %}
+                                        Administrateur<br>
+                                    {% elseif role == "ROLE_MODO" %}
+                                        Modérateur<br>
+                                    {% endif %}
+                                {% endfor %}</td>
+                            <td>{{ user.registeredAt ? user.registeredAt|date('Y-m-d H:i:s') : '' }}</td>
+
+                            {% for photos in user.photo %}
+                                {{ dump(user.photo) }}
+                                {% if photo is null %}
+                                    <td>aucune photo</td>
+                                {% else %}
+                                    <td>{{ photo }}</td>
+                                {% endif %}
+                            {% endfor %}
+                            <td>{{ user.tricks|length }}</td>
+                            <td><a href="{{ path('admin_modify_user', {'id':user.id}) }}" class="btn btn-warning">Modifier</a></td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="10">Il n'y a aucun utilisateur</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

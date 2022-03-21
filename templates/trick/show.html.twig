@@ -16,8 +16,9 @@
             <img class="card-img-top mt-2" src=" {{ asset('/uploads/' ~ image.name) }}" alt="Image" height="150vw" />
             <a href= "{{ path('trick_delete_image', {id: image.id}) }}"
                data-delete data-token ="{{ csrf_token('delete' ~ image.id) }}
-                ">Supprimer</a>
-            <a href="{{ path('trick_edit', {'id': trick.id}) }}">Modifier</a>
+                " class="btn btn-danger">Supprimer
+            </a>
+            <a href="{{ path('trick_edit', {'id': trick.id}) }}" class="btn btn-warning">Modifier</a>
         </div>
     {% endfor %}
     {% for video in trick.videos %}
@@ -25,9 +26,12 @@
                     src="{{ video.name }}" width="250vw" frameborder="0"
                     allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                     allowfullscreen>
-
             </iframe>
-        <a href="{{ path('trick_edit', {'id': trick.id}) }}">Modifier</a>
+        <a href= "{{ path('trick_delete_video', {idVideo: video.id}) }}"
+           data-delete data-token ="{{ csrf_token('delete' ~ video.id) }}
+                " class="btn btn-danger">Supprimer
+        </a>
+        <a href="{{ path('trick_edit', {'id': trick.id}) }}" class="btn btn-warning">Modifier</a>
 
     {% endfor %}
             <div class="centered">

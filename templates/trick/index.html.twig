@@ -3,9 +3,18 @@
 {% block title %}Trick index{% endblock %}
 
 {% block body %}
-    <h1>Trick index</h1>
+    <div class="d-flex" id="wrapper">
+    <!-- Sidebar-->
+        <div class="border-end bg-white" id="sidebar-wrapper">
+        <div class="list-group list-group-flush">
+            <a class="nav-link" href="{{ path('admin_users') }}">Liste Utilisateurs</a>
+        </div>
+    </div>
+        <div id="page-content-wrapper">
+    <div class="container">
+        <h1 class="text-center">Liste Figures</h1>
 
-    <table class="table">
+        <table class="table">
         <thead>
             <tr>
                 <th>Id</th>
@@ -13,7 +22,7 @@
                 <th>Description</th>
                 <th>CreatedAt</th>
                 <th>PublishedAt</th>
-                <th>Category</th>
+                {#<th>Category</th>  #}
                 <th>IsPublished</th>
                 <th>Image</th>
                 <th>Videos</th>
@@ -26,17 +35,17 @@
             <tr>
                 <td>{{ trick.id }}</td>
                 <td>{{ trick.nameFigure }}</td>
-                <td>{{ trick.description }}</td>
+                <td>{{ trick.description|slice(0, 40) }}</td>
                 <td>{{ trick.createdAt ? trick.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ trick.publishedAt ? trick.publishedAt|date('Y-m-d H:i:s') : '' }}</td>
                 {#  <td>{{ trick.categories.0.label}}</td>#}
                 <td>{{ trick.isPublished ? 'Yes' : 'No' }}</td>
-                 {% for image in trick.images %}
-                     <td>{{ image.name }}</td>
-                 {% endfor %}
-                {% for video in trick.videos %}
-                   <td>{{ video.name }}</td>
-                {% endfor %}
+                <td> {% for image in trick.images %}
+                     {{ image.name|slice(0, 10) }}<br>
+                 {% endfor %}</td>
+                <td> {% for video in trick.videos %}
+                   {{ video.name|slice(0, 10) }}<br>
+                {% endfor %}</td>
                 <td>
                     <a href="{{ path('trick_show', {'id': trick.id}) }}">Voir</a>
                     <a href="{{ path('trick_edit', {'id': trick.id}) }}">Modifier</a>
@@ -49,6 +58,7 @@
         {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('trick_new') }}">Créer une figure</a>
+    </div>
+</div>
+</div>
 {% endblock %}

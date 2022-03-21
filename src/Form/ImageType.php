@@ -15,20 +15,19 @@ class ImageType extends AbstractType
     {
         $builder
             ->add('images', FileType::class, [
-            'label'=>'Ajouter une ou des images',
-            'mapped' => false,
-            'multiple' => true,
-            'required' => false
+                    'label' => false,
+                    'required' => false,
                 ]
             )
             ->add('delete', ButtonType::class, [
                 'label_html' => true,
-                'label' => '<i class="fas fa-times"></i>',
+                //'label' => '<i class="fas fa-times"></i>',
                 'attr' => [
                     'data-action' => 'delete',
                     'data-target' => '#trick_images___name__',
                 ],
-            ]);;
+            ])
+           ;
     }
     public function configureOptions(OptionsResolver $resolver)
     {

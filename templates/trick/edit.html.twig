@@ -23,9 +23,18 @@
                     {% for image in form.images %}
                             {{ include("trick/_image.html.twig", {form: image}) }}
                     {% endfor %}
-                    <a href="{{ path('trick_delete_image', {id: image.id}) }}" data-delete data-token="{{ csrf_token('delete' ~ image.id) }}" class="btn btn-danger delete-article"
+                {#  <div class="form-group">
+                    <button type="button" class="btn btn-danger btn-remove">Effacer</button>
+                </div>
+                   <a href="{{ path('trick_delete_image', {id: image.id}) }}" data-delete data-token="{{ csrf_token('delete' ~ image.id) }}" class="btn btn-danger delete-article"
                        data-id="{{ image.id }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
                         Supprimer</a>
+                       {# <a href= "{{ path('trick_delete_image', {id: image.id}) }}" class="btn btn-danger delete-article"
+                        data-id="{{ image.id }}onsubmit="return confirm('Are you sure you want to delete this item?');">Supprimer</a>#}
+                <a href="{{ path('trick_delete_image', {id: image.id}) }} " data-delete data-token="{{ csrf_token('delete' ~ image.id) }}" class="btn btn-danger delete-article"
+                   data-id="{{ image.id }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                    Supprimer</a>
+
                        {# <a href= "{{ path('trick_delete_image', {id: image.id}) }}" class="btn btn-danger delete-article"
                         data-id="{{ image.id }}onsubmit="return confirm('Are you sure you want to delete this item?');">Supprimer</a>#}
                 {% endfor %}
@@ -42,6 +51,7 @@
                     data-index="{{ form.videos|length > 0 ? form.videos|last.vars.name + 1 : 0 }}">
                 {% for video in form.videos %}
                 <div class="col-4">
+                    {# Btn effacer #}
                     {{ include("trick/_video.html.twig", {form: video}) }}
                 </div>
                 {% endfor %}

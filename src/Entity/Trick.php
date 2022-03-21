@@ -86,7 +86,7 @@ class Trick
     /**
      * @ORM\OneToMany(targetEntity=Images::class, mappedBy="trick", orphanRemoval=true, cascade={"persist"})
      */
-    private $images;
+    private Collection $images;
 
     /**
      * @ORM\OneToMany (targetEntity=Videos::class, mappedBy="trick", orphanRemoval=true, cascade={"persist"} )

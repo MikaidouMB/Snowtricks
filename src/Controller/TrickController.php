@@ -163,7 +163,7 @@ class TrickController extends AbstractController
         ]);
     }
 
-    /**
+  /*  /**
      * @Route("/delete/{id}", name="trick_delete_image", methods={"DELETE", "GET", "POST"})
      */
    /* public function delete(Request $request, Images $image, EntityManagerInterface $entityManager): Response{
@@ -187,7 +187,7 @@ class TrickController extends AbstractController
      * @param Request $request
      * @param EntityManagerInterface $entityManager
      * @return Response
-     * @Route("/delete/{id}/", name="trick_delete_image", methods={"DELETE", "GET", "POST"})
+     * @Route("/delete/{id}", name="trick_delete_image", methods={"DELETE", "GET", "POST"})
      */
     public function deleteImage(Images $images, Request $request,
                                 EntityManagerInterface $entityManager):Response
@@ -196,10 +196,26 @@ class TrickController extends AbstractController
             $entityManager->remove($images);
             $entityManager->flush();
 
-
-        return $this->redirectToRoute('trick_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('trick_index',[],Response::HTTP_SEE_OTHER);
   //  }            return $this->redirectToRoute('trick_index', [], Response::HTTP_SEE_OTHER);
 
     }
+    /**
+     * @param Videos $videos
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @return Response
+     * @Route("/delete/{idVideo}", name="trick_delete_video", methods={"DELETE", "GET", "POST"})
+     */
+    public function deleteVideo(Videos $videos, Request $request,
+                                EntityManagerInterface $entityManager):Response
+    {
+        // if ($this->isCsrfTokenValid('trick_delete_image'.$images->getId(), $request->request->get('_token'))) {
+        $entityManager->remove($videos);
+        $entityManager->flush();
 
+        return $this->redirectToRoute('trick_index',[],Response::HTTP_SEE_OTHER);
+        //  }            return $this->redirectToRoute('trick_index', [], Response::HTTP_SEE_OTHER);
+
+    }
 }
