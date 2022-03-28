@@ -4,21 +4,21 @@
 
 {% block body %}
     {% if images is not empty %}
-
         <div class="row d-flex flex-column justify-content-center align-items-center">
             <img src="{{ asset('uploads/' ~ trick.images.0.name) }}" class="img-fluid"  alt="">
-
         </div>
     {% endif %}
 <div class="container-fluid">
     {% for image in trick.images %}
         <div class="d-inline-block mt-3" >
             <img class="card-img-top mt-2" src=" {{ asset('/uploads/' ~ image.name) }}" alt="Image" height="150vw" />
-            <a href= "{{ path('trick_delete_image', {id: image.id}) }}"
-               data-delete data-token ="{{ csrf_token('delete' ~ image.id) }}
-                " class="btn btn-danger">Supprimer
+            <a href= "{{ path('trick_delete_image', {idTrick: trick.id , id: image.id}) }}"
+               data-delete data-token ="{{ csrf_token('delete' ~ image.id) }}"
+               onclick="return confirm('are you sure?')"
+               class="btn btn-danger" >Supprimer
             </a>
-            <a href="{{ path('trick_edit', {'id': trick.id}) }}" class="btn btn-warning">Modifier</a>
+            <a href="{{ path('trick_edit', {'id': trick.id}) }}"
+               class="btn btn-warning">Modifier</a>
         </div>
     {% endfor %}
     {% for video in trick.videos %}
@@ -27,9 +27,10 @@
                     allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                     allowfullscreen>
             </iframe>
-        <a href= "{{ path('trick_delete_video', {idVideo: video.id}) }}"
-           data-delete data-token ="{{ csrf_token('delete' ~ video.id) }}
-                " class="btn btn-danger">Supprimer
+        <a href= "{{ path('trick_delete_video', {video_id: video.id}) }}"
+           data-delete data-token ="{{ csrf_token('delete' ~ video.id) }}"
+           onclick="return confirm('are you sure?')"
+           class="btn btn-danger">Supprimer
         </a>
         <a href="{{ path('trick_edit', {'id': trick.id}) }}" class="btn btn-warning">Modifier</a>
 
@@ -75,10 +76,7 @@
                 {% endfor %}
             </div>
         </div>
-
     </div>
-
-
 </div>
     <div class="text-center m-3"><a href="{{ path('trick_index') }}">retour à la liste</a></div>
 

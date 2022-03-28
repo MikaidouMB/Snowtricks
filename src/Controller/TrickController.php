@@ -14,6 +14,7 @@ use App\Repository\TrickRepository;
 use App\Repository\VideosRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,9 +27,11 @@ use Symfony\Component\Routing\Annotation\Route;
 class TrickController extends AbstractController
 {
     private ManagerRegistry $doctrine;
+    private VideosRepository  $videosRepository;
 
-    public function __construct(ManagerRegistry $doctrine) {
+    public function __construct(ManagerRegistry $doctrine, VideosRepository $videosRepository) {
         $this->doctrine = $doctrine;
+        $this->videosRepository =$videosRepository;
     }
 
     /**
@@ -81,48 +84,12 @@ class TrickController extends AbstractController
         ]);
     }
 
-
-    /**
-     * @Route("/{id}", name="trick_show", methods={"GET","POST"})
-     * @param Trick $trick
-     * @param \App\Repository\TrickRepository $trickRepository
-     * @param \App\Repository\MessageRepository $messageRepository
-     * @param \App\Repository\ImageRepository $imageRepository
-     * @param Request $request
-     * @param EntityManagerInterface $entityManager
-     * @return Response
-     */
-    public function show(Trick $trick,
-                         TrickRepository $trickRepository,
-                         MessageRepository $messageRepository,
-                         ImageRepository  $imageRepository,
-                         Request $request,
-                         EntityManagerInterface $entityManager
-    ): Response
-    {
-        $message = new Message();
-        $form = $this->createForm(MessageType::class, $message);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $message->setUser($trick->getUser());
-            $message->setTrick($trick);
-            $entityManager->persist($message);
-            $entityManager->flush();
-        }
-            return $this->render('trick/show.html.twig', [
-                'messages'=>$messageRepository->findMessageByTrick($trick),
-                'images'=> $imageRepository->findImagesByTrick($trick),
-                'trick' => $trick,
-                'form' => $form->createView()
-        ]);
-    }
-
     /**
      * @Route("/{id}/edit", name="trick_edit", methods={"GET", "POST", "DELETE"})
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \App\Entity\Trick $trick
      * @param \Doctrine\ORM\EntityManagerInterface $entityManager
+     * @param VideosRepository $videosRepository
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function edit(Request $request, Trick $trick,
@@ -132,6 +99,7 @@ class TrickController extends AbstractController
 
         $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
+        $idTrick = $trick->getId();
 
         if ($form->isSubmitted() && $form->isValid()) {
             $images = $form->get('images')->getData();
@@ -153,7 +121,9 @@ class TrickController extends AbstractController
             $entityManager->persist($trick);
             $entityManager->flush();
 
-            return $this->redirectToRoute('trick_index', [], Response::HTTP_SEE_OTHER);
+
+            return $this->redirectToRoute('app_home',[],Response::HTTP_SEE_OTHER);
+
         }
 
         return $this->renderForm('trick/edit.html.twig', [
@@ -163,59 +133,47 @@ class TrickController extends AbstractController
         ]);
     }
 
-  /*  /**
-     * @Route("/delete/{id}", name="trick_delete_image", methods={"DELETE", "GET", "POST"})
-     */
-   /* public function delete(Request $request, Images $image, EntityManagerInterface $entityManager): Response{
-     //   $data = $this->json_decode($request->getContent(),true);
-
-      //  if ($this->isCsrfTokenValid('delete'.$image->getId(), $data['_token'])) {
-            $nom = $image->getName();
-        //    unlink($this->getParameter('uploads') . '/' . $nom);
-            $entityManager->remove($image);
-
-            $entityManager->flush();
-
-          //  return new JsonResponse(['']);
-                }
-        }
-        return $this->redirectToRoute('trick_index', [], Response::HTTP_SEE_OTHER);
-    }
-*/
     /**
      * @param Images $images
+     * @param Int $idTrick
      * @param Request $request
      * @param EntityManagerInterface $entityManager
      * @return Response
-     * @Route("/delete/{id}", name="trick_delete_image", methods={"DELETE", "GET", "POST"})
+     * @Route("/delete/{idTrick}/{id}", name="trick_delete_image", methods={"DELETE", "GET", "POST"})
      */
-    public function deleteImage(Images $images, Request $request,
+    public function deleteImage(Images $images,Int $idTrick, Request $request,
                                 EntityManagerInterface $entityManager):Response
     {
        // if ($this->isCsrfTokenValid('trick_delete_image'.$images->getId(), $request->request->get('_token'))) {
             $entityManager->remove($images);
             $entityManager->flush();
-
-        return $this->redirectToRoute('trick_index',[],Response::HTTP_SEE_OTHER);
-  //  }            return $this->redirectToRoute('trick_index', [], Response::HTTP_SEE_OTHER);
+        $this->addFlash(
+            'success',
+            'L\'image a bien été supprimée'
+        );
+        return $this->redirectToRoute('trick_edit',['id'=> $idTrick],Response::HTTP_SEE_OTHER);
 
     }
+
     /**
-     * @param Videos $videos
+     * @param Videos|null $video_id
      * @param Request $request
      * @param EntityManagerInterface $entityManager
      * @return Response
-     * @Route("/delete/{idVideo}", name="trick_delete_video", methods={"DELETE", "GET", "POST"})
+     * @Route("/delete/{video_id}", name="trick_delete_video", methods={"DELETE", "GET", "POST"})
      */
-    public function deleteVideo(Videos $videos, Request $request,
-                                EntityManagerInterface $entityManager):Response
+    public function deleteVideo(Videos $video_id = null, Request $request,
+                                EntityManagerInterface $entityManager
+    ):Response
     {
+        $idTrick = $video_id->getTrick()->getId();
         // if ($this->isCsrfTokenValid('trick_delete_image'.$images->getId(), $request->request->get('_token'))) {
-        $entityManager->remove($videos);
+        $entityManager->remove($video_id);
         $entityManager->flush();
-
-        return $this->redirectToRoute('trick_index',[],Response::HTTP_SEE_OTHER);
-        //  }            return $this->redirectToRoute('trick_index', [], Response::HTTP_SEE_OTHER);
-
+        $this->addFlash(
+            'success',
+            'La vidéo a bien été supprimée'
+        );
+        return $this->redirectToRoute('trick_edit',['id'=> $idTrick],Response::HTTP_SEE_OTHER);
     }
 }
