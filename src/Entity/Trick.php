@@ -280,7 +280,6 @@ class Trick
             $this->videos->add($video);
             $video->setTrick($this);
         }
-
         return $this;
     }
 
@@ -307,4 +306,5 @@ class Trick
 
         return $this;
     }
+
 }

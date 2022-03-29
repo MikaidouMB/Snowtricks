@@ -3,21 +3,27 @@
 {% block title %}Créer figure{% endblock %}
 
 {% block body %}
-<div class="container mt-3">
+<div class="container mt-3 mb-4">
     {{ form_errors(form) }}
     <h1>Créer figure</h1>
 
-    <div class="col-12">
+    <div class="col-12 mt-4">
         {{ form_start(form) }}
         {{ form_widget(form._token) }}
+        <div class="mt-4">
         {{ form_row(form.nameFigure) }}
+        </div>
+        <div class="mt-4">
         {{ form_row(form.description) }}
+        </div>
+        <div class="mt-4">
         {{ form_row(form.images) }}
+        </div>
         {{ form_row(form.categories) }}
-
-
-        <button type="button" class="btn btn-primary btn-new mb-4" data-collection="#videos">Ajouter</button>
-    <div
+    <div class="mt-4">
+    <button type="button" class="btn btn-warning btn-new mb-4" data-collection="#videos">Ajouter une video</button>
+    </div>
+        <div
             id="videos"
             class="row"
             data-prototype="{{ include("trick/_video.html.twig", {form: form.videos.vars.prototype})|e("html_attr")}}"
@@ -28,10 +34,12 @@
             </div>
         {% endfor %}
     </div>
+    <div class="text-center">
         {{ include('trick/figure_form.html.twig') }}
-        {#  {{ include('trick/figure_form.html.twig') }}#}
     </div>
     {{ form_end(form, {render_rest:false}) }}
 </div>
+</div>
+
     <a href="{{ path('trick_index') }}">Retour à la liste</a>
 {% endblock %}

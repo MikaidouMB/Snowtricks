@@ -75,7 +75,7 @@ class TrickController extends AbstractController
             $entityManager->persist($trick);
             $entityManager->flush();
 
-            return $this->redirectToRoute('trick_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('trick/new.html.twig', [
@@ -99,7 +99,6 @@ class TrickController extends AbstractController
 
         $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
-        $idTrick = $trick->getId();
 
         if ($form->isSubmitted() && $form->isValid()) {
             $images = $form->get('images')->getData();
@@ -134,6 +133,28 @@ class TrickController extends AbstractController
     }
 
     /**
+     * @param Trick $trick
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @return Response
+     * @Route("/delete/{id}", name="trick_delete", methods={"DELETE", "GET", "POST"})
+     */
+    public function deleteTrick(Trick $trick, Request $request,
+                                EntityManagerInterface $entityManager):Response
+    {
+        // if ($this->isCsrfTokenValid('trick_delete_image'.$images->getId(), $request->request->get('_token'))) {
+        $idTrick = $trick->getId();
+
+        $entityManager->remove($trick);
+        $entityManager->flush();
+        $this->addFlash(
+            'success',
+            'Le trick a bien été supprimée'
+        );
+        return $this->redirectToRoute('app_home',[],Response::HTTP_SEE_OTHER);
+    }
+
+    /**
      * @param Images $images
      * @param Int $idTrick
      * @param Request $request
@@ -152,7 +173,6 @@ class TrickController extends AbstractController
             'L\'image a bien été supprimée'
         );
         return $this->redirectToRoute('trick_edit',['id'=> $idTrick],Response::HTTP_SEE_OTHER);
-
     }
 
     /**

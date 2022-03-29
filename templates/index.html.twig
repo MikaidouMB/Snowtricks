@@ -44,22 +44,24 @@
                         <div class="card-body p-2">
                             <div class="text-center">
                                 <h5 class="fw-bolder"></h5>
-
+                                {% if trick.images|length >= 1%}
                                 {% for image in trick.images %}
                                     {% if loop.index0 < 1 %}
                                         <img class="card-img-top" src=" {{ asset('uploads/' ~ image.name) }}" alt="..." />
                                     {% endif %}
                                 {% endfor %}
+                                {% else %}
+                                    <img class="card-img-top" src=" {{ 'assets/snowboarding.jpg' }}" alt="..." />
+                                {% endif %}
                                 <a href="{{ path('trick_show', {'id': trick.id}) }}">{{ trick.nameFigure }}</a>
-                                    <a href="{{ path('trick_edit', {'id': trick.id}) }}">
-                                        <i class="bi bi-pen left-icon-holder"></i>
-                                    </a>
-                                
-                                    <form method="post"
-                                          onsubmit="return confirm('Are you sure you want to delete this item?');">
-                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ trick.id) }}">
-                                        <button class="bi bi-trash">Delete</button>
-                                    </form>
+                                <a href="{{ path('trick_edit', {'id': trick.id}) }}">
+                                    <i class="bi bi-pen left-icon-holder"></i>
+                                </a>
+                                <a href= "{{ path('trick_delete', {id: trick.id}) }}"
+                                   data-delete data-token ="{{ csrf_token('deleteTrick' ~ trick.id) }}"
+                                   onclick="return confirm('Etes vous sure?')"
+                                   class="bi bi-trash">
+                                </a>
                             </div>
                         </div>
                     </div>
