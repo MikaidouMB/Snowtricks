@@ -49,7 +49,6 @@
                             <td>{{ user.registeredAt ? user.registeredAt|date('Y-m-d H:i:s') : '' }}</td>
 
                             {% for photos in user.photo %}
-                                {{ dump(user.photo) }}
                                 {% if photo is null %}
                                     <td>aucune photo</td>
                                 {% else %}

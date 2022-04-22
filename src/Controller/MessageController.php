@@ -58,6 +58,8 @@ class MessageController extends AbstractController
         ]);
     }
 
+
+
     /**
      * @Route("/{id}/edit", name="message_edit", methods={"GET", "POST"})
      */
@@ -79,14 +81,14 @@ class MessageController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="message_delete", methods={"POST"})
+     * @Route("/delete/{idTrick}/{id}", name="message_delete", methods={"DELETE", "GET", "POST"})
      */
-    public function delete(Request $request, Message $message, EntityManagerInterface $entityManager): Response
+    public function delete(Request $request,Int $idTrick, Message $message, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$message->getId(), $request->request->get('_token'))) {
+        //if ($this->isCsrfTokenValid('delete'.$message->getId(), $request->request->get('_token'))) {
             $entityManager->remove($message);
             $entityManager->flush();
-        }
-        return $this->redirectToRoute('message_index', [], Response::HTTP_SEE_OTHER);
+       // }
+        return $this->redirectToRoute('trick_show',['id'=> $idTrick],Response::HTTP_SEE_OTHER);
     }
 }

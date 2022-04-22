@@ -3,7 +3,7 @@
 {% block title %}Hello Snowboarders!{% endblock %}
 
 {% block body %}
-    <html lang="en">
+    <div lang="en">
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -22,55 +22,82 @@
         <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
         <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
     </head>
-    <body>
     <!-- Header-->
-    <div class="full-screen-width">
-        <img class="img-fluid" src="{{ asset('assets/877546.jpg') }}"  alt="">
-    </div>
-    <!-- Section-->
-      <section class="py-5">
-
-        {# {% for image in tricks.images %}
-              <img class="card-img-top" src=" {{ asset('uploads/' ~ trick.images.name) }}" alt="..." />
-
-          {% endfor %}#}
-
-          {% for trick in tricks %}
-          <div class="container px-4 px-lg-5 mt-5">
-            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-                <div class="col mb-5">
-                    <div class="card h-10">
-                        <!-- Product image-->
-                        <div class="card-body p-2">
-                            <div class="text-center">
-                                <h5 class="fw-bolder"></h5>
-                                {% if trick.images|length >= 1%}
-                                {% for image in trick.images %}
-                                    {% if loop.index0 < 1 %}
-                                        <img class="card-img-top" src=" {{ asset('uploads/' ~ image.name) }}" alt="..." />
-                                    {% endif %}
-                                {% endfor %}
-                                {% else %}
-                                    <img class="card-img-top" src=" {{ 'assets/snowboarding.jpg' }}" alt="..." />
-                                {% endif %}
-                                <a href="{{ path('trick_show', {'id': trick.id}) }}">{{ trick.nameFigure }}</a>
-                                <a href="{{ path('trick_edit', {'id': trick.id}) }}">
-                                    <i class="bi bi-pen left-icon-holder"></i>
-                                </a>
-                                <a href= "{{ path('trick_delete', {id: trick.id}) }}"
-                                   data-delete data-token ="{{ csrf_token('deleteTrick' ~ trick.id) }}"
-                                   onclick="return confirm('Etes vous sure?')"
-                                   class="bi bi-trash">
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                {% endfor %}
+    <div class="container-fluid">
+        <section id="sec-1" >
+            <div class="full-screen-width">
+                <img class="img-fluid" src="{{ asset('assets/877546.jpg') }}"  alt="">
+                <a href="#sec-2">
+                    <div class="scroll-down"></div>
+                </a>
             </div>
+        </section>
+    </div>
+        <div class="container">
+        <section id="sec-2" style="border: #0a53be 2px solid">
+          {% for trick in tricks %}
+              {% set runtimeConfig = {"thumbnail": {"size": [50, 50] }} %}
+              <div class="d-inline-block mt-3" >
+              <div class="text-center">
+                  <h5 class="fw-bolder"></h5>
+                  {% if trick.images|length >= 1%}
+                      {% for image in trick.images %}
+                          {% if loop.index0 < 1 %}
+                              <img class="card-img-top mt-2" src=" {{ asset('uploads/' ~ image.name) }}" alt="..." height="150vw"/>
+                          {% endif %}
+                      {% endfor %}
+                  {% else %}
+                      <img class="card-img-top" src=" {{ 'assets/snowboarding.jpg' }}" alt="..." />
+                  {% endif %}
+                  <a href="{{ path('trick_show', {'id': trick.id}) }}">{{ trick.nameFigure }}</a>
+                  {% if app.user %}
+                      {% if (app.user.roles.0 == "ROLE_ADMIN") or (app.user.id == trick.user.id) %}
+                          <a href="{{ path('trick_edit', {'id': trick.id}) }}">
+                              <i class="bi bi-pen left-icon-holder"></i>
+                          </a>
+                          <a href= "{{ path('trick_delete', {id: trick.id}) }}"
+                             data-delete data-token ="{{ csrf_token('deleteTrick' ~ trick.id) }}"
+                             onclick="return confirm('Etes vous sure?')"
+                             class="bi bi-trash">
+                          </a>
+                      {% endif %}
+                  {% endif %}
+
+              </div>
+          </div>
+    {% endfor %}
+            {% if isPaginated %}
+            <div class="text-center m-3">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    {% if (page) != (1) %}
+                        <li class="page-item">
+                            <a class="page-link" href="{{ path('app_home',{page : page - 1, nbre: nbre})}}">
+                                Précédent
+                            </a>
+                        </li>
+                    {% endif %}
+                    {% for i in range(1, nbrePage) %}
+                        <li class="page-item">
+                            <a class="page-link" href="{{ path('app_home',{page : i, nbre: nbre})}}">{{ i }}</a>
+                        </li>
+                    {% endfor%}
+                    {% if (page) != (nbrePage) %}
+                        <li class="page-item">
+                            <a class="page-link" href="{{ path('app_home',{page : page + 1, nbre: nbre})}}">
+                                Suivant
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
+            {% endif %}
+            </div>
+        </section>
+            <a href="#sec-2">
+                <div class="scroll-up"></div>
+            </a>
         </div>
-    </section>
-    </body>
-    </html>
+    <a href="#" class="top">&#8593;</a>
 
 {% endblock %}

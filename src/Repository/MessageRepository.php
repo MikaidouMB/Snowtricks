@@ -26,8 +26,9 @@ class MessageRepository extends ServiceEntityRepository
             ->addSelect('m.content')
             ->addSelect('m.id')
             ->join('m.trick','t')
+            ->orderBy('m.createdAt','DESC')
             ->andWhere('t.id=' . $trick->getId())
-            ->setMaxResults(4)
+            ->setMaxResults(5)
             ->getQuery()
             ->getResult()
             ;
@@ -36,18 +37,21 @@ class MessageRepository extends ServiceEntityRepository
      /**
       * @return Message[] Returns an array of Message objects
       */
-   /* public function findByExampleField($value): array
+    public function findRecentsMessages($trick): array
     {
         return $this->createQueryBuilder('m')
-            ->andWhere('m.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('m.id', 'ASC')
-            ->setMaxResults(10)
+            ->addSelect('m.content')
+            ->addSelect('m.id')
+            ->join('m.trick','t')
+            ->orderBy('m.createdAt','DESC')
+            ->andWhere('t.id=' . $trick->getId())
+            ->expr()
+            ->setMaxResults(5)
             ->getQuery()
             ->getResult()
-        ;
+            ;
     }
-*/
+
     /*
     public function findOneBySomeField($value): ?Message
     {

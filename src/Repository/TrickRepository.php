@@ -14,7 +14,6 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class TrickRepository extends ServiceEntityRepository
 {
-    public $findOneBySomeField;
 
     public function __construct(ManagerRegistry $registry)
     {

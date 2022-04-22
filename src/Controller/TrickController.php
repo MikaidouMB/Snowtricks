@@ -14,12 +14,18 @@ use App\Repository\TrickRepository;
 use App\Repository\VideosRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
+use PhpParser\Node\Expr\Cast\Object_;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\SerializerInterface;
 
 /**
  * @Route("/trick")
@@ -120,9 +126,7 @@ class TrickController extends AbstractController
             $entityManager->persist($trick);
             $entityManager->flush();
 
-
             return $this->redirectToRoute('app_home',[],Response::HTTP_SEE_OTHER);
-
         }
 
         return $this->renderForm('trick/edit.html.twig', [
@@ -137,14 +141,13 @@ class TrickController extends AbstractController
      * @param Request $request
      * @param EntityManagerInterface $entityManager
      * @return Response
-     * @Route("/delete/{id}", name="trick_delete", methods={"DELETE", "GET", "POST"})
+     * @Route("/delete-trick/{id}", name="trick_delete",requirements={"name"=".+"}, methods={"DELETE", "GET", "POST"})
      */
-    public function deleteTrick(Trick $trick, Request $request,
+    public function deleteTrick( Trick $trick, Request $request,
                                 EntityManagerInterface $entityManager):Response
     {
         // if ($this->isCsrfTokenValid('trick_delete_image'.$images->getId(), $request->request->get('_token'))) {
-        $idTrick = $trick->getId();
-
+        //$idTrick = $trick->getId();
         $entityManager->remove($trick);
         $entityManager->flush();
         $this->addFlash(
@@ -152,6 +155,28 @@ class TrickController extends AbstractController
             'Le trick a bien été supprimée'
         );
         return $this->redirectToRoute('app_home',[],Response::HTTP_SEE_OTHER);
+    }
+
+    /**
+     * @param Images $images
+     * @param Int $idTrick
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @return Response
+     * @Route("/delete/{idTrick}/{id}", name="trick_delete_image_show", methods={"DELETE", "GET", "POST"})
+     */
+    public function deleteImageShow(Images $images,Int $idTrick, Request $request,
+                                EntityManagerInterface $entityManager):
+    Response
+    {
+        // if ($this->isCsrfTokenValid('trick_delete_image'.$images->getId(), $request->request->get('_token'))) {
+        $entityManager->remove($images);
+        $entityManager->flush();
+        $this->addFlash(
+            'success',
+            'L\'image a bien été supprimée'
+        );
+        return $this->redirectToRoute('trick_show',['id'=> $idTrick],Response::HTTP_SEE_OTHER);
     }
 
     /**

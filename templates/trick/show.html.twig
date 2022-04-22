@@ -3,24 +3,43 @@
 {% block title %}Trick{% endblock %}
 
 {% block body %}
-    {% if images is not empty %}
+<div class="container-fluid">
+{% if images is not empty %}
         <div class="row d-flex flex-column justify-content-center align-items-center">
             <img src="{{ asset('uploads/' ~ trick.images.0.name) }}" class="img-fluid"  alt="">
+            {% if app.user %}
+                {% if (app.user.roles.0 == "ROLE_ADMIN") or (app.user.id == trick.user.id) %}
+                    <div class="btn-group">
+                        <a href= "{{ path('trick_delete_image_show', {idTrick: trick.id , id: images.0.id}) }}"
+                           data-delete data-token ="{{ csrf_token('delete' ~ images.0.id) }}"
+                           onclick="return confirm('Etes-vous sure de vouloir supprimer cette image?')"
+                           class="btn btn-danger">Supprimer
+                        </a>
+                        <a href="{{ path('trick_edit', {'id': trick.id}) }}" id="edit"
+                           class="btn btn-warning">Modifier</a>
+                    </div>
+                {% endif %}
+            {% endif %}
         </div>
-    {% endif %}
+    {% else %}
+        <img class="card-img-top" src=" {{ 'assets/snowboarding.jpg' }}" alt="..." />
+
+{% endif %}
 <div class="container-fluid">
     {% for image in trick.images %}
         <div class="d-inline-block mt-3" >
             <img class="card-img-top mt-2" src=" {{ asset('/uploads/' ~ image.name) }}" alt="Image" height="150vw" />
+
             <a href= "{{ path('trick_delete_image', {idTrick: trick.id , id: image.id}) }}"
                data-delete data-token ="{{ csrf_token('delete' ~ image.id) }}"
-               onclick="return confirm('are you sure?')"
+               onclick="return confirm('Etes vous sur de vouloir supprimer cette image?')"
                class="btn btn-danger" >Supprimer
             </a>
             <a href="{{ path('trick_edit', {'id': trick.id}) }}"
                class="btn btn-warning">Modifier</a>
         </div>
     {% endfor %}
+</div>
     {% for video in trick.videos %}
             <iframe class="trick-media" id="{{ loop.index + trick.images|length }}"
                     src="{{ video.name }}" width="250vw" frameborder="0"
@@ -29,7 +48,7 @@
             </iframe>
         <a href= "{{ path('trick_delete_video', {video_id: video.id}) }}"
            data-delete data-token ="{{ csrf_token('delete' ~ video.id) }}"
-           onclick="return confirm('are you sure?')"
+           onclick="return confirm('Etes vous sur de vouloir supprimer cette vidéo?')"
            class="btn btn-danger">Supprimer
         </a>
         <a href="{{ path('trick_edit', {'id': trick.id}) }}" class="btn btn-warning">Modifier</a>
@@ -60,24 +79,58 @@
         {% if app.user %}
             {{ include('trick/_form_message.html.twig', {'button_label': 'Laisser un commentaire'}) }}
         {% endif %}
-        <div class="flex-grow-0 py-3 px-4 border-top">
-            <div class="position-relative">
-                {% for message in messages %}
-                    <div class="chat-message-right pb-4">
-                        <div>
-                            <img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="rounded-circle mr-1" alt="Chris Wood" width="40" height="40">
-                            <div class="text-muted small text-nowrap mt-2">{{ message.0.createdAt|date ('m-d-Y H:i:s') }}</div>
-                        </div>
-                        <div class="flex-shrink-1 bg-light rounded py-2 px-3 mr-3">
-                            <div class="font-weight-bold mb-1">You</div>
-                            <p>{{message.content}}</p>
+            <div class="flex-grow-0 py-3 px-4 border-top">
+                <div class="position-relative">
+                    {% for message in messages %}
+                    <div class="wrapper">
+                        <div class="chat-message-right pb-4">
+                            <div>
+                                <img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="rounded-circle mr-1" alt="Chris Wood" width="40" height="40">
+                                <div class="text-muted small text-nowrap mt-2" >{{ message.0.createdAt|date ('m-d-Y H:i:s') }} </div>
+                            </div>
+                            <div class="flex-shrink-1 bg-light rounded py-2 px-3 mr-3" data-message-id="{{ loop.index0 }}">
+                                <div class="font-weight-bold mb-1">You</div>
+                                <p>{{message.content}}</p>
+                            </div>
+                            <a href= "{{ path('message_delete',{idTrick:trick.id, id: message.id}) }}"
+                               data-delete data-token ="{{ csrf_token('delete' ~ message.id) }}"
+                               onclick="return confirm('Etes vous sure?')"
+                               class="btn btn-danger">Supprimer
+                            </a>
                         </div>
                     </div>
-                {% endfor %}
+                    {% endfor %}
+                    {% if isPaginated %}
+                    <div class="text-center m-3">
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination">
+                                {% if (page) != (1) %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="{{ path('app_home',{page : page - 1, nbre: nbre})}}">
+                                            Précédent
+                                        </a>
+                                    </li>
+                                {% endif %}
+                                {% for i in range(1, nbrePage) %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="{{ path('app_home',{page : i, nbre: nbre})}}">{{ i }}</a>
+                                    </li>
+                                {% endfor%}
+                                {% if (page) != (nbrePage) %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="{{ path('app_home',{page : page + 1, nbre: nbre})}}">
+                                            Suivant
+                                        </a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </nav>
+                        {% endif %}
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
     <div class="text-center m-3"><a href="{{ path('trick_index') }}">retour à la liste</a></div>
 
 {% endblock %}

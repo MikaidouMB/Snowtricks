@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\MessageRepository;
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=MessageRepository::class)
@@ -19,22 +20,26 @@ class Message
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups ("message:read")
      */
     private $id;
 
     /**
      * @ORM\Column(type="text")
+     * @Groups ("message:read")
      */
     private ?string $content;
 
     /**
      * @ORM\Column(type="datetime_immutable")
+     * @Groups ("message:read")
      */
     private DateTimeImmutable $createdAt;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="messages")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups ("message:read")
      */
     private ?User $user;
 
