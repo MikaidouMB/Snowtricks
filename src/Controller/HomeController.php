@@ -6,8 +6,6 @@ use App\Entity\Message;
 use App\Entity\Trick;
 use App\Form\MessageType;
 use App\Repository\ImageRepository;
-use App\Repository\MessageRepository;
-use App\Repository\TrickRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -26,6 +24,7 @@ class HomeController extends AbstractController
         $tricks = $repository->findBy( [],[],$nbre,($page -1) * $nbre);
         $nbTricks = $repository->count([]);
         $nbrePage = ceil($nbTricks / $nbre);
+
         return $this->render('index.html.twig',[
             'tricks' => $tricks,
             'isPaginated' => true,
@@ -36,37 +35,36 @@ class HomeController extends AbstractController
     }
 
     /**
-     * @Route("/trick-{id}/{page?1}/{nbre?5}", name="trick_show", methods={"GET","POST"})
+     * @Route("/trick-{id}/{page?1}/{nbre?10}", name="trick_show", methods={"GET","POST"})
      * @param Trick $trick
-     * @param \App\Repository\MessageRepository $messageRepository
      * @param \App\Repository\ImageRepository $imageRepository
      * @param Request $request
      * @param EntityManagerInterface $entityManager
+     * @param ManagerRegistry $doctrine
+     * @param $page
+     * @param $nbre
      * @return Response
      */
     public function show(Trick $trick,
-                         MessageRepository $messageRepository,
                          ImageRepository  $imageRepository,
                          Request $request,
                          EntityManagerInterface $entityManager,
                          ManagerRegistry $doctrine,
-                         $page, $nbre
-    ): Response
+                         $page, $nbre): Response
     {
         $message = new Message();
         $message->setUser($trick->getUser());
         $message->setTrick($trick);
 
-        //$repository = $doctrine->getRepository(Message::class)->findMessageByTrick($trick);
-        $messagesPaginatedByTrick = $doctrine->getRepository(Message::class)->findBy( [],[],$nbre,($page -1) * $nbre);
+        $messagesPaginatedByTrick = $doctrine->getRepository(Message::class);
+        $messages = $messagesPaginatedByTrick->findBy( ['trick'=> $trick->getId()],['createdAt' => 'DESC'],10,($page -1) * $nbre);
 
-        foreach ($messagesPaginatedByTrick as $message){
-            $nbMessages = $message->count([]);
-        }
+        $allMessagesByFigure = $messagesPaginatedByTrick->findBy(['trick'=> $trick->getId()]);
+        $nbMessages = count($allMessagesByFigure);
         $nbrePage = ceil($nbMessages / $nbre);
 
-
         $form = $this->createForm(MessageType::class, $message)->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($message);
             $entityManager->flush();
@@ -74,7 +72,7 @@ class HomeController extends AbstractController
             return $this->redirectToRoute("trick_show", ["id"=>$trick->getId()]);
         }
         return $this->render('trick/show.html.twig', [
-            'messages'=>$messagesPaginatedByTrick,
+            'messages'=>$messages,
             'images'=> $imageRepository->findImagesByTrick($trick),
             'trick' => $trick,
             'isPaginated' => true,

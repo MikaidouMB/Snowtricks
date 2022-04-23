@@ -21,7 +21,8 @@ class ImageRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return Images[] Returns an array of Images objects
+     * @param \App\Entity\Trick $trick
+     * @return array|null Returns an array of Images objects
      */
 
     public function findImagesByTrick(Trick $trick): ?array

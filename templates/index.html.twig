@@ -33,12 +33,11 @@
             </div>
         </section>
     </div>
-        <div class="container">
         <section id="sec-2" style="border: #0a53be 2px solid">
-          {% for trick in tricks %}
+            <div class="text-center" style="margin-left: 150px; margin-right: 150px">
+            {% for trick in tricks %}
               {% set runtimeConfig = {"thumbnail": {"size": [50, 50] }} %}
               <div class="d-inline-block mt-3" >
-              <div class="text-center">
                   <h5 class="fw-bolder"></h5>
                   {% if trick.images|length >= 1%}
                       {% for image in trick.images %}
@@ -62,10 +61,9 @@
                           </a>
                       {% endif %}
                   {% endif %}
-
               </div>
-          </div>
-    {% endfor %}
+            {% endfor %}
+            </div>
             {% if isPaginated %}
             <div class="text-center m-3">
             <nav aria-label="Page navigation example">

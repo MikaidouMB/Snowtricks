@@ -19,39 +19,6 @@ class MessageRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Message::class);
     }
-
-    public function findMessageByTrick(Trick $trick): ?array
-    {
-        return $this->createQueryBuilder('m')
-            ->addSelect('m.content')
-            ->addSelect('m.id')
-            ->join('m.trick','t')
-            ->orderBy('m.createdAt','DESC')
-            ->andWhere('t.id=' . $trick->getId())
-            ->setMaxResults(5)
-            ->getQuery()
-            ->getResult()
-            ;
-    }
-
-     /**
-      * @return Message[] Returns an array of Message objects
-      */
-    public function findRecentsMessages($trick): array
-    {
-        return $this->createQueryBuilder('m')
-            ->addSelect('m.content')
-            ->addSelect('m.id')
-            ->join('m.trick','t')
-            ->orderBy('m.createdAt','DESC')
-            ->andWhere('t.id=' . $trick->getId())
-            ->expr()
-            ->setMaxResults(5)
-            ->getQuery()
-            ->getResult()
-            ;
-    }
-
     /*
     public function findOneBySomeField($value): ?Message
     {
