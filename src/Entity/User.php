@@ -25,8 +25,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->registeredAt = new DateTimeImmutable('now');
         $this->roles = ['ROLE_USER'];
         $this->accountMustBeVerifiedBefore = (new DateTimeImmutable('now'))->add(new \DateInterval("P1D"));
-        //$this->tricks = new ArrayCollection();
-        //$this->messages = new ArrayCollection();
 
     }
     /**
@@ -112,6 +110,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private ?string $photo;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $username;
 
     public function getId(): ?int
     {
@@ -383,6 +386,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPhoto(?string $photo): self
     {
         $this->photo = $photo;
+
+        return $this;
+    }
+
+    public function setUsername(string $username): self
+    {
+        $this->username = $username;
 
         return $this;
     }
