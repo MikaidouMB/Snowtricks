@@ -26,29 +26,32 @@
     <div class="container-fluid">
         <section id="sec-1" >
             <div class="full-screen-width">
-                <img class="img-fluid" src="{{ asset('assets/877546.jpg') }}"  alt="">
+                <img class="img-fluid" src="{{ asset('assets/877546.jpg')| imagine_filter('welcome6') }}"  alt="">
                 <a href="#sec-2">
                     <div class="scroll-down"></div>
                 </a>
             </div>
         </section>
     </div>
-        <section id="sec-2" style="border: #0a53be 2px solid">
-            <div class="text-center" style="margin-left: 150px; margin-right: 150px">
+        <section id="sec-2" >
+            <div class="text-center" style="margin-left: 260px;margin-right:260px">
             {% for trick in tricks %}
-              {% set runtimeConfig = {"thumbnail": {"size": [50, 50] }} %}
               <div class="d-inline-block mt-3" >
                   <h5 class="fw-bolder"></h5>
                   {% if trick.images|length >= 1%}
                       {% for image in trick.images %}
+
                           {% if loop.index0 < 1 %}
-                              <img class="card-img-top mt-2" src=" {{ asset('uploads/' ~ image.name) }}" alt="..." height="150vw"/>
+                              <img class="gallery-index" src=" {{ asset('uploads/' ~ image.name) | imagine_filter('imgs') }}" style="margin: 10px"  alt="..."/>
                           {% endif %}
                       {% endfor %}
                   {% else %}
                       <img class="card-img-top" src=" {{ 'assets/snowboarding.jpg' }}" alt="..." />
                   {% endif %}
-                  <a href="{{ path('trick_show', {'id': trick.id}) }}">{{ trick.nameFigure }}</a>
+                  <br/>
+                  <span>
+                      <a href="{{ path('trick_show', {'id': trick.id}) }}">{{ trick.nameFigure }}</a>
+                  </span>
                   {% if app.user %}
                       {% if (app.user.roles.0 == "ROLE_ADMIN") or (app.user.id == trick.user.id) %}
                           <a href="{{ path('trick_edit', {'id': trick.id}) }}">
@@ -90,11 +93,9 @@
                 </ul>
             </nav>
             {% endif %}
+
             </div>
         </section>
-            <a href="#sec-2">
-                <div class="scroll-up"></div>
-            </a>
         </div>
     <a href="#" class="top">&#8593;</a>
 

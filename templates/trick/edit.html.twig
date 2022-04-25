@@ -19,16 +19,23 @@
             <strong>{{ form_row(form.images) }}</strong>
             </div>
             {% for image in trick.images %}
-                <img id="images" class="mt-3" src=" {{ asset('/uploads/' ~ image.name) }}" alt="Image" height="150vw" />
+            <div class="d-inline-block mt-3" >
+            <img class="mt-3" src=" {{ asset('/uploads/' ~ image.name)| imagine_filter('imgs') }}" alt="Image" height="150vw" />
                 {% for image in form.images %}
                     {{ include("trick/_image.html.twig", {form: image}) }}
                 {% endfor %}
-                <a href= "{{ path('trick_delete_image', {idTrick: trick.id , id: image.id}) }}"
-                   data-delete data-token ="{{ csrf_token('delete' ~ image.id) }}"
-                   onclick="return confirm('Etes vous sure?')"
-                   class="btn btn-danger" >Supprimer
-                </a>
+                <br><span>
+                    <div class="text-center mt-2">
+                        <a href= "{{ path('trick_delete_image', {idTrick: trick.id , id: image.id}) }}"
+                           data-delete data-token ="{{ csrf_token('delete' ~ image.id) }}"
+                           onclick="return confirm('Etes vous sure?')"
+                           class="btn btn-danger" >Supprimer
+                        </a>
+                    </div>
+                </span>
+            </div>
             {% endfor %}
+
             <div class="mt-4">
             <strong>{{ form_row(form.categories) }}</strong>
             </div>

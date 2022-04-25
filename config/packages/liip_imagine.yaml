@@ -1,10 +1,8 @@
 liip_imagine:
-    resolvers:
+    loaders:
         default:
-            web_path: ~
-
+            filesystem:
     filter_sets:
-        cache: ~
 
         # the name of the "filter set"
         my_thumb:
@@ -17,8 +15,13 @@ liip_imagine:
 
                 # create a thumbnail: set size to 120x90 and use the "outbound" mode
                 # to crop the image when the size ratio of the input differs
-                thumbnail: { size: [120, 90], mode: outbound }
-
+                thumbnail: { size: [400, 400], mode: outbound }
+        imgs:
+            filters:
+                resize: { size: [ 250, 160 ] }
+        welcome6:
+            filters:
+                resize: {size: [2000, 900]}
                 # create a 2px black border: center the thumbnail on a black background
                 # 4px larger to create a 2px border around the final image
-                background: { size: [124, 94], position: center, color: '#000000' }
+                #background: { size: [124, 94], position: center, color: '#000000' }

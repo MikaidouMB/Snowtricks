@@ -6,7 +6,7 @@
 <div class="container-fluid">
 {% if images is not empty %}
         <div class="row d-flex flex-column justify-content-center align-items-center">
-            <img src="{{ asset('uploads/' ~ trick.images.0.name) }}" class="img-fluid"  alt="">
+            <img src="{{ asset('uploads/' ~ trick.images.0.name)| imagine_filter('welcome6') }}" class="img-fluid"  alt="">
             {% if app.user %}
                 {% if (app.user.roles.0 == "ROLE_ADMIN") or (app.user.id == trick.user.id) %}
                     <div class="btn-group">
@@ -26,36 +26,45 @@
 
 {% endif %}
 </div>
-    <div class = "text-center">
+    <div class = "text-center mb-10">
     {% for image in trick.images %}
         <div class="d-inline-block mt-3" >
-            <img class="card-img-top mt-2" src=" {{ asset('/uploads/' ~ image.name) }}" alt="Image" height="180vw" />
-            <a href= "{{ path('trick_delete_image', {idTrick: trick.id , id: image.id}) }}"
-               data-delete data-token ="{{ csrf_token('delete' ~ image.id) }}"
-               onclick="return confirm('Etes vous sur de vouloir supprimer cette image?')"
-               class="btn btn-danger" >Supprimer
+            <img class="gallery-index" src=" {{ asset('/uploads/' ~ image.name)| imagine_filter('imgs') }}" style="margin:10px" alt="Image" />
+            <br/>
+            <span>
+                <a href= "{{ path('trick_delete_image', {idTrick: trick.id , id: image.id}) }}"
+                   data-delete data-token ="{{ csrf_token('delete' ~ image.id) }}"
+                   onclick="return confirm('Etes vous sur de vouloir supprimer cette image?')"
+                   class="btn btn-danger" >Supprimer
             </a>
             <a href="{{ path('trick_edit', {'id': trick.id}) }}"
                class="btn btn-warning">Modifier</a>
+            </span>
         </div>
+
     {% endfor %}
         {% for video in trick.videos %}
-            <iframe class="trick-media" id="{{ loop.index + trick.images|length }}"
+        <div class="d-inline-block" >
+        <iframe class="trick-media"style="margin-top: 4px;margin-right: 10px;margin-left: 10px" id="{{ loop.index + trick.images|length }}"
                     src="{{ video.name }}" width="250vw" frameborder="0"
                     allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                     allowfullscreen>
             </iframe>
-            <a href= "{{ path('trick_delete_video', {video_id: video.id}) }}"
-               data-delete data-token ="{{ csrf_token('delete' ~ video.id) }}"
-               onclick="return confirm('Etes vous sur de vouloir supprimer cette vidéo?')"
-               class="btn btn-danger">Supprimer
-            </a>
+            <br/>
+            <span>
+                <a href= "{{ path('trick_delete_video', {video_id: video.id}) }}"
+                   data-delete data-token ="{{ csrf_token('delete' ~ video.id) }}"
+                   onclick="return confirm('Etes vous sur de vouloir supprimer cette vidéo?')"
+                   class="btn btn-danger">Supprimer
+                </a>
             <a href="{{ path('trick_edit', {'id': trick.id}) }}" class="btn btn-warning">Modifier</a>
+            </span>
+        </div>
         {% endfor %}
 </div>
 
 
-    <div class="centered">
+    <div class="centered mt-5">
                 {{ trick.nameFigure }}
             </div>
     <div class="container">
@@ -135,7 +144,7 @@
             </div>
         {% endif %}
         </div>
-    </div>
+
     <div class="text-center m-3"><a href="{{ path('trick_index') }}">retour à la liste</a></div>
 
 {% endblock %}
