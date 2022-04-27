@@ -26,6 +26,8 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\String\AbstractUnicodeString;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 /**
  * @Route("/trick")
@@ -34,10 +36,13 @@ class TrickController extends AbstractController
 {
     private ManagerRegistry $doctrine;
     private VideosRepository  $videosRepository;
+    private SluggerInterface $slugger;
 
-    public function __construct(ManagerRegistry $doctrine, VideosRepository $videosRepository) {
+    public function __construct(ManagerRegistry $doctrine, VideosRepository $videosRepository, SluggerInterface $slugger) {
         $this->doctrine = $doctrine;
         $this->videosRepository =$videosRepository;
+        $this->slugger = $slugger;
+
     }
 
     /**
@@ -53,7 +58,7 @@ class TrickController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="trick_new", methods={"GET", "POST"})
+     * @Route("/new", name="trick_new", methods={"GET", "POST"}, priority=1)
      * @param Request $request
      * @param EntityManagerInterface $entityManager
      * @return Response
@@ -78,9 +83,14 @@ class TrickController extends AbstractController
             }
             $video = new Videos();
             $trick->setUser($this->getUser());
+            $slug = $request->request->filter('trick')['nameFigure'];
+            $trick->setSlug($this->slugger->slug($slug));
             $entityManager->persist($trick);
             $entityManager->flush();
-
+            $this->addFlash(
+                'success',
+                'La figure a bien été crée'
+            );
             return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -91,18 +101,18 @@ class TrickController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="trick_edit", methods={"GET", "POST", "DELETE"})
+     * @Route("/{slug}/edit", name="trick_edit", methods={"GET", "POST", "DELETE"},requirements={"slug"="[a-zA-Z1-9\-_\/]+"})
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \App\Entity\Trick $trick
      * @param \Doctrine\ORM\EntityManagerInterface $entityManager
      * @param VideosRepository $videosRepository
+     * @param string $slug
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function edit(Request $request, Trick $trick,
-                         EntityManagerInterface $entityManager,VideosRepository $videosRepository
+                         EntityManagerInterface $entityManager,VideosRepository $videosRepository,string $slug
     ): Response
     {
-
         $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
 
@@ -125,10 +135,12 @@ class TrickController extends AbstractController
             $trick->setUser($this->getUser());
             $entityManager->persist($trick);
             $entityManager->flush();
-
+            $this->addFlash(
+                'success',
+                'Le trick a bien été modifiée'
+            );
             return $this->redirectToRoute('app_home',[],Response::HTTP_SEE_OTHER);
         }
-
         return $this->renderForm('trick/edit.html.twig', [
             'trick' => $trick,
             'video' =>$videosRepository->findByVideosTrick($trick),
@@ -140,11 +152,12 @@ class TrickController extends AbstractController
      * @param Trick $trick
      * @param Request $request
      * @param EntityManagerInterface $entityManager
+     * @param $slug
      * @return Response
-     * @Route("/delete-trick/{id}", name="trick_delete",requirements={"name"=".+"}, methods={"DELETE", "GET", "POST"})
+     * @Route("/delete-trick/{slug}", name="trick_delete",requirements={"slug"=".+"}, methods={"DELETE", "GET", "POST"})
      */
     public function deleteTrick( Trick $trick, Request $request,
-                                EntityManagerInterface $entityManager):Response
+                                EntityManagerInterface $entityManager,$slug):Response
     {
         // if ($this->isCsrfTokenValid('trick_delete_image'.$images->getId(), $request->request->get('_token'))) {
         //$idTrick = $trick->getId();
@@ -159,13 +172,12 @@ class TrickController extends AbstractController
 
     /**
      * @param Images $images
-     * @param Int $idTrick
      * @param Request $request
      * @param EntityManagerInterface $entityManager
      * @return Response
-     * @Route("/delete/{idTrick}/{id}", name="trick_delete_image_show", methods={"DELETE", "GET", "POST"})
+     * @Route("/delete/{slug}/{id}", name="trick_delete_image_show", methods={"DELETE", "GET", "POST"})
      */
-    public function deleteImageShow(Images $images,Int $idTrick, Request $request,
+    public function deleteImageShow(Images $images,String $slug, Request $request,
                                 EntityManagerInterface $entityManager):
     Response
     {
@@ -176,7 +188,7 @@ class TrickController extends AbstractController
             'success',
             'L\'image a bien été supprimée'
         );
-        return $this->redirectToRoute('trick_show',['id'=> $idTrick],Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('trick_show',['slug'=> $slug],Response::HTTP_SEE_OTHER);
     }
 
     /**
@@ -185,7 +197,7 @@ class TrickController extends AbstractController
      * @param Request $request
      * @param EntityManagerInterface $entityManager
      * @return Response
-     * @Route("/delete/{idTrick}/{id}", name="trick_delete_image", methods={"DELETE", "GET", "POST"})
+     * @Route("/delete/{slug}/{id}", name="trick_delete_image", methods={"DELETE", "GET", "POST"})
      */
     public function deleteImage(Images $images,Int $idTrick, Request $request,
                                 EntityManagerInterface $entityManager):Response

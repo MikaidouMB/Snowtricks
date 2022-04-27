@@ -13,12 +13,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+
 class HomeController extends AbstractController
 {
     /**
      * @Route("/home/{page?1}/{nbre?15}", name="app_home")
      */
-    public function index(ManagerRegistry $doctrine,$page,$nbre): Response
+    public function index(ManagerRegistry $doctrine,$page,$nbre,Request $request): Response
     {
         $repository = $doctrine->getRepository(Trick::class);
         $tricks = $repository->findBy( [],[],$nbre,($page -1) * $nbre);
@@ -35,7 +36,7 @@ class HomeController extends AbstractController
     }
 
     /**
-     * @Route("/trick-{id}/{page?1}/{nbre?10}", name="trick_show", methods={"GET","POST"})
+     * @Route("trick/{slug}/{page?1}/{nbre?10}", name="trick_show", methods={"GET","POST"},requirements={"page"="\d+"})
      * @param Trick $trick
      * @param \App\Repository\ImageRepository $imageRepository
      * @param Request $request
@@ -43,6 +44,7 @@ class HomeController extends AbstractController
      * @param ManagerRegistry $doctrine
      * @param $page
      * @param $nbre
+     * @param $slug
      * @return Response
      */
     public function show(Trick $trick,
@@ -50,8 +52,9 @@ class HomeController extends AbstractController
                          Request $request,
                          EntityManagerInterface $entityManager,
                          ManagerRegistry $doctrine,
-                         $page, $nbre): Response
+                         $page, $nbre,$slug): Response
     {
+        //dd($request,$page, $nbre, $slug);
         $message = new Message();
         $message->setUser($trick->getUser());
         $message->setTrick($trick);
@@ -81,18 +84,5 @@ class HomeController extends AbstractController
             'nbre' => $nbre,
             'form' => $form->createView()
         ]);
-    }
-
-    /**
-     * @Route("/{id}", name="trick_delete", methods={"POST"})
-     */
-    public function delete(Request $request, Trick $trick, EntityManagerInterface $entityManager): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$trick->getId(), $request->request->get('_token'))) {
-            $entityManager->remove($trick);
-            $entityManager->flush();
-        }
-
-        return $this->redirectToRoute('trick_index', [], Response::HTTP_SEE_OTHER);
     }
 }

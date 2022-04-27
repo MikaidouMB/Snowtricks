@@ -25,13 +25,7 @@
         </a>
     </nav>
     <div class="container">
-        {% for message in app.flashes('success') %}
-        <div class="message-alert">
-            <div class="alert alert-success">
-                {{ message }}
-            </div>
-        </div>
-        {% endfor %}
+
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
     </div>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -47,7 +41,6 @@
                 <li class="nav-item"><a class="nav-link" href="{{ path('app_register')}}">Inscription</a></li>
             {% else %}
                 <li class="nav-item"><a class="nav-link" href="{{ path('trick_new') }}">Créer Trick</a></li>
-
                 <li class="nav-item"><a class="nav-link" href="{{ path('app_logout') }}">Déconnexion</a></li>
             {% endif %}
         </ul>

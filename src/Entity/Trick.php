@@ -8,12 +8,15 @@ use Doctrine\Common\Collections\Collection;
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Table;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 
 /**
  * @ORM\Entity(repositoryClass=TrickRepository::class)
  * @Table(name="tricks")
+ * @UniqueEntity(fields={"nameFigure"}, message="Ce nom de figure existe déjà, veuillez en choisir un autre")
+
  */
 class Trick
 {
@@ -33,7 +36,7 @@ class Trick
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, unique=true)
      */
     private ?string $nameFigure;
 

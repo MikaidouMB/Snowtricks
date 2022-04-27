@@ -17,6 +17,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @Table(name="users")
  * @UniqueEntity(fields={"email"}, message="Impossible de créer un compte utilisateur avec cet email")
+ * @UniqueEntity(fields={"username"}, message="Impossible de créer un compte utilisateur avec ce nom d'utilisateur")
+
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -112,7 +114,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $photo;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, unique=true)
      */
     private $username;
 

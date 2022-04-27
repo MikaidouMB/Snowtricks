@@ -10,12 +10,12 @@
             {% if app.user %}
                 {% if (app.user.roles.0 == "ROLE_ADMIN") or (app.user.id == trick.user.id) %}
                     <div class="btn-group">
-                        <a href= "{{ path('trick_delete_image_show', {idTrick: trick.id , id: images.0.id}) }}"
+                        <a href= "{{ path('trick_delete_image_show', {'slug': trick.slug | slug, id: images.0.id}) }}"
                            data-delete data-token ="{{ csrf_token('delete' ~ images.0.id) }}"
                            onclick="return confirm('Etes-vous sure de vouloir supprimer cette image?')"
                            class="btn btn-danger">Supprimer
                         </a>
-                        <a href="{{ path('trick_edit', {'id': trick.id}) }}" id="edit"
+                        <a href="{{ path('trick_edit', {'slug': trick.slug}) }}" id="edit"
                            class="btn btn-warning">Modifier</a>
                     </div>
                 {% endif %}
@@ -32,12 +32,12 @@
             <img class="gallery-index" src=" {{ asset('/uploads/' ~ image.name)| imagine_filter('imgs') }}" style="margin:10px" alt="Image" />
             <br/>
             <span>
-                <a href= "{{ path('trick_delete_image', {idTrick: trick.id , id: image.id}) }}"
+                <a href= "{{ path('trick_delete_image', {'slug': trick.slug|slug , id: image.id}) }}"
                    data-delete data-token ="{{ csrf_token('delete' ~ image.id) }}"
                    onclick="return confirm('Etes vous sur de vouloir supprimer cette image?')"
                    class="btn btn-danger" >Supprimer
             </a>
-            <a href="{{ path('trick_edit', {'id': trick.id}) }}"
+            <a href="{{ path('trick_edit', {'slug': trick.slug|slug}) }}"
                class="btn btn-warning">Modifier</a>
             </span>
         </div>
@@ -57,7 +57,7 @@
                    onclick="return confirm('Etes vous sur de vouloir supprimer cette vidéo?')"
                    class="btn btn-danger">Supprimer
                 </a>
-            <a href="{{ path('trick_edit', {'id': trick.id}) }}" class="btn btn-warning">Modifier</a>
+            <a href="{{ path('trick_edit', {'slug': trick.slug|slug}) }}" class="btn btn-warning">Modifier</a>
             </span>
         </div>
         {% endfor %}
@@ -103,7 +103,7 @@
                                 <div class="font-weight-bold mb-1">You</div>
                                 <p>{{message.content}}</p>
                             </div>
-                            <a href= "{{ path('message_delete',{idTrick:trick.id, id: message.id}) }}"
+                            <a href= "{{ path('message_delete',{'slug': trick.slug|slug, id: message.id}) }}"
                                data-delete data-token ="{{ csrf_token('delete' ~ message.id) }}"
                                onclick="return confirm('Etes vous sure?')"
                                class="btn btn-danger">Supprimer
@@ -117,7 +117,7 @@
                             <ul class="pagination">
                                 {% if (page) != (1) %}
                                     <li class="page-item">
-                                        <a class="page-link" href="{{ path('trick_show',{'id': trick.id, page : page - 1, nbre: nbre})}}">
+                                        <a class="page-link" href="{{ path('trick_show',{'slug': trick.slug|slug, page : page - 1, nbre: nbre})}}">
                                             Précédent
                                         </a>
                                     </li>
@@ -125,13 +125,13 @@
                                 {% if trick.messages|length > 10 %}
                                     {% for i in range(1, nbrePage) %}
                                         <li class="page-item">
-                                            <a class="page-link" href="{{ path('trick_show', {'id': trick.id, page : i, nbre: nbre})}}">{{ i }}</a>
+                                            <a class="page-link" href="{{ path('trick_show', {'slug': trick.slug|slug, page : i, nbre: nbre})}}">{{ i }}</a>
                                         </li>
                                     {% endfor%}
                                 {% endif %}
                                 {% if (page) != (nbrePage) %}
                                     <li class="page-item">
-                                        <a class="page-link" href="{{ path('trick_show',{'id': trick.id, page : page + 1, nbre: nbre})}}">
+                                        <a class="page-link" href="{{ path('trick_show',{'slug': trick.slug|slug, page : page + 1, nbre: nbre})}}">
                                             Suivant
                                         </a>
                                     </li>

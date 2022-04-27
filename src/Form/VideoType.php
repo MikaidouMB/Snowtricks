@@ -21,7 +21,7 @@ class VideoType extends AbstractType
                  'constraints' => [
                      new Regex([
                          'pattern' => '#^((?:https?:)?\/\/)?(?:www\.)?((?:youtube\.com|youtu\.be|dai\.ly|dailymotion\.com|vimeo\.com|player\.vimeo\.com))(\/(?:[\w\-]+\?v=|embed\/|video\/|embed\/video\/)?)([\w\-]+)(\S+)?$#',
-                         'message' => 'You can only use youtube, dailymotion or vimeo video url',
+                         'message' => 'Vous ne pouvez inserer des urls issues des plateformes youtube, dailymotion ou vimeo',
                      ]),
                  ],
              ])
