@@ -41,7 +41,6 @@
                class="btn btn-warning">Modifier</a>
             </span>
         </div>
-
     {% endfor %}
         {% for video in trick.videos %}
         <div class="d-inline-block" >
@@ -62,8 +61,6 @@
         </div>
         {% endfor %}
 </div>
-
-
     <div class="centered mt-5">
                 {{ trick.nameFigure }}
             </div>
@@ -144,7 +141,7 @@
             </div>
         {% endif %}
         </div>
-
-    <div class="text-center m-3"><a href="{{ path('trick_index') }}">retour à la liste</a></div>
-
+    {% if is_granted('ROLE_ADMIN') %}
+        <div class="text-center m-3"><a href="{{ path('trick_index') }}">Retour à la liste </a></div>
+    {% endif %}
 {% endblock %}

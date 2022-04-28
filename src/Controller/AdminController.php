@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use App\Form\EditUserType;
+use App\Form\EditProfilUserType;
 use App\Repository\UserRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -50,7 +50,7 @@ class AdminController extends AbstractController
      * @Route("/user/modify/{id}",name="modify_user")
      */
     public function editUser(User $user, Request $request){
-        $form = $this->createForm(EditUserType::class, $user);
+        $form = $this->createForm(EditProfilUserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()){

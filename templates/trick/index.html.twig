@@ -18,12 +18,12 @@
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Name</th>
+                <th>Nom</th>
                 <th>Description</th>
-                <th>CreatedAt</th>
-                <th>PublishedAt</th>
-                {#<th>Category</th>  #}
-                <th>IsPublished</th>
+                <th>Créé le</th>
+                <th>Publiée le</th>
+                <th>Catégorie</th>
+                <th>Publiée?</th>
                 <th>Image</th>
                 <th>Videos</th>
                 <th>actions</th>
@@ -38,8 +38,8 @@
                 <td>{{ trick.description|slice(0, 40) }}</td>
                 <td>{{ trick.createdAt ? trick.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ trick.publishedAt ? trick.publishedAt|date('Y-m-d H:i:s') : '' }}</td>
-                {#  <td>{{ trick.categories.0.label}}</td>#}
-                <td>{{ trick.isPublished ? 'Yes' : 'No' }}</td>
+                <td>{{ trick.categories.0.label}}</td>
+                <td>{{ trick.isPublished ? 'Oui' : 'Non' }}</td>
                 <td> {% for image in trick.images %}
                      {{ image.name|slice(0, 10) }}<br>
                  {% endfor %}</td>
@@ -53,7 +53,7 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="10">no records found</td>
+                <td colspan="10">aucune figures trouvée</td>
             </tr>
         {% endfor %}
         </tbody>

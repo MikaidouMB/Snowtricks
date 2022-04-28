@@ -1,9 +1,17 @@
 {% block body %}
-<div class="container">
-          <div class="col-12 mb-4">
+<div class="container-fluid">
+          <div class="text-right mb-4">
               <div class="input-field col s12 m12 l12">
                   <input type="submit" name="" value="Enregistrer" class="btn btn-primary">
               </div>
           </div>
+          {# <div class="text-left">
+                <a href= "{{ path('trick_delete', {slug:trick.slug}) }}"
+                   data-delete data-token ="{{ csrf_token('trick_delete' ~ trick.slug|slug) }}"
+                   onclick="return confirm('Etes vous sur de vouloir supprimer cette figure?')"
+                   class="btn btn-danger" >Supprimer la figure
+                </a>
+            </div>
+          #}
       </div>
-    {% endblock %}
+{% endblock %}

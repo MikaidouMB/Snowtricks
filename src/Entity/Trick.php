@@ -27,6 +27,7 @@ class Trick
         $this->categories = new ArrayCollection();
         $this->images = new ArrayCollection();
         $this->videos = new ArrayCollection();
+        $this->messages = new ArrayCollection();
     }
     /**
      * @ORM\Id
@@ -48,7 +49,7 @@ class Trick
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private ?string $slug;
+    private ?string $slug = null;
 
     /**
      * @ORM\Column(type="datetime_immutable")

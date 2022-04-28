@@ -3,30 +3,17 @@
 namespace App\Controller;
 
 use App\Entity\Images;
-use App\Entity\Message;
 use App\Entity\Trick;
 use App\Entity\Videos;
-use App\Form\MessageType;
 use App\Form\TrickType;
-use App\Repository\ImageRepository;
-use App\Repository\MessageRepository;
 use App\Repository\TrickRepository;
 use App\Repository\VideosRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
-use PhpParser\Node\Expr\Cast\Object_;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
-use Symfony\Component\Serializer\Serializer;
-use Symfony\Component\Serializer\SerializerInterface;
-use Symfony\Component\String\AbstractUnicodeString;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
 /**
@@ -72,6 +59,7 @@ class TrickController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $images = $form->get('images')->getData();
             foreach ($images as $image){
+
                 $file = md5(uniqid()) . '.' . $image->guessExtension();
                 $image->move(
                     $this->getParameter('images_directory'),
