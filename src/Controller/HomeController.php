@@ -11,6 +11,8 @@ use App\Form\EditUserType;
 use App\Form\MessageType;
 use App\Form\UserType;
 use App\Repository\ImageRepository;
+use App\Repository\MessageRepository;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,10 +21,18 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
 
 
 class HomeController extends AbstractController
 {
+    private $security;
+
+    public function __construct(Security $security)
+    {
+        $this->security = $security;
+    }
+
     /**
      * @Route("/home/{page?1}/{nbre?15}", name="app_home",requirements={"page"="\d+"})
      */
@@ -49,6 +59,7 @@ class HomeController extends AbstractController
      * @param Request $request
      * @param EntityManagerInterface $entityManager
      * @param ManagerRegistry $doctrine
+     * @param UserRepository $userRepository
      * @param $page
      * @param $nbre
      * @param $slug
@@ -59,22 +70,31 @@ class HomeController extends AbstractController
                          Request $request,
                          EntityManagerInterface $entityManager,
                          ManagerRegistry $doctrine,
+                         UserRepository $userRepository,
+                         Security $security,
                          $page, $nbre,$slug): Response
     {
         $message = new Message();
-        $message->setUser($trick->getUser());
+        $message->setUser($this->getUser());
+
         $message->setTrick($trick);
+
+
 
         $messagesPaginatedByTrick = $doctrine->getRepository(Message::class);
         $messages = $messagesPaginatedByTrick->findBy( ['trick'=> $trick->getId()],['createdAt' => 'DESC'],10,($page -1) * $nbre);
-
         $allMessagesByFigure = $messagesPaginatedByTrick->findBy(['trick'=> $trick->getId()]);
         $nbMessages = count($allMessagesByFigure);
         $nbrePage = ceil($nbMessages / $nbre);
 
-        $form = $this->createForm(MessageType::class, $message)->handleRequest($request);
+        //Il faut récupérer les USERS.username = Message.author
+        //dump($userRepository->findUsersByMessage($message));
 
+        $form = $this->createForm(MessageType::class, $message)->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            //dd($message);
+
+            //$user = $this->getUser();
             $entityManager->persist($message);
             $entityManager->flush();
 
@@ -82,7 +102,9 @@ class HomeController extends AbstractController
         }
         return $this->render('trick/show.html.twig', [
             'messages'=>$messages,
+            'authors'=> $userRepository->findUsersByMessage($message),
             'images'=> $imageRepository->findImagesByTrick($trick),
+            //dd($imageRepository->findImagesByTrick($trick)),
             'trick' => $trick,
             'isPaginated' => true,
             'nbrePage' => (string)$nbrePage,

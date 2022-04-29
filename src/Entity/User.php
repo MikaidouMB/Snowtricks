@@ -22,6 +22,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
+
     public function __construct(){
         $this->isVerified = false;
         $this->registeredAt = new DateTimeImmutable('now');
@@ -29,8 +30,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->accountMustBeVerifiedBefore = (new DateTimeImmutable('now'))->add(new \DateInterval("P1D"));
         $this->tricks = new ArrayCollection();
         $this->messages = new ArrayCollection();
-
     }
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -120,7 +121,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private ?string $photo;
-
 
     public function getId(): ?int
     {

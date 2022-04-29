@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Message;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -36,6 +37,17 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->_em->flush();
     }
 
+    public function findUsersByMessage(Message $message)
+    {
+        return $this->createQueryBuilder('u')
+            ->Select('u.username','u.photo')
+            //->addSelect('u.photo')
+           //  ->join('u.message','m')
+            //->andWhere('u.username=' . $message->getAuthor())
+            ->getQuery()
+            ->getResult()
+            ;
+    }
     // /**
     //  * @return User[] Returns an array of User objects
     //  */
