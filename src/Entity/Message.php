@@ -14,10 +14,10 @@ class Message
 {
     public function __construct()
     {
-
         ($this->createdAt = new DateTimeImmutable('now'));
     }
-        /**
+
+    /**
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
@@ -49,6 +49,11 @@ class Message
      * @ORM\JoinColumn(nullable=false)
      */
     private ?Trick $trick;
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
 
     public function getContent(): ?string
     {

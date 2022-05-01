@@ -14,6 +14,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Csrf\CsrfToken;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
 /**
@@ -29,19 +31,6 @@ class TrickController extends AbstractController
         $this->doctrine = $doctrine;
         $this->videosRepository =$videosRepository;
         $this->slugger = $slugger;
-
-    }
-
-    /**
-     * @Route("/", name="trick_index", methods={"GET"})
-     * @param TrickRepository $trickRepository
-     * @return Response
-     */
-    public function index(TrickRepository $trickRepository): Response
-    {
-        return $this->render('trick/index.html.twig', [
-            'tricks' => $trickRepository->findAll(),
-        ]);
     }
 
     /**
@@ -89,7 +78,7 @@ class TrickController extends AbstractController
     }
 
     /**
-     * @Route("/{slug}/edit", name="trick_edit", methods={"GET", "POST", "DELETE"},requirements={"slug"="[a-zA-Z1-9\-_\/]+"})
+     * @Route("/{slug}/edit", name="trick_edit", methods={"GET", "POST", "DELETE"})
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \App\Entity\Trick $trick
      * @param \Doctrine\ORM\EntityManagerInterface $entityManager
@@ -141,35 +130,47 @@ class TrickController extends AbstractController
      * @param Request $request
      * @param EntityManagerInterface $entityManager
      * @param $slug
+     * @param CsrfTokenManagerInterface $csrfTokenManager
      * @return Response
      * @Route("/delete-trick/{slug}", name="trick_delete",requirements={"slug"=".+"}, methods={"DELETE", "GET", "POST"})
      */
     public function deleteTrick( Trick $trick, Request $request,
-                                EntityManagerInterface $entityManager,$slug):Response
+                                EntityManagerInterface $entityManager,
+                                 $slug,
+                                 CsrfTokenManagerInterface $csrfTokenManager):Response
     {
-        // if ($this->isCsrfTokenValid('trick_delete_image'.$images->getId(), $request->request->get('_token'))) {
-        //$idTrick = $trick->getId();
-        $entityManager->remove($trick);
-        $entityManager->flush();
-        $this->addFlash(
-            'success',
-            'Le trick a bien été supprimée'
-        );
-        return $this->redirectToRoute('app_home',[],Response::HTTP_SEE_OTHER);
-    }
+        dd($request->attributes->get('_route'));
+
+        $token = new CsrfToken('delete-trick', $request->query->get('_csrf_token'));
+        if (!$csrfTokenManager->isTokenValid($token)) {
+            throw $this->createAccessDeniedException('Token CSRF invalide');
+        }
+            $entityManager->remove($trick);
+            $entityManager->flush();
+            $this->addFlash(
+                'success',
+                'Le trick a bien été supprimée'
+            );
+            return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
+        }
 
     /**
      * @param Images $images
+     * @param String $slug
      * @param Request $request
      * @param EntityManagerInterface $entityManager
+     * @param \Symfony\Component\Security\Csrf\CsrfTokenManagerInterface $csrfTokenManager
      * @return Response
      * @Route("/delete/{slug}/{id}", name="trick_delete_image_show", methods={"DELETE", "GET", "POST"})
      */
     public function deleteImageShow(Images $images,String $slug, Request $request,
-                                EntityManagerInterface $entityManager):
-    Response
+                                EntityManagerInterface $entityManager,
+                                CsrfTokenManagerInterface $csrfTokenManager): Response
     {
-        // if ($this->isCsrfTokenValid('trick_delete_image'.$images->getId(), $request->request->get('_token'))) {
+        $token = new CsrfToken('delete-image', $request->query->get('_csrf_token'));
+        if (!$csrfTokenManager->isTokenValid($token)) {
+            throw $this->createAccessDeniedException('Token CSRF invalide');
+        }
         $entityManager->remove($images);
         $entityManager->flush();
         $this->addFlash(
@@ -181,44 +182,53 @@ class TrickController extends AbstractController
 
     /**
      * @param Images $images
-     * @param Int $idTrick
      * @param Request $request
      * @param EntityManagerInterface $entityManager
+     * @param $slug
+     * @param \Symfony\Component\Security\Csrf\CsrfTokenManagerInterface $csrfTokenManager
      * @return Response
-     * @Route("/delete/{slug}/{id}", name="trick_delete_image", methods={"DELETE", "GET", "POST"})
+     * @Route("/delete/edit/{slug}/{id}", name="trick_delete_image_edit", methods={"DELETE", "GET", "POST"})
      */
-    public function deleteImage(Images $images,Int $idTrick, Request $request,
-                                EntityManagerInterface $entityManager):Response
+    public function deleteImageEdit(Images $images, Request $request,
+                                EntityManagerInterface $entityManager,$slug,
+                                CsrfTokenManagerInterface $csrfTokenManager):Response
     {
-       // if ($this->isCsrfTokenValid('trick_delete_image'.$images->getId(), $request->request->get('_token'))) {
-            $entityManager->remove($images);
+        $token = new CsrfToken('delete-image-edit', $request->query->get('_csrf_token'));
+        if (!$csrfTokenManager->isTokenValid($token)) {
+            throw $this->createAccessDeniedException('Token CSRF invalide');
+        }
+        $entityManager->remove($images);
             $entityManager->flush();
         $this->addFlash(
             'success',
             'L\'image a bien été supprimée'
         );
-        return $this->redirectToRoute('trick_edit',['id'=> $idTrick],Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('trick_edit',['slug'=> $slug],Response::HTTP_SEE_OTHER);
     }
 
     /**
      * @param Videos|null $video_id
      * @param Request $request
      * @param EntityManagerInterface $entityManager
+     * @param $slug
+     * @param \Symfony\Component\Security\Csrf\CsrfTokenManagerInterface $csrfTokenManager
      * @return Response
-     * @Route("/delete/{video_id}", name="trick_delete_video", methods={"DELETE", "GET", "POST"})
+     * @Route("/delete/video/{slug}/{video_id}", name="trick_delete_video", methods={"DELETE", "GET", "POST"})
      */
     public function deleteVideo(Videos $video_id = null, Request $request,
-                                EntityManagerInterface $entityManager
-    ):Response
+                                EntityManagerInterface $entityManager,$slug,
+                                CsrfTokenManagerInterface $csrfTokenManager):Response
     {
-        $idTrick = $video_id->getTrick()->getId();
-        // if ($this->isCsrfTokenValid('trick_delete_image'.$images->getId(), $request->request->get('_token'))) {
+        $token = new CsrfToken('delete-video', $request->query->get('_csrf_token'));
+        if (!$csrfTokenManager->isTokenValid($token)) {
+            throw $this->createAccessDeniedException('Token CSRF invalide');
+        }
         $entityManager->remove($video_id);
         $entityManager->flush();
         $this->addFlash(
             'success',
             'La vidéo a bien été supprimée'
         );
-        return $this->redirectToRoute('trick_edit',['id'=> $idTrick],Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('trick_show',['slug'=> $slug],Response::HTTP_SEE_OTHER);
     }
 }

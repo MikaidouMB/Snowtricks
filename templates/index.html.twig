@@ -40,13 +40,12 @@
                   <h5 class="fw-bolder"></h5>
                   {% if trick.images|length >= 1%}
                       {% for image in trick.images %}
-
                           {% if loop.index0 < 1 %}
                               <img class="gallery-index" src=" {{ asset('uploads/' ~ image.name) | imagine_filter('imgs') }}" style="margin: 10px"  alt="..."/>
                           {% endif %}
                       {% endfor %}
                   {% else %}
-                      <img class="card-img-top" src=" {{ 'assets/snowboarding.jpg' }}" alt="..." />
+                      <img class="card-img-top" src=" {{ asset('assets/snowboarding.jpg') | imagine_filter('imgs') }}" alt="..." />
                   {% endif %}
                   <br/>
                   <span>
@@ -57,8 +56,7 @@
                           <a href="{{ path('trick_edit', {'slug': trick.slug|slug}) }}">
                               <i class="bi bi-pen left-icon-holder"></i>
                           </a>
-                          <a href= "{{ path('trick_delete', {'slug': trick.slug|slug}) }}"
-                             data-delete data-token ="{{ csrf_token('deleteTrick' ~ trick.slug|slug) }}"
+                          <a href= "{{ path('trick_delete', {'slug': trick.slug|slug, _csrf_token: csrf_token('delete-trick')}) }}"
                              onclick="return confirm('Etes vous sure?')"
                              class="bi bi-trash">
                           </a>
@@ -79,12 +77,18 @@
                         </li>
                     {% endif %}
                     {% for i in range(1, nbrePage) %}
-                        <li class="page-item">
+                    {% if page == i  %}
+                        <li class="page-item active">
                             <a class="page-link" href="{{ path('app_home',{page : i, nbre: nbre})}}">{{ i }}</a>
                         </li>
+                        {% else %}
+                            <li class="page-item">
+                                <a class="page-link" href="{{ path('app_home',{page : i, nbre: nbre})}}">{{ i }}</a>
+                            </li>
+                        {% endif %}
                     {% endfor%}
                     {% if (page) != (nbrePage) %}
-                        <li class="page-item">
+                        <li class="page-item " >
                             <a class="page-link" href="{{ path('app_home',{page : page + 1, nbre: nbre})}}">
                                 Suivant
                             </a>
@@ -93,7 +97,6 @@
                 </ul>
             </nav>
             {% endif %}
-
             </div>
         </section>
         </div>

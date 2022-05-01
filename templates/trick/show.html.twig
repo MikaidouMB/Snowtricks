@@ -4,42 +4,48 @@
 
 {% block body %}
 <div class="container-fluid">
-{% if images is not empty %}
-        <div class="row d-flex flex-column justify-content-center align-items-center">
+    <div class="row d-flex flex-column justify-content-center align-items-center">
+        {% if images is empty %}
+            <img class="card-img-top" src=" {{ asset('assets/snowboarding.jpg')| imagine_filter('welcome6') }}" alt="..." />
+            <div class="btn-group">
+                <a href="{{ path('trick_edit', {'slug': trick.slug}) }}" id="edit"
+                   class="btn btn-warning">Modifier</a>
+            </div>
+        {% else %}
             <img src="{{ asset('uploads/' ~ trick.images.0.name)| imagine_filter('welcome6') }}" class="img-fluid"  alt="">
             {% if app.user %}
-                {% if (app.user.roles.0 == "ROLE_ADMIN") or (app.user.id == trick.user.id) %}
-                    <div class="btn-group">
-                        <a href= "{{ path('trick_delete_image_show', {'slug': trick.slug | slug, id: images.0.id}) }}"
-                           data-delete data-token ="{{ csrf_token('delete' ~ images.0.id) }}"
-                           onclick="return confirm('Etes-vous sure de vouloir supprimer cette image?')"
-                           class="btn btn-danger">Supprimer
-                        </a>
-                        <a href="{{ path('trick_edit', {'slug': trick.slug}) }}" id="edit"
-                           class="btn btn-warning">Modifier</a>
-                    </div>
-                {% endif %}
+            {% if (app.user.roles.0 == "ROLE_ADMIN") or (app.user.id == trick.user.id) %}
+                <div class="btn-group">
+                    <a href="{{ path('trick_edit', {'slug': trick.slug}) }}" id="edit"
+                       class="btn btn-warning">Modifier</a>
+                    <a href= "{{ path('trick_delete_image_show', {'slug': trick.slug | slug, id: images.0.id, _csrf_token: csrf_token('delete-image')}) }}"
+                       onclick="return confirm('Etes-vous sure de vouloir supprimer cette image?')"
+                       class="btn btn-danger">Supprimer
+                    </a>
+                </div>
             {% endif %}
-        </div>
-    {% else %}
-        <img class="card-img-top" src=" {{ 'assets/snowboarding.jpg' }}" alt="..." />
-
-{% endif %}
+                {% endif %}
+        {% endif %}
+    </div>
 </div>
     <div class = "text-center mb-10">
     {% for image in trick.images %}
         <div class="d-inline-block mt-3" >
             <img class="gallery-index" src=" {{ asset('/uploads/' ~ image.name)| imagine_filter('imgs') }}" style="margin:10px" alt="Image" />
             <br/>
+            {% if app.user %}
+            {% if (app.user.roles.0 == "ROLE_ADMIN") or (app.user.id == trick.user.id) %}
             <span>
-                <a href= "{{ path('trick_delete_image', {'slug': trick.slug|slug , id: image.id}) }}"
-                   data-delete data-token ="{{ csrf_token('delete' ~ image.id) }}"
-                   onclick="return confirm('Etes vous sur de vouloir supprimer cette image?')"
-                   class="btn btn-danger" >Supprimer
-            </a>
+            <a href= "{{ path('trick_delete_image_show', {'slug': trick.slug | slug, id: images.0.id,
+                _csrf_token: csrf_token('delete-image')}) }}"
+               onclick="return confirm('Etes-vous sure de vouloir supprimer cette image?')"
+               class="btn btn-danger">Supprimer
+                    </a>
             <a href="{{ path('trick_edit', {'slug': trick.slug|slug}) }}"
                class="btn btn-warning">Modifier</a>
             </span>
+            {% endif %}
+            {% endif %}
         </div>
     {% endfor %}
         {% for video in trick.videos %}
@@ -51,8 +57,8 @@
             </iframe>
             <br/>
             <span>
-                <a href= "{{ path('trick_delete_video', {video_id: video.id}) }}"
-                   data-delete data-token ="{{ csrf_token('delete' ~ video.id) }}"
+                <a href= "{{ path('trick_delete_video', {'slug': trick.slug | slug, video_id: video.id,
+                 _csrf_token:csrf_token('delete-video')}) }}"
                    onclick="return confirm('Etes vous sur de vouloir supprimer cette vidéo?')"
                    class="btn btn-danger">Supprimer
                 </a>
@@ -60,7 +66,7 @@
             </span>
         </div>
         {% endfor %}
-</div>
+    </div>
     <div class="centered mt-5">
                 {{ trick.nameFigure }}
             </div>
@@ -69,7 +75,6 @@
             <strong>Description</strong> :  {{ trick.description }}
         </div>
         <div class="col border text-center mt-5">
-
             Créer le : <strong>
                 {{ trick.createdAt ? trick.createdAt|date('Y-m-d H:i:s') : '' }}
             </strong>
@@ -106,14 +111,14 @@
                               </strong>
                               <p>{{message.content}}</p>
                           </div>
-
-                        {#
-                        <a href= "{{ path('message_delete',{'slug': trick.slug|slug, id: message.id}) }}"
-                              data-delete data-token ="{{ csrf_token('delete' ~ message.id) }}"
-                              onclick="return confirm('Etes vous sure?')"
-                              class="btn btn-danger">Supprimer
-                           </a>
-                        #}
+                            {% if app.user %}
+                                {% if (app.user.roles.0 == "ROLE_ADMIN") or (app.user.id == trick.user.id) %}
+                                <a href= "{{ path('message_delete',{'slug': trick.slug|slug, id: message.id, _csrf_token: csrf_token('delete-message')}) }}"
+                                  onclick="return confirm('Etes vous sure?')"
+                                  class="btn btn-danger">Supprimer
+                                </a>
+                                {% endif %}
+                            {% endif %}
                         </div>
                     </div>
                     {% endfor %}
@@ -151,6 +156,6 @@
         {% endif %}
         </div>
     {% if is_granted('ROLE_ADMIN') %}
-        <div class="text-center m-3"><a href="{{ path('trick_index') }}">Retour à la liste </a></div>
+        <div class="text-center m-3"><a href="{{ path('admin_trick_index') }}">Retour à l'index d'administration des figures </a></div>
     {% endif %}
 {% endblock %}

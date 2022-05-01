@@ -18,7 +18,8 @@
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Nom</th>
+                <th>Rédacteur</th>
+                <th>Titre</th>
                 <th>Description</th>
                 <th>Créé le</th>
                 <th>Publiée le</th>
@@ -34,6 +35,7 @@
         {% for trick in tricks %}
             <tr>
                 <td>{{ trick.id }}</td>
+                <td>{{ trick.user.username }}</td>
                 <td>{{ trick.nameFigure }}</td>
                 <td>{{ trick.description|slice(0, 40) }}</td>
                 <td>{{ trick.createdAt ? trick.createdAt|date('Y-m-d H:i:s') : '' }}</td>
@@ -58,7 +60,40 @@
         {% endfor %}
         </tbody>
     </table>
-    </div>
+        {% if isPaginated %}
+        <div class="text-center m-3">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    {% if (page) != (1) %}
+                        <li class="page-item">
+                            <a class="page-link" href="{{ path('admin_trick_index',{page : page - 1, nbre: nbre})}}">
+                                Précédent
+                            </a>
+                        </li>
+                    {% endif %}
+                    {% for i in range(1, nbrePage) %}
+                        {% if page == i  %}
+                            <li class="page-item active">
+                                <a class="page-link" href="{{ path('admin_trick_index',{page : i, nbre: nbre})}}">{{ i }}</a>
+                            </li>
+                        {% else %}
+                            <li class="page-item">
+                                <a class="page-link" href="{{ path('admin_trick_index',{page : i, nbre: nbre})}}">{{ i }}</a>
+                            </li>
+                        {% endif %}
+                    {% endfor%}
+                    {% if (page) != (nbrePage) %}
+                        <li class="page-item " >
+                            <a class="page-link" href="{{ path('admin_trick_index',{page : page + 1, nbre: nbre})}}">
+                                Suivant
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
+            {% endif %}
+        </div>
+        </div>
 </div>
 </div>
 {% endblock %}

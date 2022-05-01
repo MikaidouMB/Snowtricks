@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Trick;
 use App\Entity\User;
-use App\Form\EditProfilUserType;
+use App\Form\EditUserType;
+use App\Repository\TrickRepository;
 use App\Repository\UserRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -35,6 +37,29 @@ class AdminController extends AbstractController
     }
 
     /**
+     * @Route("/indexTricks/{page?1}/{nbre?15}", name="trick_index", methods={"GET"})
+     * @param \Doctrine\Persistence\ManagerRegistry $doctrine
+     * @param $page
+     * @param $nbre
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param TrickRepository $trickRepository
+     * @return Response
+     */
+    public function indexTricks(ManagerRegistry $doctrine,$page,$nbre,Request $request,TrickRepository $trickRepository): Response
+    {
+        $repository = $doctrine->getRepository(Trick::class);
+        $tricks = $repository->findBy( [],[],$nbre,($page -1) * $nbre);
+        $nbTricks = $repository->count([]);
+        $nbrePage = ceil($nbTricks / $nbre);
+        return $this->render('trick/index.html.twig', [
+            'tricks' => $tricks,
+            'isPaginated' => true,
+            'nbrePage' => (string)$nbrePage,
+            'page' => $page,
+            'nbre' => $nbre        ]);
+    }
+
+    /**
      * Liste utilisateurs du site
      * @Route("/users", name="users")
      */
@@ -50,7 +75,7 @@ class AdminController extends AbstractController
      * @Route("/user/modify/{id}",name="modify_user")
      */
     public function editUser(User $user, Request $request){
-        $form = $this->createForm(EditProfilUserType::class, $user);
+        $form = $this->createForm(EditUserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()){

@@ -10,6 +10,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Csrf\CsrfToken;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 /**
  * @Route("/message")
@@ -58,8 +60,6 @@ class MessageController extends AbstractController
         ]);
     }
 
-
-
     /**
      * @Route("/{id}/edit", name="message_edit", methods={"GET", "POST"})
      */
@@ -70,10 +70,8 @@ class MessageController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
-
             return $this->redirectToRoute('message_index', [], Response::HTTP_SEE_OTHER);
         }
-
         return $this->renderForm('message/edit.html.twig', [
             'message' => $message,
             'form' => $form,
@@ -82,13 +80,23 @@ class MessageController extends AbstractController
 
     /**
      * @Route("/delete/{slug}/{id}", name="message_delete", methods={"DELETE", "GET", "POST"})
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param $slug
+     * @param \App\Entity\Message $message
+     * @param \Doctrine\ORM\EntityManagerInterface $entityManager
+     * @param \Symfony\Component\Security\Csrf\CsrfTokenManagerInterface $csrfTokenManager
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function delete(Request $request,$slug, Message $message, EntityManagerInterface $entityManager): Response
+    public function delete(Request $request, $slug, Message $message, EntityManagerInterface $entityManager,
+                           CsrfTokenManagerInterface $csrfTokenManager): Response
     {
-        //if ($this->isCsrfTokenValid('delete'.$message->getId(), $request->request->get('_token'))) {
-            $entityManager->remove($message);
-            $entityManager->flush();
-       // }
+        $token = new CsrfToken('delete-message', $request->query->get('_csrf_token'));
+        if (!$csrfTokenManager->isTokenValid($token)) {
+            throw $this->createAccessDeniedException('Token CSRF invalide');
+        }
+        $entityManager->remove($message);
+        $entityManager->flush();
+
         return $this->redirectToRoute('trick_show',['slug'=> $slug],Response::HTTP_SEE_OTHER);
     }
 }
