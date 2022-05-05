@@ -6,7 +6,6 @@ use App\Entity\Images;
 use App\Entity\Trick;
 use App\Entity\Videos;
 use App\Form\TrickType;
-use App\Repository\TrickRepository;
 use App\Repository\VideosRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
@@ -37,10 +36,16 @@ class TrickController extends AbstractController
      * @Route("/new", name="trick_new", methods={"GET", "POST"}, priority=1)
      * @param Request $request
      * @param EntityManagerInterface $entityManager
+     * @param \Symfony\Component\Security\Csrf\CsrfTokenManagerInterface $csrfTokenManager
      * @return Response
      */
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager,
+                        CsrfTokenManagerInterface $csrfTokenManager): Response
     {
+        $token = new CsrfToken('new-trick', $request->query->get('_csrf_token'));
+        if (!$csrfTokenManager->isTokenValid($token)) {
+            throw $this->createAccessDeniedException('Token CSRF invalide');
+        }
         $trick = new Trick();
         $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
@@ -84,12 +89,19 @@ class TrickController extends AbstractController
      * @param \Doctrine\ORM\EntityManagerInterface $entityManager
      * @param VideosRepository $videosRepository
      * @param string $slug
+     * @param \Symfony\Component\Security\Csrf\CsrfTokenManagerInterface $csrfTokenManager
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function edit(Request $request, Trick $trick,
-                         EntityManagerInterface $entityManager,VideosRepository $videosRepository,string $slug
+                         EntityManagerInterface $entityManager,
+                         VideosRepository $videosRepository,string $slug,
+                         CsrfTokenManagerInterface $csrfTokenManager
     ): Response
     {
+        $token = new CsrfToken('edit-trick-update', $request->query->get('_csrf_token'));
+        if (!$csrfTokenManager->isTokenValid($token)) {
+            throw $this->createAccessDeniedException('Token CSRF invalide');
+        }
         $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
 
@@ -135,12 +147,9 @@ class TrickController extends AbstractController
      * @Route("/delete-trick/{slug}", name="trick_delete",requirements={"slug"=".+"}, methods={"DELETE", "GET", "POST"})
      */
     public function deleteTrick( Trick $trick, Request $request,
-                                EntityManagerInterface $entityManager,
-                                 $slug,
+                                EntityManagerInterface $entityManager,$slug,
                                  CsrfTokenManagerInterface $csrfTokenManager):Response
     {
-        dd($request->attributes->get('_route'));
-
         $token = new CsrfToken('delete-trick', $request->query->get('_csrf_token'));
         if (!$csrfTokenManager->isTokenValid($token)) {
             throw $this->createAccessDeniedException('Token CSRF invalide');

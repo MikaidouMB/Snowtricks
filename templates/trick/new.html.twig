@@ -34,12 +34,13 @@
             </div>
         {% endfor %}
     </div>
-    <div class="text-center">
-        {{ include('trick/figure_form.html.twig') }}
-    </div>
+        <div class="text-right mb-4">
+            <div class="input-field col s12 m12 l12">
+                <input type="submit" name="" value="Enregistrer" class="btn btn-primary">
+            </div>
+        </div>
     {{ form_end(form, {render_rest:false}) }}
 </div>
 </div>
-
-    <a href="{{ path('trick_index') }}">Retour à la liste</a>
+    <a href="{{ path('app_home') }}">Retour à l'accueil</a>
 {% endblock %}

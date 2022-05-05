@@ -23,7 +23,6 @@ class Trick
     public function __construct(){
         ($this->createdAt = new DateTimeImmutable('now'));
         $this->publishedAt = new DateTimeImmutable('now');
-        $this->isPublished = true;
         $this->categories = new ArrayCollection();
         $this->images = new ArrayCollection();
         $this->videos = new ArrayCollection();
@@ -66,10 +65,6 @@ class Trick
      */
     private ?\DateTimeInterface $editedAt;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private ?bool $isPublished;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Category", inversedBy="tricks")
@@ -95,6 +90,9 @@ class Trick
     /**
      * @ORM\OneToMany (targetEntity=Videos::class, mappedBy="trick", orphanRemoval=true, cascade={"persist"} )
      * @Assert\Valid()
+     * @Assert\Count(
+     *      max = 5,
+     *      max = "You cannot specify more than {{ limit }} video")
     */
     private Collection $videos;
 
@@ -159,18 +157,6 @@ class Trick
     public function setEditedAt(?\DateTimeInterface $editedAt): self
     {
         $this->editedAt = $editedAt;
-
-        return $this;
-    }
-
-    public function getIsPublished(): ?bool
-    {
-        return $this->isPublished;
-    }
-
-    public function setIsPublished(bool $isPublished): self
-    {
-        $this->isPublished = $isPublished;
 
         return $this;
     }

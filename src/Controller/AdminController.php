@@ -37,7 +37,7 @@ class AdminController extends AbstractController
     }
 
     /**
-     * @Route("/indexTricks/{page?1}/{nbre?15}", name="trick_index", methods={"GET"})
+     * @Route("/indexTricks/{page?1}/{nbre?8}", name="trick_index", methods={"GET"})
      * @param \Doctrine\Persistence\ManagerRegistry $doctrine
      * @param $page
      * @param $nbre
@@ -74,7 +74,8 @@ class AdminController extends AbstractController
      * Modifier un utilisateur
      * @Route("/user/modify/{id}",name="modify_user")
      */
-    public function editUser(User $user, Request $request){
+    public function editUser(User $user, Request $request): \Symfony\Component\HttpFoundation\RedirectResponse|Response
+    {
         $form = $this->createForm(EditUserType::class, $user);
         $form->handleRequest($request);
 

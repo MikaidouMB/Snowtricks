@@ -16,6 +16,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Csrf\CsrfToken;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 
 class HomeController extends AbstractController
@@ -27,7 +29,7 @@ class HomeController extends AbstractController
     public function index(ManagerRegistry $doctrine,$page,$nbre,Request $request): Response
     {
         $repository = $doctrine->getRepository(Trick::class);
-        $tricks = $repository->findBy( [],[],$nbre,($page -1) * $nbre);
+        $tricks = $repository->findBy( [],['createdAt' => 'DESC'],$nbre,($page -1) * $nbre);
         $nbTricks = $repository->count([]);
         $nbrePage = ceil($nbTricks / $nbre);
 
@@ -94,13 +96,18 @@ class HomeController extends AbstractController
      * @param \Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface $userPasswordHasher
      * @param \Doctrine\Persistence\ManagerRegistry $doctrine
      * @param \App\Entity\User $user
+     * @param \Symfony\Component\Security\Csrf\CsrfTokenManagerInterface $csrfTokenManager
      * @return Response
      */
     public function showUserAccount( Request $request,
                                      EntityManagerInterface $entityManager,
                                      UserPasswordHasherInterface $userPasswordHasher,
-                                     ManagerRegistry $doctrine, User $user): Response
+                                     ManagerRegistry $doctrine, User $user,CsrfTokenManagerInterface $csrfTokenManager): Response
     {
+        $token = new CsrfToken('account-edit', $request->query->get('_csrf_token'));
+        if (!$csrfTokenManager->isTokenValid($token)) {
+            throw $this->createAccessDeniedException('Token CSRF invalide');
+        }
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 

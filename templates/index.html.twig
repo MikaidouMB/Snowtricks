@@ -3,40 +3,18 @@
 {% block title %}Salut Snowboarders!{% endblock %}
 
 {% block body %}
-    <div lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-        <title>Shop Homepage - Start Bootstrap Template</title>
-        <!-- Bootstrap icons-->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
-        <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="{{ asset("css/styles.css") }}" rel="stylesheet" />
-        <link href="{{ asset("css/bootstrap.min.css") }}" rel="stylesheet">
 
-        <script src="https://kit.fontawesome.com/cedb22606b.js" crossorigin="anonymous"></script>
-        <!-- Custom Fonts copier le CDN -->
-        <link href="../public/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
-        <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
-    </head>
     <!-- Header-->
-    <div class="container-fluid">
-        <section id="sec-1" >
-            <div class="full-screen-width">
-                <img class="img-fluid" src="{{ asset('assets/877546.jpg')| imagine_filter('welcome6') }}"  alt="">
-                <a href="#sec-2">
-                    <div class="scroll-down"></div>
-                </a>
-            </div>
-        </section>
-    </div>
+        <div class="full-screen-width " style="width: 100%;height: 100%">
+            <img class="img-fluid" src="{{ asset('assets/877546.jpg')| imagine_filter('welcome6') }}"  alt="">
+            <a href="#sec-2">
+                <div class="scroll-down"></div>
+            </a>
+        </div>
         <section id="sec-2" >
-            <div class="text-center" style="margin-left: 260px;margin-right:260px">
-            {% for trick in tricks %}
-              <div class="d-inline-block mt-3" >
+            <div class="text-center" style="margin-left: 260px;margin-right:260px;">
+                {% for trick in tricks %}
+              <div class="d-inline-block mt-3 mb-5" >
                   <h5 class="fw-bolder"></h5>
                   {% if trick.images|length >= 1%}
                       {% for image in trick.images %}
@@ -53,7 +31,7 @@
                   </span>
                   {% if app.user %}
                       {% if (app.user.roles.0 == "ROLE_ADMIN") or (app.user.id == trick.user.id) %}
-                          <a href="{{ path('trick_edit', {'slug': trick.slug|slug}) }}">
+                          <a href="{{ path('trick_edit', {'slug': trick.slug|slug, _csrf_token: csrf_token('edit-trick-update')}) }}">
                               <i class="bi bi-pen left-icon-holder"></i>
                           </a>
                           <a href= "{{ path('trick_delete', {'slug': trick.slug|slug, _csrf_token: csrf_token('delete-trick')}) }}"
@@ -64,11 +42,15 @@
                   {% endif %}
               </div>
             {% endfor %}
+                {% if tricks|length >= 15%}
+                    <a href="#" class="top"><i class="fa fa-arrow-up" aria-hidden="true"></i>
+                    </a>
+                {% endif %}
             </div>
-            {% if isPaginated %}
-            <div class="text-center m-3">
-            <nav aria-label="Page navigation example">
-                <ul class="pagination">
+        </section>
+        {% if isPaginated %}
+            <nav aria-label="Page navigation example " >
+                <ul class="pagination justify-content-center">
                     {% if (page) != (1) %}
                         <li class="page-item">
                             <a class="page-link" href="{{ path('app_home',{page : page - 1, nbre: nbre})}}">
@@ -77,10 +59,10 @@
                         </li>
                     {% endif %}
                     {% for i in range(1, nbrePage) %}
-                    {% if page == i  %}
-                        <li class="page-item active">
-                            <a class="page-link" href="{{ path('app_home',{page : i, nbre: nbre})}}">{{ i }}</a>
-                        </li>
+                        {% if page == i  %}
+                            <li class="page-item active">
+                                <a class="page-link" href="{{ path('app_home',{page : i, nbre: nbre})}}">{{ i }}</a>
+                            </li>
                         {% else %}
                             <li class="page-item">
                                 <a class="page-link" href="{{ path('app_home',{page : i, nbre: nbre})}}">{{ i }}</a>
@@ -96,10 +78,5 @@
                     {% endif %}
                 </ul>
             </nav>
-            {% endif %}
-            </div>
-        </section>
-        </div>
-    <a href="#" class="top">&#8593;</a>
-
+        {% endif %}
 {% endblock %}
