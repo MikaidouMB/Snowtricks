@@ -2,8 +2,8 @@
 {% block title %}Mon espace utilisateur{% endblock %}
 {% block body %}
     <div class="container mt-3 mb-4">
-    {{ form_errors(formUserProfil) }}
-    <h1>Editer Profil</h1>
+        {{ form_errors(formUserProfil) }}
+        <h1>Editer Profil</h1>
         {{ form_start(formUserProfil) }}
         {% if user.photo is not empty %}
             <img class="rounded-circle" src="{{ asset('uploads/' ~ user.photo) }}"
@@ -17,29 +17,28 @@
             <strong>{{ form_row(formUserProfil.photos) }}</strong>
         </span>
         <div class="col-12 mt-4">
-    {{ form_start(formUserProfil) }}
-    {{ form_widget(formUserProfil._token) }}
-     <div class=" col-4 mt-4">
-        <strong>{{ form_row(formUserProfil.username) }}</strong>
-    </div>
-    <div class="col-4 mt-4">
-            <strong>{{ form_row(formUserProfil.password) }}</strong>
-        </div>
-    <div class="col-4 mt-4 mb-4">
-        <strong>{{ form_row(formUserProfil.email) }}</strong>
-    </div>
+            {{ form_start(formUserProfil) }}
+            {{ form_widget(formUserProfil._token) }}
+            <div class=" col-4 mt-4">
+                <strong>{{ form_row(formUserProfil.username) }}</strong>
+            </div>
+            <div class="col-4 mt-4">
+                <strong>{{ form_row(formUserProfil.password) }}</strong>
+            </div>
+            <div class="col-4 mt-4 mb-4">
+                <strong>{{ form_row(formUserProfil.email) }}</strong>
+            </div>
             <div class="mb-4">
                 <a href= "{{ path('user_delete', {id: user.id, _csrf_token: csrf_token('delete-user')}) }}"
                    onclick="return confirm('Etes-vous sure de vouloir supprimer votre compte?')"
                    class="btn btn-danger">Supprimer le profil
                 </a>
             </div>
-
-        <div class="text-right mb-4">
-            <div class="input-field col s12 m12 l12">
-                <input type="submit" name="" value="Enregistrer" class="btn btn-primary">
+            <div class="text-right mb-4">
+                <div class="input-field col s12 m12 l12">
+                    <input type="submit" name="" value="Enregistrer" class="btn btn-primary">
+                </div>
             </div>
         </div>
-    </div>
     </div>
 {% endblock %}

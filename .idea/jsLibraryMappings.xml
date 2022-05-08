@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="JavaScriptLibraryMappings">
-    <file url="PROJECT" libraries="{@types/jquery, axios, bootstrap, bootstrap-icons, jquery, jquery-3.2.1, jquery-3.2.1.slim, jquery-3.3.1.slim, jquery-3.4.1.slim, jquery-3.5.1.slim, jquery-easing, mdbootstrap, popper.js, vquery}" />
+    <file url="PROJECT" libraries="{@types/jquery, a076d05399, axios, bootstrap, bootstrap-icons, font-awesome, jquery, jquery-3.2.1, jquery-3.2.1.slim, jquery-3.3.1.slim, jquery-3.4.1.slim, jquery-3.5.1.slim, jquery-easing, mdbootstrap, popper.js, vquery}" />
     <includedPredefinedLibrary name="HTTP Response Handler" />
   </component>
 </project>

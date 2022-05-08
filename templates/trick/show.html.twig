@@ -4,24 +4,36 @@
 
 {% block body %}
     {% if images is empty %}
-        <div class="full-screen-width " style="width: 100%;height: 100%">
-            <img class="img-fluid" src="{{ asset('assets/snowboarding.jpg')| imagine_filter('welcome6') }}" alt="..." />
-            {% if app.user %}
-                {% if (app.user.roles.0 == "ROLE_ADMIN") or (app.user.id == trick.user.id) %}
-                    <div class="btn-group">
-                        <a href="{{ path('trick_edit', {'slug': trick.slug, _csrf_token: csrf_token('edit-trick-update')}) }}" id="edit"
-                           class="btn btn-warning">Modifier</a>
-                    </div>
+        <div class="container-fluid">
+                <div class="img-ajust">
+                <img class="img-fluid" src="{{ asset('assets/snowboarding.jpg')| imagine_filter('welcome6') }}" alt="..." />
+                </div>
+                <div class="img-full">
+                    <img class="img-fluid" src="{{ asset('assets/snowboarding.jpg')| imagine_filter('welcome7') }}" alt="..." />
+                </div>
+                    {% if app.user %}
+                    {% if (app.user.roles.0 == "ROLE_ADMIN") or (app.user.id == trick.user.id) %}
+                        <div class="edit-btn btn-xs">
+                            <a href="{{ path('trick_edit',{'slug': trick.slug, _csrf_token: csrf_token('edit-trick-update')}) }}"
+                               class="btn btn-warning ">Modifier
+                            </a>
+                        </div>
+                    {% endif %}
                 {% endif %}
-            {% endif %}
-        </div>
+            </div>
+
     {% endif %}
      {% if images is not empty %}
-        <div class="full-screen-width "  style=" width: 100% ;height: 100%">
-            <img class="img-fluid" src="{{ asset('uploads/' ~ trick.images.0.name)| imagine_filter('welcome6') }}" alt="">
-            {% if app.user %}
+<div class="container-fluid">
+    <div class="img-ajust">
+        <img class="img-fluid" src="{{ asset('uploads/' ~ trick.images.0.name)| imagine_filter('welcome6') }}" alt="">
+    </div>
+    <div class="img-full">
+        <img class="img-fluid" src="{{ asset('uploads/' ~ trick.images.0.name)| imagine_filter('welcome7') }}" alt="">
+    </div>
+        {% if app.user %}
                 {% if (app.user.roles.0 == "ROLE_ADMIN") or (app.user.id == trick.user.id) %}
-                    <div class="btn-group">
+                    <div class="edit-btn btn-xs">
                         <a href="{{ path('trick_edit', {'slug': trick.slug, _csrf_token: csrf_token('edit-trick-update')}) }}" id="edit"
                            class="btn btn-warning">Modifier</a>
                         <a href= "{{ path('trick_delete_image_show', {'slug': trick.slug | slug, id: images.0.id, _csrf_token: csrf_token('delete-image')}) }}" onclick="return confirm('Etes-vous sure de vouloir supprimer cette image?')"

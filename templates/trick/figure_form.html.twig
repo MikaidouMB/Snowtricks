@@ -5,8 +5,7 @@
                   <input type="submit" name="" value="Enregistrer" class="btn btn-primary">
               </div>
           </div>
-         {#
-         #}  <div class="text-left">
+         <div class="text-left">
                 <a href= "{{ path('trick_delete',{'slug': trick.slug|slug, _csrf_token: csrf_token('delete-trick')}) }}"
                    onclick="return confirm('Etes vous sur de vouloir supprimer cette figure?')"
                    class="btn btn-danger" >Supprimer la figure

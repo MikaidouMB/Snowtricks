@@ -3,28 +3,35 @@
 {% block title %}Salut Snowboarders!{% endblock %}
 
 {% block body %}
-
-    <!-- Header-->
-        <div class="full-screen-width " style="width: 100%;height: 100%">
-            <img class="img-fluid" src="{{ asset('assets/877546.jpg')| imagine_filter('welcome6') }}"  alt="">
-            <a href="#sec-2">
-                <div class="scroll-down"></div>
-            </a>
-        </div>
-        <section id="sec-2" >
-            <div class="text-center" style="margin-left: 260px;margin-right:260px;">
-                {% for trick in tricks %}
-              <div class="d-inline-block mt-3 mb-5" >
-                  <h5 class="fw-bolder"></h5>
-                  {% if trick.images|length >= 1%}
-                      {% for image in trick.images %}
-                          {% if loop.index0 < 1 %}
-                              <img class="gallery-index" src=" {{ asset('uploads/' ~ image.name) | imagine_filter('imgs') }}" style="margin: 10px"  alt="..."/>
-                          {% endif %}
-                      {% endfor %}
-                  {% else %}
-                      <img class="card-img-top" src=" {{ asset('assets/snowboarding.jpg') | imagine_filter('imgs') }}" alt="..." />
-                  {% endif %}
+    <div class="full-screen-width">
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success" role="alert">
+                {{ message}}
+            </div>
+        {% endfor %}
+    <div class="img-ajust">
+        <img class="img-fluid" src="{{ asset('assets/877546.jpg')| imagine_filter('welcome6') }}"  alt="">
+    </div>
+    <div class="img-full">
+        <img class="img-fluid" src="{{ asset('assets/877546.jpg')| imagine_filter('welcome7') }}"  alt="">
+    </div>
+        <a href="#sec-2">
+            <div class="scroll-down"></div>
+        </a>
+    <section id="sec-2" >
+        <div class="text-center" style="margin-left: 260px;margin-right:260px;">
+            {% for trick in tricks %}
+                <div class="d-inline-block mt-3 mb-5" >
+                    <h5 class="fw-bolder"></h5>
+                    {% if trick.images|length >= 1%}
+                        {% for image in trick.images %}
+                            {% if loop.index0 < 1 %}
+                                <img class="gallery-index" src=" {{ asset('uploads/' ~ image.name) | imagine_filter('imgs') }}" style="margin: 10px"  alt="..."/>
+                            {% endif %}
+                        {% endfor %}
+                    {% else %}
+                        <img class="card-img-top" src=" {{ asset('assets/snowboarding.jpg') | imagine_filter('imgs') }}" alt="..." />
+                    {% endif %}
                   <br/>
                   <span>
                       <a href="{{ path('trick_show', {'slug': trick.slug|slug}) }}">{{ trick.nameFigure }}</a>
@@ -32,11 +39,11 @@
                   {% if app.user %}
                       {% if (app.user.roles.0 == "ROLE_ADMIN") or (app.user.id == trick.user.id) %}
                           <a href="{{ path('trick_edit', {'slug': trick.slug|slug, _csrf_token: csrf_token('edit-trick-update')}) }}">
-                              <i class="bi bi-pen left-icon-holder"></i>
-                          </a>
+                              <i class="fas fa-pen"></i>
+                          </a>&nbsp;
                           <a href= "{{ path('trick_delete', {'slug': trick.slug|slug, _csrf_token: csrf_token('delete-trick')}) }}"
-                             onclick="return confirm('Etes vous sure?')"
-                             class="bi bi-trash">
+                             onclick="return confirm('Etes vous sure?')">
+                          <i class="fas fa-trash"></i>
                           </a>
                       {% endif %}
                   {% endif %}
