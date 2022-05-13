@@ -59,16 +59,17 @@ class AppFixtures extends Fixture
                 $user->setUsername($faker->userName);
                 $user->setPhoto('user_admin.jpeg');
                 $user->setIsVerified(1);
+                //Varier les roles
                 $user->setRoles(["ROLE_USER"]);
 
                 $message->setContent($faker->realText(50));
                 $message->setUser($user);
                 $message->setTrick($trick);
 
-                $video->setName('https://www.youtube.com/embed/Kad-Ezbf888');
                 $video->setTrick($trick);
                 $image->setName('877546.jpg');
                 $image->setTrick($trick);
+
 
                 $manager->persist($message);
                 $manager->persist($image);
