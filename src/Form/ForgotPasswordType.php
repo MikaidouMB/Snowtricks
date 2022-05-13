@@ -16,10 +16,7 @@ class ForgotPasswordType extends AbstractType
             'type' => EmailType::class,
             'invalid_message' => "Les adresses email doivent être identiques.",
             'required' => true,
-            'constraints' => [
-            /*    new NotBlank(),
-                new Email()
-            */],
+            'constraints' => [],
             'first_options' => [
                 'label' => 'Saisir votre adresse e-mail'
             ],

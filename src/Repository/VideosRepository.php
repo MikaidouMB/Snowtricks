@@ -20,10 +20,6 @@ class VideosRepository extends ServiceEntityRepository
         parent::__construct($registry, Videos::class);
     }
 
-    // /**
-    //  * @return Videos[] Returns an array of Videos objects
-    //  */
-
     public function findByVideosTrick(Trick $trick): ?array
     {
         return $this->createQueryBuilder('v')
@@ -36,16 +32,4 @@ class VideosRepository extends ServiceEntityRepository
             ->getResult()
             ;
     }
-
-    /*
-    public function findOneBySomeField($value): ?Videos
-    {
-        return $this->createQueryBuilder('v')
-            ->andWhere('v.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

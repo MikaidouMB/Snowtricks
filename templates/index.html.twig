@@ -15,75 +15,75 @@
     <div class="img-full">
         <img class="img-fluid" src="{{ asset('assets/877546.jpg')| imagine_filter('welcome7') }}"  alt="">
     </div>
-        <a href="#sec-2">
-            <div class="scroll-down"></div>
-        </a>
-    <section id="sec-2" >
-        <div class="text-center" style="margin-left: 260px;margin-right:260px;">
+    <a href="#sec-2">
+        <div class="scroll-down"></div>
+    </a>
+    <div class="container">
+        <div id="sec-2" >
             {% for trick in tricks %}
                 <div class="d-inline-block mt-3 mb-5" >
                     <h5 class="fw-bolder"></h5>
                     {% if trick.images|length >= 1%}
                         {% for image in trick.images %}
                             {% if loop.index0 < 1 %}
-                                <img class="gallery-index" src=" {{ asset('uploads/' ~ image.name) | imagine_filter('imgs') }}" style="margin: 10px"  alt="..."/>
+                                <img class="gallery-index" src=" {{ asset('uploads/' ~ image.name) | imagine_filter('imgs') }}"  alt="..."/>
                             {% endif %}
                         {% endfor %}
                     {% else %}
                         <img class="card-img-top" src=" {{ asset('assets/snowboarding.jpg') | imagine_filter('imgs') }}" alt="..." />
                     {% endif %}
-                  <br/>
-                  <span>
-                      <a href="{{ path('trick_show', {'slug': trick.slug|slug}) }}">{{ trick.nameFigure }}</a>
-                  </span>
-                  {% if app.user %}
-                      {% if (app.user.roles.0 == "ROLE_ADMIN") or (app.user.id == trick.user.id) %}
-                          <a href="{{ path('trick_edit', {'slug': trick.slug|slug, _csrf_token: csrf_token('edit-trick-update')}) }}">
-                              <i class="fas fa-pen"></i>
-                          </a>&nbsp;
-                          <a href= "{{ path('trick_delete', {'slug': trick.slug|slug, _csrf_token: csrf_token('delete-trick')}) }}"
-                             onclick="return confirm('Etes vous sure?')">
-                          <i class="fas fa-trash"></i>
-                          </a>
-                      {% endif %}
-                  {% endif %}
-              </div>
-            {% endfor %}
-                {% if tricks|length >= 15%}
-                    <a href="#" class="top"><i class="fa fa-arrow-up" aria-hidden="true"></i>
-                    </a>
-                {% endif %}
-            </div>
-        </section>
-        {% if isPaginated %}
-            <nav aria-label="Page navigation example " >
-                <ul class="pagination justify-content-center">
-                    {% if (page) != (1) %}
-                        <li class="page-item">
-                            <a class="page-link" href="{{ path('app_home',{page : page - 1, nbre: nbre})}}">
-                                Précédent
+                    <br/>
+                    <span>
+                    <a href="{{ path('trick_show', {'slug': trick.slug|slug}) }}">{{ trick.nameFigure }}</a>
+                </span>
+                    {% if app.user %}
+                        {% if (app.user.roles.0 == "ROLE_ADMIN") or (app.user.id == trick.user.id) %}
+                            <a href="{{ path('trick_edit', {'slug': trick.slug|slug, _csrf_token: csrf_token('edit-trick-update')}) }}">
+                                <i class="fas fa-pen"></i>
+                            </a>&nbsp;
+                            <a href= "{{ path('trick_delete', {'slug': trick.slug|slug, _csrf_token: csrf_token('delete-trick')}) }}"
+                               onclick="return confirm('Etes vous sure?')">
+                                <i class="fas fa-trash"></i>
                             </a>
-                        </li>
-                    {% endif %}
-                    {% for i in range(1, nbrePage) %}
-                        {% if page == i  %}
-                            <li class="page-item active">
-                                <a class="page-link" href="{{ path('app_home',{page : i, nbre: nbre})}}">{{ i }}</a>
-                            </li>
-                        {% else %}
-                            <li class="page-item">
-                                <a class="page-link" href="{{ path('app_home',{page : i, nbre: nbre})}}">{{ i }}</a>
-                            </li>
                         {% endif %}
-                    {% endfor%}
-                    {% if (page) != (nbrePage) %}
-                        <li class="page-item " >
-                            <a class="page-link" href="{{ path('app_home',{page : page + 1, nbre: nbre})}}">
-                                Suivant
-                            </a>
+                    {% endif %}
+                </div>
+            {% endfor %}
+            {% if tricks|length >= 15%}
+                <a href="#" class="top"><i class="fa fa-arrow-up" aria-hidden="true"></i>
+                </a>
+            {% endif %}
+        </div>
+    </div>
+    {% if isPaginated %}
+        <nav aria-label="Page navigation example " >
+            <ul class="pagination justify-content-center">
+                {% if (page) != (1) %}
+                    <li class="page-item">
+                        <a class="page-link" href="{{ path('app_home',{page : page - 1, nbre: nbre})}}">
+                            Précédent
+                        </a>
+                    </li>
+                {% endif %}
+                {% for i in range(1, nbrePage) %}
+                    {% if page == i  %}
+                        <li class="page-item active">
+                            <a class="page-link" href="{{ path('app_home',{page : i, nbre: nbre})}}">{{ i }}</a>
+                        </li>
+                    {% else %}
+                        <li class="page-item">
+                            <a class="page-link" href="{{ path('app_home',{page : i, nbre: nbre})}}">{{ i }}</a>
                         </li>
                     {% endif %}
-                </ul>
-            </nav>
-        {% endif %}
+                {% endfor%}
+                {% if (page) != (nbrePage) %}
+                    <li class="page-item " >
+                        <a class="page-link" href="{{ path('app_home',{page : page + 1, nbre: nbre})}}">
+                            Suivant
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+    {% endif %}
 {% endblock %}

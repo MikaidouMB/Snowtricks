@@ -21,7 +21,6 @@ class ImageType extends AbstractType
             )
             ->add('delete', ButtonType::class, [
                 'label_html' => true,
-                //'label' => '<i class="fas fa-times"></i>',
                 'attr' => [
                     'data-action' => 'delete',
                     'data-target' => '#trick_images___name__',

@@ -36,18 +36,6 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->_em->persist($user);
         $this->_em->flush();
     }
-
-    public function findUsersByMessage(Message $message)
-    {
-        return $this->createQueryBuilder('u')
-            ->Select('u.username','u.photo')
-            //->addSelect('u.photo')
-           //  ->join('u.message','m')
-            //->andWhere('u.username=' . $message->getAuthor())
-            ->getQuery()
-            ->getResult()
-            ;
-    }
     // /**
     //  * @return User[] Returns an array of User objects
     //  */

@@ -5,37 +5,33 @@
 {% block body %}
     {% if images is empty %}
         <div class="container-fluid">
-                <div class="img-ajust">
+            <div class="img-ajust">
                 <img class="img-fluid" src="{{ asset('assets/snowboarding.jpg')| imagine_filter('welcome6') }}" alt="..." />
-                </div>
-                <div class="img-full">
-                    <img class="img-fluid" src="{{ asset('assets/snowboarding.jpg')| imagine_filter('welcome7') }}" alt="..." />
-                </div>
-                    {% if app.user %}
-                    {% if (app.user.roles.0 == "ROLE_ADMIN") or (app.user.id == trick.user.id) %}
-                        <div class="edit-btn btn-xs">
-                            <a href="{{ path('trick_edit',{'slug': trick.slug, _csrf_token: csrf_token('edit-trick-update')}) }}"
-                               class="btn btn-warning ">Modifier
-                            </a>
-                        </div>
-                    {% endif %}
-                {% endif %}
             </div>
-
-    {% endif %}
-     {% if images is not empty %}
-<div class="container-fluid">
-    <div class="img-ajust">
-        <img class="img-fluid" src="{{ asset('uploads/' ~ trick.images.0.name)| imagine_filter('welcome6') }}" alt="">
-    </div>
-    <div class="img-full">
-        <img class="img-fluid" src="{{ asset('uploads/' ~ trick.images.0.name)| imagine_filter('welcome7') }}" alt="">
-    </div>
-        {% if app.user %}
+            <div class="img-full">
+                <img class="img-fluid" src="{{ asset('assets/snowboarding.jpg')| imagine_filter('welcome7') }}" alt="..." />
+            </div>
+            {% if app.user %}
                 {% if (app.user.roles.0 == "ROLE_ADMIN") or (app.user.id == trick.user.id) %}
                     <div class="edit-btn btn-xs">
-                        <a href="{{ path('trick_edit', {'slug': trick.slug, _csrf_token: csrf_token('edit-trick-update')}) }}" id="edit"
-                           class="btn btn-warning">Modifier</a>
+                        {{ include('trick/_edit_form.html.twig') }}
+                    </div>
+                {% endif %}
+            {% endif %}
+        </div>
+    {% endif %}
+    {% if images is not empty %}
+        <div class="container-fluid">
+            <div class="img-ajust">
+                <img class="img-fluid" src="{{ asset('uploads/' ~ trick.images.0.name)| imagine_filter('welcome6') }}" alt="">
+            </div>
+            <div class="img-full">
+                <img class="img-fluid" src="{{ asset('uploads/' ~ trick.images.0.name)| imagine_filter('welcome7') }}" alt="">
+            </div>
+            {% if app.user %}
+                {% if (app.user.roles.0 == "ROLE_ADMIN") or (app.user.id == trick.user.id) %}
+                    <div class="edit-btn btn-xs">
+                        {{ include('trick/_edit_form.html.twig') }}
                         <a href= "{{ path('trick_delete_image_show', {'slug': trick.slug | slug, id: images.0.id, _csrf_token: csrf_token('delete-image')}) }}" onclick="return confirm('Etes-vous sure de vouloir supprimer cette image?')"
                            class="btn btn-danger">Supprimer
                         </a>
@@ -45,25 +41,23 @@
         </div>
     {% endif %}
     <div class="container-fluid">
-        <div class="text-center mb-4" style="flex-wrap: wrap">
-            <button type="button" id="show" class="btn btn-secondary mt-5">Voir les media</button>
-            <button type="button" id="hide" class="btn btn-secondary mt-5">Masquer les media</button>
+        <div class="text-center mb-4 media-hide-show">
+            <button type="button" id="show" class="btn btn-secondary mt-5">Voir/masquer les media</button>
             <div class="wrapper" >
                 {% for image in trick.images %}
                     <div class="d-inline-block " >
                         <h5 class="fw-bolder"></h5>
-                        <img class="gallery-index" src=" {{ asset('/uploads/' ~ image.name)| imagine_filter('imgs') }}" style="margin:10px" alt="Image" />
+                        <img class="gallery-index" src=" {{ asset('/uploads/' ~ image.name)| imagine_filter('imgs') }}" alt="Image" />
                         <br/>
                         {% if app.user %}
                             {% if (app.user.roles.0 == "ROLE_ADMIN") or (app.user.id == trick.user.id) %}
                                 <span>
-                        <a href= "{{ path('trick_delete_image_show', {'slug': trick.slug | slug, id: images.0.id,
-                            csrf_token: csrf_token('delete-image')}) }}"
-                           onclick="return confirm('Etes-vous sure de vouloir supprimer cette image?')"
-                           class="btn btn-danger">Supprimer
-                        </a>
-                        <a href="{{ path('trick_edit', {'slug': trick.slug|slug, _csrf_token: csrf_token('edit-trick-update')}) }}"
-                           class="btn btn-warning">Modifier</a>
+                                    <a href= "{{ path('trick_delete_image_show', {'slug': trick.slug | slug, id: images.0.id,
+                                        csrf_token: csrf_token('delete-image')}) }}"
+                                       onclick="return confirm('Etes-vous sure de vouloir supprimer cette image?')"
+                                       class="btn btn-danger">Supprimer
+                                    </a>
+                                     {{ include('trick/_edit_form.html.twig') }}
                                 </span>
                             {% endif %}
                         {% endif %}
@@ -73,30 +67,29 @@
             <div class="videos mt-3">
                 {% for video in trick.videos %}
                     <div class="d-inline-block" >
-                        <iframe class="trick-media" style="margin-top: 4px;margin-right: 10px;margin-left: 10px" id="{{ loop.index + trick.images|length }}"
+                        <iframe class="trick-media" id="{{ loop.index + trick.images|length }}"
                                 src="{{ video.name }}" width="250vw" frameborder="0"
                                 allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                                 allowfullscreen>
                         </iframe>
                         <br/>
                         {% if app.user %}
-                        {% if (app.user.roles.0 == "ROLE_ADMIN") or (app.user.id == trick.user.id) %}
-                        <span>
-                            <a href= "{{ path('trick_delete_video', {'slug': trick.slug | slug, video_id: video.id,
-                                _csrf_token:csrf_token('delete-video')}) }}"
-                       onclick="return confirm('Etes vous sur de vouloir supprimer cette vidéo?')"
-                       class="btn btn-danger">Supprimer
-                    </a>
-                            <a href="{{ path('trick_edit', {'slug': trick.slug|slug, _csrf_token: csrf_token('edit-trick-update')}) }}" class="btn btn-warning">Modifier</a>
-                        </span>
-                        {% endif %}
+                            {% if (app.user.roles.0 == "ROLE_ADMIN") or (app.user.id == trick.user.id) %}
+                                <span>
+                                    <a href= "{{ path('trick_delete_video', {'slug': trick.slug | slug, video_id: video.id,
+                                        _csrf_token:csrf_token('delete-video')}) }}"
+                                       onclick="return confirm('Etes vous sur de vouloir supprimer cette vidéo?')"
+                                       class="btn btn-danger">Supprimer
+                                    </a>
+                                    {{ include('trick/_edit_form.html.twig') }}
+                                </span>
+                            {% endif %}
                         {% endif %}
                     </div>
                 {% endfor %}
             </div>
         </div>
     </div>
-
     <div class="container">
         <div class="row text-center mt-5">
             <strong>{{ trick.nameFigure }}</strong>
@@ -107,11 +100,6 @@
         <div class="col border text-center mt-5">
             Créer le : <strong>
                 {{ trick.createdAt ? trick.createdAt|date('d/m/Y') }} à {{ trick.createdAt|date('H:i:s') }}
-            </strong>
-        </div>
-        <div class="col border text-center">
-            Publié le :<strong>
-                {{ trick.publishedAt ? trick.publishedAt|date('d/m/Y')}} à {{ trick.publishedAt|date('H:i:s')}}
             </strong>
         </div>
         <div class="col border text-center mb-4">
@@ -145,10 +133,7 @@
                                 </div>
                                 {% if app.user %}
                                     {% if (app.user.roles.0 == "ROLE_ADMIN") or (app.user.id == trick.user.id) %}
-                                        <a href= "{{ path('message_delete',{'slug': trick.slug|slug, id: message.id, _csrf_token: csrf_token('delete-message')}) }}"
-                                           onclick="return confirm('Etes vous sure?')"
-                                           class="btn btn-danger">Supprimer le commentaire
-                                        </a>
+                                        {{ include('message/_delete_form.html.twig') }}
                                     {% endif %}
                                 {% endif %}
                             </div>
@@ -161,6 +146,4 @@
             <div class="text-center m-3"><a href="{{ path('admin_trick_index') }}">Retour à l'index d'administration des figures </a></div>
         {% endif %}
     </div>
-
-
 {% endblock %}

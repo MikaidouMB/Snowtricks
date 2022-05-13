@@ -3,64 +3,67 @@
 {% block title %}Utilisateurs{% endblock %}
 
 {% block body %}
-    <h1 class="text-center">Liste Utilisateurs</h1>
+    <div class="text-center">
+        <h1>Liste des utilisateurs</h1>
+    </div>
     <div class="d-flex" id="wrapper">
-        <!-- Sidebar-->
-        <div class="border-end bg-white" id="sidebar-wrapper">
+        <div class="border-end" id="sidebar-wrapper">
             <div class="list-group list-group-flush">
             <a class="nav-link" href="{{ path('admin_trick_index') }}">Liste Tricks</a>
             </div>
         </div>
     </div>
-<section class="bg-light p-5">
-    <div class="table-responsive" id="no-more-tables" >
-        <table class="table bg-white" style="margin-bottom: 120%">
-            <thead class="bg-dark text-light">
-            <tr>
-                <th scope="col">Id</th>
-                <th scope="col">Pseudo</th>
-                <th scope="col">Email</th>
-                <th scope="col">Role</th>
-                <th scope="col">Date d'enregistrement</th>
-                <th scope="col">Figures</th>
-                <th scope="col">Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                {% for user in users %}
-                <td data-title ='id'>{{ user.id }}</td>
-                <td data-title ='pseudo'>{{ user.username }}</td>
-                <td data-title ='email'>{{ user.email }}</td>
-                <td data-title ='roles'>
-                    {% for role in user.roles %}
-                        {% if role == "ROLE_USER" %}
-                            Utilisateur
-                        {% elseif role == "ROLE_EDITOR" %}
-                            Editeur
-                        {% elseif role == "ROLE_ADMIN" %}
-                            Administrateur<br>
-                        {% elseif role == "ROLE_MODO" %}
-                            Modérateur<br>
-                        {% endif %}
-                    {% endfor %}</td>
-                <div>
-
-                </div>
-                <td data-title ='enregistré le:'> &nbsp  &nbsp &nbsp
-                    {{ user.registeredAt ? user.registeredAt|date('Y-m-d H:i:s') : '' }}
-                </td>
-                <td data-title ='nombre de figures'> &nbsp  &nbsp &nbsp &nbsp  &nbsp &nbsp &nbsp
-                    &nbsp{{ user.tricks|length }}</td>
-                <td data-title ='action'><a href="{{ path('admin_modify_user', {'id':user.id}) }}" class="btn btn-warning">Modifier</a></td>
-            </tr>
-            {% else %}
-                <tr>
-                    <td colspan="10">Il n'y a aucun utilisateur</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+<div class="wrapper-form">
+    <div class="container">
+        <div class="table-responsive" id="no-more-tables" >
+            <div class="table-margin">
+                <table class="table bg-white">
+                    <thead class="bg-dark text-light">
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Pseudo</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Role</th>
+                        <th scope="col">Date d'enregistrement</th>
+                        <th scope="col">Figures</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        {% for user in users %}
+                        <td data-title ='id'>{{ user.id }}</td>
+                        <td data-title ='pseudo'>{{ user.username }}</td>
+                        <td data-title ='email'>{{ user.email }}</td>
+                        <td data-title ='roles'>
+                            {% for role in user.roles %}
+                                {% if role == "ROLE_USER" %}
+                                    Utilisateur
+                                {% elseif role == "ROLE_EDITOR" %}
+                                    Editeur
+                                {% elseif role == "ROLE_ADMIN" %}
+                                    Administrateur<br>
+                                {% elseif role == "ROLE_MODO" %}
+                                    Modérateur<br>
+                                {% endif %}
+                            {% endfor %}
+                        </td>
+                        <td data-title ='enregistré le:'> &nbsp  &nbsp &nbsp
+                            {{ user.registeredAt ? user.registeredAt|date('Y-m-d H:i:s') : '' }}
+                        </td>
+                        <td data-title ='nombre de figures'> &nbsp  &nbsp &nbsp &nbsp  &nbsp &nbsp &nbsp
+                            &nbsp{{ user.tricks|length }}</td>
+                        <td data-title ='action'><a href="{{ path('admin_modify_user', {'id':user.id}) }}" class="btn btn-warning">Modifier</a></td>
+                    </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="10">Il n'y a aucun utilisateur</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
-</section>
+</div>
 {% endblock %}

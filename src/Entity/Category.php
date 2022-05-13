@@ -53,7 +53,7 @@ class Category
     }
 
     /**
-     * @return Collection|Trick[]
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getTricks(): Collection
     {

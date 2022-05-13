@@ -1,3 +1,5 @@
-<div class="form-group">
-    <button type="button" class="btn btn-danger btn-remove">Effacer</button>
-</div>
+<a href= "{{ path('trick_delete_image_edit', {slug: trick.slug,
+    id: image.id, _csrf_token: csrf_token('delete-image-edit')})}}"
+   onclick="return confirm('Etes vous sure?')"
+   class="btn btn-danger" >Supprimer
+</a>

@@ -4,7 +4,6 @@ namespace App\Form;
 
 use App\Entity\Videos;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -24,16 +23,7 @@ class VideoType extends AbstractType
                          'message' => 'Vous ne pouvez inserer des urls issues des plateformes youtube, dailymotion ou vimeo',
                      ]),
                  ],
-             ])
-            /* ->add('delete', ButtonType::class, [
-                 'label_html' => true,
-                 'label' => 'delete',
-                 'attr' => [
-                     'data-action' => 'delete',
-                     'data-target' => '#trick_videos___name__',
-                 ],
-             ])*/
-            ;
+             ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

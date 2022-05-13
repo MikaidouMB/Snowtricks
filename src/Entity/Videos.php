@@ -22,7 +22,6 @@ class Videos
      */
     private ?string $name;
 
-    private $link;
 
     /**
      * @ORM\ManyToOne(targetEntity=Trick::class, inversedBy="videos")
@@ -46,24 +45,6 @@ class Videos
 
         return $this;
     }
-    /**
-     * @return mixed
-     */
-    public function getLink()
-    {
-        return $this->link;
-    }
-
-    /**
-     * @param mixed $link
-     * @return Videos
-     */
-    public function setLink($link)
-    {
-        $this->link = $link;
-        return $this;
-    }
-
 
     public function getTrick(): ?Trick
     {

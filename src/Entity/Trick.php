@@ -22,7 +22,6 @@ class Trick
 {
     public function __construct(){
         ($this->createdAt = new DateTimeImmutable('now'));
-        $this->publishedAt = new DateTimeImmutable('now');
         $this->categories = new ArrayCollection();
         $this->images = new ArrayCollection();
         $this->videos = new ArrayCollection();
@@ -54,17 +53,6 @@ class Trick
      * @ORM\Column(type="datetime_immutable")
      */
     private ?\DateTimeImmutable $createdAt;
-
-    /**
-     * @ORM\Column(type="datetime_immutable", nullable=true)
-     */
-    private ?\DateTimeImmutable $publishedAt;
-
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private ?\DateTimeInterface $editedAt;
-
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Category", inversedBy="tricks")
@@ -133,30 +121,6 @@ class Trick
     public function setCreatedAt(\DateTimeImmutable $createdAt): self
     {
         $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    public function getPublishedAt(): ?\DateTimeImmutable
-    {
-        return $this->publishedAt;
-    }
-
-    public function setPublishedAt(?\DateTimeImmutable $publishedAt): self
-    {
-        $this->publishedAt = $publishedAt;
-
-        return $this;
-    }
-
-    public function getEditedAt(): ?\DateTimeInterface
-    {
-        return $this->editedAt;
-    }
-
-    public function setEditedAt(?\DateTimeInterface $editedAt): self
-    {
-        $this->editedAt = $editedAt;
 
         return $this;
     }

@@ -4,65 +4,51 @@
 
 {% block body %}
     <div class="text-center">
-        <h2>Liste des figures</h2>
+        <h1>Liste des figures</h1>
     </div>
-<div class="d-flex" id="wrapper">
-    <!-- Sidebar-->
-    <div class="border-end bg-white" id="sidebar-wrapper">
-        <div class="list-group list-group-flush">
-            <a class="nav-link" href="{{ path('admin_users') }}">Liste utilisateurs</a>
+    <div class="d-flex" id="wrapper">
+        <div class="border-end" id="sidebar-wrapper">
+            <div class="list-group list-group-flush">
+                <a class="nav-link" href="{{ path('admin_users') }}">Liste utilisateurs</a>
+            </div>
         </div>
     </div>
-</div>
-<section class="bg-light p-5">
-    <div class="table-responsive" id="no-more-tables">
-        <table class="table bg-white">
-            <thead class="bg-dark text-light">
-            <tr>
-                <th scope="col">Id</th>
-                <th scope="col">Rédacteur</th>
-                <th scope="col">Titre</th>
-                <th scope="col">Description</th>
-                <th scope="col">Créé le</th>
-                <th scope="col">Publiée le</th>
-                <th scope="col">Catégorie</th>
-                <th scope="col">Images</th>
-                <th scope="col">Videos</th>
-                <th scope="col">actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        <tr>
-        {% for trick in tricks %}
-
-                <td data-title ='id'>{{ trick.id }}</td>
-                <td data-title = 'pseudo'>{{ trick.user.username }}</td>
-                <td data-title ='titre'>{{ trick.nameFigure }}</td>
-                <td data-title = 'description'>{{ trick.description|slice(0, 40) }}</td>
-                <td data-title = 'créé le'>{{ trick.createdAt ? trick.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td data-title = 'publié le'>{{ trick.publishedAt ? trick.publishedAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td data-title = 'categories'>{{ trick.categories.0.label}}</td>
-                <td data-title ='image'> {% for image in trick.images %}
-                     {{ image.name|slice(0, 10) }}<br>
-                 {% endfor %}</td>
-                <td data-title ='video'> {% for video in trick.videos %}
-                   {{ video.name|slice(0, 10) }}<br>
-                {% endfor %}</td>
-                <td data-title ='actions'>
-                    <a href="{{ path('trick_show', {'slug': trick.slug|slug}) }}">Voir</a>
-                    <a href="{{ path('trick_edit', {'slug': trick.slug|slug, _csrf_token: csrf_token('edit-trick-update')}) }}">Modifier</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="10">aucune figures trouvée</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <div class="wrapper-form">
+        <div class="container">
+            <div class="table-responsive" id="no-more-tables">
+                <table class="table bg-white">
+                    <thead class="bg-dark text-light">
+                        <tr>
+                            <th scope="col">Id</th>
+                            <th scope="col">Rédacteur</th>
+                            <th scope="col">Titre</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Créé le</th>
+                            <th scope="col">Catégorie</th>
+                            <th scope="col">actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                        {% for trick in tricks %}
+                            <td data-title ='id'>{{ trick.id }}</td>
+                            <td data-title = 'pseudo'>{{ trick.user.username }}</td>
+                            <td data-title ='titre'>{{ trick.nameFigure }}</td>
+                            <td data-title = 'description'>{{ trick.description|slice(0, 40) }}</td>
+                            <td data-title = 'créée le'>{{ trick.createdAt ? trick.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                            <td data-title = 'categories'>{{ trick.categories.0.label}}</td>
+                            <td data-title ='actions'>
+                            {{ include('trick/_show_figure.html.twig') }}
+                            {{ include('trick/_edit_form.html.twig') }}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
-</section>
-        {% if isPaginated %}
+    {% if isPaginated %}
         <div class="text-center m-3">
             <nav aria-label="Page navigation example">
                 <ul class="pagination justify-content-center">
@@ -93,6 +79,6 @@
                     {% endif %}
                 </ul>
             </nav>
-            {% endif %}
         </div>
+    {% endif %}
 {% endblock %}

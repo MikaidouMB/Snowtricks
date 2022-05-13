@@ -9,13 +9,11 @@
                 {% if error %}
                     <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
                 {% endif %}
-
                 {% if app.user %}
                     <div class="mb-3 col-sm-3">
                         Bienvenue {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
                     </div>
                 {% endif %}
-
                 <h1>M'authentifier pour accéder à mon espace</h1>
                 <div class="col-12 mt-4">
                     <div class="mt-4 mb-4 col-sm-3">
@@ -27,7 +25,6 @@
                         <div class="mt-2">
                             <input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="form-control" required autofocus>
                         </div>
-
                     </div>
                     <div class="mt-4 mb-4 col-sm-3">
                         <strong>
@@ -39,14 +36,12 @@
                     </div>
                 </div>
                 <input type="hidden" name="_csrf_token"
-                       value="{{ csrf_token('authenticate') }}"
-                >
+                       value="{{ csrf_token('authenticate') }}">
                 <button class="btn btn-primary mt-3" type="submit">
                     Se connecter
                 </button>
-                <a href="{{ path('app_forgot_password') }}" class="d-block text-center text-info text-decoration-none mt-3">Mot de passe oublié</a>
+                <a href="{{ path('app_forgot_password') }}" class="d-block text-center text-info text-decoration-none mt-3">Mot de passe oublié ?</a>
             </form>
         </main>
     </div>
-
 {% endblock %}
