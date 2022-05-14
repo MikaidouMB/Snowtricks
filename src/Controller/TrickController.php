@@ -111,7 +111,6 @@ class TrickController extends AbstractController
                 $this->denyAccessUnlessGranted('edit',$trick);
             }
         }
-
         $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
 
