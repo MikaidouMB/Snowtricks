@@ -26,7 +26,7 @@ class HomeController extends AbstractController
     /**
      * @Route("/home/{page?1}/{nbre?15}", name="app_home",requirements={"page"="\d+"})
      */
-    public function index(ManagerRegistry $doctrine,$page,$nbre,Request $request): Response
+    public function index(ManagerRegistry $doctrine, $page, $nbre): Response
     {
         $repository = $doctrine->getRepository(Trick::class);
         $tricks = $repository->findBy( [],['createdAt' => 'DESC'],$nbre,($page -1) * $nbre);
@@ -94,7 +94,6 @@ class HomeController extends AbstractController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Doctrine\ORM\EntityManagerInterface $entityManager
      * @param \Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface $userPasswordHasher
-     * @param \Doctrine\Persistence\ManagerRegistry $doctrine
      * @param \App\Entity\User $user
      * @param \Symfony\Component\Security\Csrf\CsrfTokenManagerInterface $csrfTokenManager
      * @return Response
@@ -102,7 +101,7 @@ class HomeController extends AbstractController
     public function showUserAccount( Request $request,
                                      EntityManagerInterface $entityManager,
                                      UserPasswordHasherInterface $userPasswordHasher,
-                                     ManagerRegistry $doctrine, User $user,CsrfTokenManagerInterface $csrfTokenManager): Response
+                                     User $user,CsrfTokenManagerInterface $csrfTokenManager): Response
     {
         $token = new CsrfToken('account-edit', $request->query->get('_csrf_token'));
         if (!$csrfTokenManager->isTokenValid($token)) {

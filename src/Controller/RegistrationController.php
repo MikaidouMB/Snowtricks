@@ -33,14 +33,12 @@ class RegistrationController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $registrationToken = $tokenGenerator->generateToken();
-            // encode the plain password
             $user->setRegistrationToken($registrationToken)
                  ->setPassword($userPasswordHasher->hashPassword($user, $form->get('plainPassword')->getData()));
 
             $entityManager->persist($user);
             $entityManager->flush();
 
-            // generate a signed url and email it to the user
             $sendEmail->send([
                 'recipient_email'=> $user->getEmail(),
                 'subject'=> 'Verification de votre adresse email pour activer votre compte',

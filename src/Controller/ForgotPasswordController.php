@@ -75,7 +75,6 @@ class ForgotPasswordController extends AbstractController
                 return $this->redirectToRoute('app_login');
         }
 
-
         return $this->render('forgot_password/forgot_password_step_1.html.twig', [
             'forgotPasswordFormStep1' => $form->createView(),
         ]);
@@ -182,7 +181,7 @@ class ForgotPasswordController extends AbstractController
      */
     private function passwordMustBeModifiedBefore(User $user): string
     {
-        /** @var \DateTimeImmutable $forgotPasswordTokenMustBeVerifiedBefore */
+        /** @var \DateTimeImmutable $passwordMustBeModifiedBefore */
         $passwordMustBeModifiedBefore = $user->getForgotPasswordTokenMustBeVerifiedBefore();
 
         return $passwordMustBeModifiedBefore->format('H\hi');

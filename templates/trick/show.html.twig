@@ -76,7 +76,8 @@
                         {% if app.user %}
                             {% if (app.user.roles.0 == "ROLE_ADMIN") or (app.user.id == trick.user.id) %}
                                 <span>
-                                    <a href= "{{ path('trick_delete_video', {'slug': trick.slug | slug, video_id: video.id,
+                                    <a href= "{{ path('trick_delete_video',
+                                        {'slug': trick.slug | slug, video_id: video.id,
                                         _csrf_token:csrf_token('delete-video')}) }}"
                                        onclick="return confirm('Etes vous sur de vouloir supprimer cette vidéo?')"
                                        class="btn btn-danger">Supprimer

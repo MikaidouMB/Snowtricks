@@ -27,8 +27,9 @@
                         <br>
                         <span>
                             <div class="text-center mt-2">
-                                <a href= "{{ path('trick_delete_image_edit', {slug: trick.slug,
-                                    id: image.id, _csrf_token: csrf_token('delete-image-edit')})}}"
+                                <a href= "{{ path('trick_delete_image_edit',
+                                    {'slug': trick.slug | slug, image: image.id,
+                                        _csrf_token:csrf_token('delete-image-edit')}) }}"
                                     onclick="return confirm('Etes vous sure?')"
                                     class="btn btn-danger" >Supprimer
                                 </a>

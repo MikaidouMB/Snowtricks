@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\Trick;
 use App\Entity\User;
 use App\Form\EditUserType;
-use App\Repository\TrickRepository;
 use App\Repository\UserRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -41,14 +40,13 @@ class AdminController extends AbstractController
      * @param \Doctrine\Persistence\ManagerRegistry $doctrine
      * @param $page
      * @param $nbre
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param TrickRepository $trickRepository
      * @return Response
      */
-    public function indexTricks(ManagerRegistry $doctrine,$page,$nbre,Request $request,TrickRepository $trickRepository): Response
+    public function indexTricks(ManagerRegistry $doctrine,$page, $nbre): Response
     {
         $repository = $doctrine->getRepository(Trick::class);
         $tricks = $repository->findBy( [],[],$nbre,($page -1) * $nbre);
+        /** @var \Doctrine\Persistence\ObjectRepository $nbTricks */
         $nbTricks = $repository->count([]);
         $nbrePage = ceil($nbTricks / $nbre);
         return $this->render('trick/index.html.twig', [
@@ -74,7 +72,7 @@ class AdminController extends AbstractController
      * Modifier un utilisateur
      * @Route("/user/modify/{id}",name="modify_user")
      */
-    public function editUser(User $user, Request $request): \Symfony\Component\HttpFoundation\RedirectResponse|Response
+    public function editUser(User $user, Request $request): Response
     {
         $form = $this->createForm(EditUserType::class, $user);
         $form->handleRequest($request);
