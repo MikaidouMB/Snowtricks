@@ -40,6 +40,7 @@ security:
 
     role_hierarchy:
         ROLE_EDITOR: ROLE_USER
+        ROLE_MODO: ROLE_MODO
         ROLE_ADMIN: ROLE_EDITOR
 
 when@test:

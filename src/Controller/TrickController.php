@@ -107,6 +107,8 @@ class TrickController extends AbstractController
             $token = new UsernamePasswordToken($this->getUser(), 'none', 'none',
                 $this->getUser()->getRoles());
             if(!$this->accessDecisionManager->decide($token, (array)'ROLE_ADMIN') and
+                !$this->accessDecisionManager->decide($token, (array)'ROLE_MODO')
+                and
                 $this->getUser()->getUserIdentifier() !== $trick->getUser()->getUserIdentifier()){
                 $this->denyAccessUnlessGranted('edit',$trick);
             }

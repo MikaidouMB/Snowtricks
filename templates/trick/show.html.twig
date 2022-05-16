@@ -29,7 +29,7 @@
                 <img class="img-fluid" src="{{ asset('uploads/' ~ trick.images.0.name)| imagine_filter('welcome7') }}" alt="">
             </div>
             {% if app.user %}
-                {% if (app.user.roles.0 == "ROLE_ADMIN") or (app.user.id == trick.user.id) %}
+                {% if (app.user.roles.0 == "ROLE_ADMIN")or (app.user.roles.0 == "ROLE_MODO") or (app.user.id == trick.user.id) %}
                     <div class="edit-btn btn-xs">
                         {{ include('trick/_edit_form.html.twig') }}
                         <a href= "{{ path('trick_delete_image_show', {'slug': trick.slug | slug, id: images.0.id, _csrf_token: csrf_token('delete-image')}) }}" onclick="return confirm('Etes-vous sure de vouloir supprimer cette image?')"
@@ -50,7 +50,7 @@
                         <img class="gallery-index" src=" {{ asset('/uploads/' ~ image.name)| imagine_filter('imgs') }}" alt="Image" />
                         <br/>
                         {% if app.user %}
-                            {% if (app.user.roles.0 == "ROLE_ADMIN") or (app.user.id == trick.user.id) %}
+                            {% if (app.user.roles.0 == "ROLE_ADMIN")or (app.user.roles.0 == "ROLE_MODO") or (app.user.id == trick.user.id) %}
                                 <span>
                                     <a href= "{{ path('trick_delete_image_show', {'slug': trick.slug | slug, id: images.0.id,
                                         csrf_token: csrf_token('delete-image')}) }}"
@@ -74,7 +74,7 @@
                         </iframe>
                         <br/>
                         {% if app.user %}
-                            {% if (app.user.roles.0 == "ROLE_ADMIN") or (app.user.id == trick.user.id) %}
+                            {% if (app.user.roles.0 == "ROLE_ADMIN")or (app.user.roles.0 == "ROLE_MODO") or (app.user.id == trick.user.id) %}
                                 <span>
                                     <a href= "{{ path('trick_delete_video',
                                         {'slug': trick.slug | slug, video_id: video.id,
@@ -95,16 +95,18 @@
         <div class="row text-center mt-5">
             <strong>{{ trick.nameFigure }}</strong>
         </div>
-        <div class="row text-center mt-5 m-lg-3">
-            <strong>Description</strong> :  {{ trick.description }}
+        <div class="row text-center mt-5 m-lg-5">
+            <strong>Description:</strong>
+            {{ trick.description }}
         </div>
-        <div class="col border text-center mt-5">
-            Créer le : <strong>
+        <div class="col border text-center mt-5 mb-4 m-lg-5">
+            <strong>  Créer par </strong>{{ trick.user.username }}<br>
+            <strong>Le : </strong>
                 {{ trick.createdAt ? trick.createdAt|date('d/m/Y') }} à {{ trick.createdAt|date('H:i:s') }}
-            </strong>
         </div>
-        <div class="col border text-center mb-4">
-            Categorie: <strong>{{ trick.categories.0.label}}</strong>
+        <div class="col border text-center mb-4 m-lg-5">
+            <strong> Categorie: </strong>
+            {{ trick.categories.0.label}}
         </div>
         <hr>
         {% if app.user %}
