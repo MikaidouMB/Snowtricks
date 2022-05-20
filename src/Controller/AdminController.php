@@ -85,7 +85,7 @@ class AdminController extends AbstractController
     ): Response
     {
         $messageNotValidated = $doctrine->getRepository(Message::class);
-        $messagesNotValidated = $messageNotValidated->findBy(['isValidated' => null ]);
+        $messagesNotValidated = $messageNotValidated->findBy(['isValidated' => 0 ]);
         $nbMessages = count($messagesNotValidated);
         return $this->render("admin/comments_list.html.twig", [
             'messages' => $messageRepository->findAll(),
