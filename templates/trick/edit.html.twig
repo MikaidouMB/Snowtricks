@@ -55,17 +55,17 @@
                 {% endif %}
                     <div id="videos"
                          class="video-edit"
-                            data-prototype="{{ include("trick/_video.html.twig", {form: form.videos.vars.prototype})|e("html_attr")}}"
+                            data-prototype="{{ include("trick/_delete_form_video.html.twig", {form: form.videos.vars.prototype})|e("html_attr")}}"
                             data-index="{{ form.videos|length > 0 ? form.videos|last.vars.name + 1 : 0 }}">
                         {% for video in form.videos %}
                             <div class="col-4">
-                                {{ include("trick/_video.html.twig", {form: video}) }}
+                                {{ include("trick/_delete_form_video.html.twig", {form: video}) }}
                             </div><br>
                         {% endfor %}
                     </div>
                 </div>
                 <div class="text-center">
-                    {{ include('trick/figure_form.html.twig') }}
+                    {{ include('trick/_delete_trick_form.html.twig') }}
                 </div>
         {{ form_end(form, {render_rest:false}) }}
         </div>

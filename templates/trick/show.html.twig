@@ -3,6 +3,11 @@
 {% block title %}Trick{% endblock %}
 
 {% block body %}
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success" role="alert">
+            {{ message}}
+        </div>
+    {% endfor %}
     {% if images is empty %}
         <div class="container-fluid">
             <div class="img-ajust">
@@ -14,7 +19,7 @@
             {% if app.user %}
                 {% if (app.user.roles.0 == "ROLE_ADMIN") or  (app.user.roles.0 == "ROLE_EDITOR")or (app.user.id == trick.user.id) %}
                     <div class="edit-btn btn-xs">
-                        {{ include('trick/_edit_form.html.twig') }}
+                        {{ include('trick/_edit_form_trick.html.twig') }}
                     </div>
                 {% endif %}
             {% endif %}
@@ -31,7 +36,7 @@
             {% if app.user %}
                 {% if (app.user.roles.0 == "ROLE_ADMIN")or (app.user.roles.0 == "ROLE_EDITOR") or (app.user.id == trick.user.id) %}
                     <div class="edit-btn btn-xs">
-                        {{ include('trick/_edit_form.html.twig') }}
+                        {{ include('trick/_edit_form_trick.html.twig') }}
                         <a href= "{{ path('trick_delete_image_show', {'slug': trick.slug | slug, id: images.0.id, _csrf_token: csrf_token('delete-image')}) }}" onclick="return confirm('Etes-vous sure de vouloir supprimer cette image?')"
                            class="btn btn-danger">Supprimer
                         </a>
@@ -57,7 +62,7 @@
                                        onclick="return confirm('Etes-vous sure de vouloir supprimer cette image?')"
                                        class="btn btn-danger">Supprimer
                                     </a>
-                                     {{ include('trick/_edit_form.html.twig') }}
+                                     {{ include('trick/_edit_form_trick.html.twig') }}
                                 </span>
                             {% endif %}
                         {% endif %}
@@ -82,7 +87,7 @@
                                        onclick="return confirm('Etes vous sur de vouloir supprimer cette vidéo?')"
                                        class="btn btn-danger">Supprimer
                                     </a>
-                                    {{ include('trick/_edit_form.html.twig') }}
+                                    {{ include('trick/_edit_form_trick.html.twig') }}
                                 </span>
                             {% endif %}
                         {% endif %}
@@ -111,7 +116,7 @@
         <hr>
         {% if app.user %}
             <div class="mb-4">
-                {{ include('trick/_form_message.html.twig', {'button_label': 'Laisser un commentaire'}) }}
+                {{ include('trick/_submit_form_message.html.twig', {'button_label': 'Laisser un commentaire'}) }}
             </div>
         {% endif %}
         {% if trick.messages is not empty %}

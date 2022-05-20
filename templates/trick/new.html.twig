@@ -27,16 +27,16 @@
                 <button type="button" class="btn btn-warning btn-new mb-4" id="btn-add" data-collection="#videos">Ajouter une video</button>
             </div>
             <div id="videos" class="video-edit"
-                 data-prototype="{{ include("trick/_video.html.twig", {form: form.videos.vars.prototype})|e("html_attr")}}"
+                 data-prototype="{{ include("trick/_delete_form_video.html.twig", {form: form.videos.vars.prototype})|e("html_attr")}}"
                  data-index="{{ form.videos|length > 0 ? form.videos|last.vars.name + 1 : 0 }}">
                 {% for video in form.videos %}
                     <div class="col-4">
-                        {{ include("trick/_video.html.twig", {form: video}) }}
+                        {{ include("trick/_delete_form_video.html.twig", {form: video}) }}
                     </div>
                 {% endfor %}
             </div>
             <div class="text-center">
-                {{ include('trick/_form.html.twig') }}
+                {{ include('trick/_submit_form.html.twig') }}
             </div>
             {{ form_end(form, {render_rest:false}) }}
         </div>
