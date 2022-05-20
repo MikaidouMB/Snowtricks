@@ -57,10 +57,8 @@ Versions used in this project:
 This project is coded in __PHP8__, __HTML5__, __CSS3__ and __JS__.  
 Dependencies manager: __Composer__  
 PHP packages, included via Composer:
-* Symfony/Dotenv ^5.2 ([more info](https://github.com/symfony/dotenv)) 
-* "guzzlehttp/psr7": "^1.8",
-* "http-interop/response-sender": "^1.0",
-  
+* Symfony/Dotenv ^5.4 ([more info](https://github.com/symfony/dotenv)) 
+* "LiipImagineBundle"  
   CSS/JS libraries, included via CDN links:
 * Bootstrap 4
 * Font-awesome ^5.15.1
