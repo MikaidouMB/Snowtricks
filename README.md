@@ -86,18 +86,6 @@ SMTP_PASSWORD=password
 ADMIN_EMAIL=your@email.com
 ADMIN_NAME=yourname
 ```
-
-#### ___DB schema___
-![Templates tree](diagrammes/data model.png)
-![Templates tree](diagrammes/Ajout_figure_et_commentaire.png)
-![Templates tree](diagrammes/cas_utilisations.png)
-![Templates tree](diagrammes/classes.png)
-![Templates tree](diagrammes/Validation_commentaire_et_assignation_role.png)
-
-* Clone :
-```bash
-git clone https://github.com/MikaidouMB/BlogProject.git
-```
 ---  
 ### __Install Composer__
 1.  Install __Composer__ by following [the official instructions].(https://getcomposer.org/download/).
