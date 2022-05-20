@@ -50,6 +50,11 @@ class Message
      */
     private ?Trick $trick;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private ?bool $isValidated;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -99,6 +104,18 @@ class Message
     public function setTrick(?Trick $trick): self
     {
         $this->trick = $trick;
+
+        return $this;
+    }
+
+    public function getIsValidated(): ?bool
+    {
+        return $this->isValidated;
+    }
+
+    public function setIsValidated(?bool $isValidated): self
+    {
+        $this->isValidated = $isValidated;
 
         return $this;
     }

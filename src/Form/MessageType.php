@@ -15,7 +15,8 @@ class MessageType extends AbstractType
         $builder
             ->add('content',TextareaType::class, [
                 'label' => ' '
-            ]);
+            ])
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void

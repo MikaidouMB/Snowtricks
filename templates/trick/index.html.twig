@@ -6,13 +6,18 @@
     <div class="text-center">
         <h1>Liste des figures</h1>
     </div>
+    {% if is_granted('ROLE_ADMIN')%}
     <div class="d-flex" id="wrapper">
         <div class="border-end" id="sidebar-wrapper">
             <div class="list-group list-group-flush">
-                <a class="nav-link" href="{{ path('admin_users') }}">Liste utilisateurs</a>
+                <a class="nav-link" href="{{ path('admin_users') }}">Liste des utilisateurs</a>
+            </div>
+            <div class="list-group list-group-flush">
+                <a class="nav-link" href="{{ path('admin_comments') }}">Liste des commentaires</a>
             </div>
         </div>
     </div>
+    {% endif %}
     <div class="wrapper-form">
         <div class="container">
             <div class="table-responsive" id="no-more-tables">

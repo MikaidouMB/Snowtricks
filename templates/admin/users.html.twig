@@ -6,13 +6,25 @@
     <div class="text-center">
         <h1>Liste des utilisateurs</h1>
     </div>
+    <div class="container">
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success" role="alert">
+                {{ message}}
+            </div>
+        {% endfor %}
+    </div>
+    {% if is_granted('ROLE_ADMIN')%}
     <div class="d-flex" id="wrapper">
         <div class="border-end" id="sidebar-wrapper">
             <div class="list-group list-group-flush">
-            <a class="nav-link" href="{{ path('admin_trick_index') }}">Liste Tricks</a>
+            <a class="nav-link" href="{{ path('admin_trick_index') }}">Liste des figures</a>
+            </div>
+            <div class="list-group list-group-flush">
+                <a class="nav-link" href="{{ path('admin_comments') }}">Liste des commentaires</a>
             </div>
         </div>
     </div>
+    {% endif %}
 <div class="wrapper-form">
     <div class="container">
         <div class="table-responsive" id="no-more-tables" >
@@ -38,13 +50,11 @@
                         <td data-title ='roles'>
                             {% for role in user.roles %}
                                 {% if role == "ROLE_USER" %}
-                                    Utilisateur
-                                {% elseif role == "ROLE_EDITOR" %}
-                                    Editeur
+                                    Utilisateur,
                                 {% elseif role == "ROLE_ADMIN" %}
-                                    Administrateur<br>
+                                    Administrateur, <br>
                                 {% elseif role == "ROLE_MODO" %}
-                                    Modérateur<br>
+                                    Modérateur, <br>
                                 {% endif %}
                             {% endfor %}
                         </td>
@@ -53,7 +63,9 @@
                         </td>
                         <td data-title ='nombre de figures'> &nbsp  &nbsp &nbsp &nbsp  &nbsp &nbsp &nbsp
                             &nbsp{{ user.tricks|length }}</td>
-                        <td data-title ='action'><a href="{{ path('admin_modify_user', {'id':user.id}) }}" class="btn btn-warning">Modifier</a></td>
+                        <td data-title ='action'>
+                            <a href="{{ path('admin_modify_user', {'id':user.id}) }}" class="btn btn-warning">Modifier</a>
+                        </td>
                     </tr>
                     {% else %}
                         <tr>

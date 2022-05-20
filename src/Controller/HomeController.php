@@ -111,7 +111,6 @@ class HomeController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             if ($form->get('password')->getData() != null){
                 $user->setPassword($userPasswordHasher->hashPassword($user, $form->get('password')->getData()));
             }

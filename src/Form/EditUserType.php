@@ -15,18 +15,6 @@ class EditUserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('email', EmailType::class, [
-                'label'=> 'Email :',
-                'constraints' => [
-                    new NotBlank([
-                        'message'=> 'Merci de saisir une adresse email'
-                    ])
-                ],
-                'required' => true,
-                'attr' => [
-                    'class'=>'form-control'
-                ]
-            ])
             ->add('roles', ChoiceType::class, [
 
                 'choices'=> [

@@ -26,6 +26,9 @@ class AppFixtures extends Fixture
        $this->hasher = $hasher;
     }
 
+    /**
+     * @throws \Exception
+     */
     public function load(ObjectManager $manager)
     {
         $faker = Faker\Factory::create();
@@ -72,6 +75,8 @@ class AppFixtures extends Fixture
                 $user->setRoles((array)array_rand($array));
                 $manager->persist($user);
 
+                $statusMessage = random_int(0, 1);
+                $message->setIsValidated($statusMessage);
                 $message->setContent($faker->realText(50));
                 $message->setUser($user);
                 $message->setTrick($trick);

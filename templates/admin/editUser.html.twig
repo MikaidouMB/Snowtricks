@@ -7,10 +7,7 @@
     <div class="container">
         <h1>Modifier utilisateur</h1>
             {{ form_start(userForm) }}
-        <div class="col-sm-3 mb-4 ">
-            {{ form_row(userForm.email) }}
-        </div>
-        <div class="col-md-6 mb-4 ">
+        <div class="col-md-6 mb-4 mt-5 ">
             {{ form_row(userForm.roles) }}
             <button type="submit" class="btn btn-primary d-block mt-5" title="">
                 valider

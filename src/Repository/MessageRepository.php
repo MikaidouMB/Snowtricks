@@ -3,6 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\Message;
+use App\Entity\Trick;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -18,4 +20,5 @@ class MessageRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Message::class);
     }
+
 }

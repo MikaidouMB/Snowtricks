@@ -79,15 +79,14 @@ class MessageController extends AbstractController
     }
 
     /**
-     * @Route("/delete/{slug}/{id}", name="message_delete", methods={"DELETE", "GET", "POST"})
+     * @Route("/delete/{id}/", name="message_delete", methods={"DELETE", "GET", "POST"})
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param $slug
      * @param \App\Entity\Message $message
      * @param \Doctrine\ORM\EntityManagerInterface $entityManager
      * @param \Symfony\Component\Security\Csrf\CsrfTokenManagerInterface $csrfTokenManager
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function delete(Request $request, $slug, Message $message, EntityManagerInterface $entityManager,
+    public function delete(Request $request,Message $message, EntityManagerInterface $entityManager,
                            CsrfTokenManagerInterface $csrfTokenManager): Response
     {
         $token = new CsrfToken('delete-message', $request->query->get('_csrf_token'));
@@ -96,7 +95,10 @@ class MessageController extends AbstractController
         }
         $entityManager->remove($message);
         $entityManager->flush();
-
-        return $this->redirectToRoute('trick_show',['slug'=> $slug],Response::HTTP_SEE_OTHER);
+        $this->addFlash(
+            'success',
+            'Le commentaire a bien été supprimée'
+        );
+        return $this->redirectToRoute('admin_comments',[],Response::HTTP_SEE_OTHER);
     }
 }
