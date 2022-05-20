@@ -104,7 +104,7 @@ Dependencies should be installed in your project (check _vendor_ directory).
 * [Twig](https://twig.symfony.com/doc/2.x/tags/if.html)
 * [Font Awesome](https://fontawesome.com/)
 
-## Améliorations possibles
+## Potential improvements
 * Write Services
 * Notification developpement
 * Medias(photo) management
