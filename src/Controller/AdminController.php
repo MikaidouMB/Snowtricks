@@ -55,7 +55,7 @@ class AdminController extends AbstractController
         $nbTricks = $repository->count([]);
 
         $nbrePage = ceil($nbTricks / $nbre);
-        return $this->render('trick/index.html.twig', [
+        return $this->render('admin/index.html.twig', [
             'tricks' => $tricks,
             'isPaginated' => true,
             'nbrePage' => (string)$nbrePage,
