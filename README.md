@@ -110,3 +110,4 @@ Dependencies should be installed in your project (check _vendor_ directory).
 * Medias(photo) management
 # Snowtricks
 # Snowtricks
+# Snowtricks
