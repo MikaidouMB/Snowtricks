@@ -46,6 +46,7 @@ jobs:
 
       - name: Build Node assets
         env:
+          APP_SECRET: c16e26dba70ef2005722919514705c3b
           CI: true
           SITE_URL: ${{ inputs.site-url }}
         run: |
@@ -69,7 +70,7 @@ jobs:
         with:
           api-key: ${{ secrets.IONOS_API_KEY }}
           service-host: api-eu.ionos.space
-          project-id: e3ea51b0-3360-4c81-a9b0-6d3c359aab08
+          project-id: aa106a5a-0c98-4484-bad3-7ed34c005467
           branch-id: ${{ inputs.branch-id }}
           version: ${{ github.sha }}
           folder: ${{ env.DEPLOYMENT_FOLDER }}
