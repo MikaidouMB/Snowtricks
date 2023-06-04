@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "22ef3334c18e32a01f3af6a024a43419",
+    "content-hash": "2d42f19b143b4cd2715ca43588084127",
     "packages": [
         {
             "name": "bheller/images-generator",
@@ -7596,7 +7596,7 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=8.1",
+        "php": ">=7.4",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "ext-json": "*"
