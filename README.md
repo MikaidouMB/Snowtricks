@@ -109,3 +109,4 @@ Dependencies should be installed in your project (check _vendor_ directory).
 * Notification developpement
 * Medias(photo) management
 # Snowtricks
+# Snowtricks
