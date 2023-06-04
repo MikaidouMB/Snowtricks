@@ -110,16 +110,16 @@ jobs:
           action: update-status
           status: ${{ job.status }}
 
- # notify-deployment-finished:
-  #  needs: deploy-to-ionos
-   # if: ${{ github.event_name == 'workflow_dispatch' && always() }}
-    #runs-on: ubuntu-latest
-    #steps:
-#      - name: Notify all deployments finished
-#        uses: ionos-deploy-now/project-action@v1
-#        with:
-#          api-key: ${{ secrets.IONOS_API_KEY }}
-#          service-host: api-eu.ionos.space
-#          project-id: ${{ inputs.project-id }}
-#          branch-id: ${{ inputs.branch-id }}
-#          action: set-deployments-finished
+  notify-deployment-finished:
+    needs: deploy-to-ionos
+    if: ${{ github.event_name == 'workflow_dispatch' && always() }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Notify all deployments finished
+        uses: ionos-deploy-now/project-action@v1
+        with:
+          api-key: ${{ secrets.IONOS_API_KEY }}
+          service-host: api-eu.ionos.space
+          project-id: ${{ inputs.project-id }}
+          branch-id: ${{ inputs.branch-id }}
+          action: set-deployments-finished
