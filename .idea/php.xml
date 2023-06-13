@@ -99,4 +99,20 @@
       <path value="$PROJECT_DIR$/vendor/bheller/images-generator" />
     </include_path>
   </component>
+<<<<<<< HEAD
+=======
+  <component name="PhpProjectSharedConfiguration" php_language_level="8.1">
+    <option name="suggestChangeDefaultLanguageLevel" value="false" />
+  </component>
+  <component name="PhpStan">
+    <PhpStan_settings>
+      <PhpStanConfiguration tool_path="$PROJECT_DIR$/vendor/bin/phpstan" />
+    </PhpStan_settings>
+  </component>
+  <component name="PhpUnit">
+    <phpunit_settings>
+      <PhpUnitSettings custom_loader_path="$PROJECT_DIR$/vendor/autoload.php" />
+    </phpunit_settings>
+  </component>
+>>>>>>> 5a49d15 (add show func migration and update webpack)
 </project>

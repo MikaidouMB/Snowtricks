@@ -4,7 +4,11 @@ import { startStimulusApp } from '@symfony/stimulus-bridge';
 export const app = startStimulusApp(require.context(
     '@symfony/stimulus-bridge/lazy-controller-loader!./controllers',
     true,
+<<<<<<< HEAD
     /\.[jt]sx?$/
+=======
+    /\.(j|t)sx?$/
+>>>>>>> 5a49d15 (add show func migration and update webpack)
 ));
 
 // register any custom, 3rd party controllers here

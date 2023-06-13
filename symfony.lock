@@ -33,6 +33,7 @@
         "version": "v0.5.3"
     },
     "doctrine/doctrine-bundle": {
+<<<<<<< HEAD
         "version": "2.9",
         "recipe": {
             "repo": "github.com/symfony/recipes",
@@ -42,6 +43,19 @@
         },
         "files": [
             "config/packages/doctrine.yaml",
+=======
+        "version": "2.5",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "2.4",
+            "ref": "f98f1affe028f8153a459d15f220ada3826b5aa2"
+        },
+        "files": [
+            "config/packages/doctrine.yaml",
+            "config/packages/prod/doctrine.yaml",
+            "config/packages/test/doctrine.yaml",
+>>>>>>> 5a49d15 (add show func migration and update webpack)
             "src/Entity/.gitignore",
             "src/Repository/.gitignore"
         ]
@@ -62,9 +76,15 @@
         "version": "3.2",
         "recipe": {
             "repo": "github.com/symfony/recipes",
+<<<<<<< HEAD
             "branch": "main",
             "version": "3.1",
             "ref": "1d01ec03c6ecbd67c3375c5478c9a423ae5d6a33"
+=======
+            "branch": "master",
+            "version": "3.1",
+            "ref": "ee609429c9ee23e22d6fa5728211768f51ed2818"
+>>>>>>> 5a49d15 (add show func migration and update webpack)
         },
         "files": [
             "config/packages/doctrine_migrations.yaml",
@@ -177,6 +197,21 @@
             "bin/console"
         ]
     },
+<<<<<<< HEAD
+=======
+    "symfony/debug-bundle": {
+        "version": "5.4",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "5.3",
+            "ref": "5aa8aa48234c8eb6dbdd7b3cd5d791485d2cec4b"
+        },
+        "files": [
+            "config/packages/debug.yaml"
+        ]
+    },
+>>>>>>> 5a49d15 (add show func migration and update webpack)
     "symfony/dependency-injection": {
         "version": "v5.4.3"
     },
@@ -208,12 +243,21 @@
         "version": "v5.4.3"
     },
     "symfony/flex": {
+<<<<<<< HEAD
         "version": "1.20",
         "recipe": {
             "repo": "github.com/symfony/recipes",
             "branch": "main",
             "version": "1.0",
             "ref": "146251ae39e06a95be0fe3d13c807bcf3938b172"
+=======
+        "version": "1.18",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "1.0",
+            "ref": "c0eeb50665f0f77226616b6038a9b06c03752d8e"
+>>>>>>> 5a49d15 (add show func migration and update webpack)
         },
         "files": [
             ".env"
@@ -260,9 +304,15 @@
         "version": "5.4",
         "recipe": {
             "repo": "github.com/symfony/recipes",
+<<<<<<< HEAD
             "branch": "main",
             "version": "4.3",
             "ref": "2bf89438209656b85b9a49238c4467bff1b1f939"
+=======
+            "branch": "master",
+            "version": "4.3",
+            "ref": "bbfc7e27257d3a3f12a6fb0a42540a42d9623a37"
+>>>>>>> 5a49d15 (add show func migration and update webpack)
         },
         "files": [
             "config/packages/mailer.yaml"
@@ -326,9 +376,15 @@
         "version": "5.4",
         "recipe": {
             "repo": "github.com/symfony/recipes",
+<<<<<<< HEAD
             "branch": "main",
             "version": "5.3",
             "ref": "85de1d8ae45b284c3c84b668171d2615049e698f"
+=======
+            "branch": "master",
+            "version": "5.3",
+            "ref": "44633353926a0382d7dfb0530922c5c0b30fae11"
+>>>>>>> 5a49d15 (add show func migration and update webpack)
         },
         "files": [
             "config/packages/routing.yaml",
@@ -342,9 +398,15 @@
         "version": "5.4",
         "recipe": {
             "repo": "github.com/symfony/recipes",
+<<<<<<< HEAD
             "branch": "main",
             "version": "5.3",
             "ref": "98f1f2b0d635908c2b40f3675da2d23b1a069d30"
+=======
+            "branch": "master",
+            "version": "5.3",
+            "ref": "09b5e809bd7a992061febd05b797c64a2d93b5cd"
+>>>>>>> 5a49d15 (add show func migration and update webpack)
         },
         "files": [
             "config/packages/security.yaml"
@@ -397,9 +459,15 @@
         "version": "5.4",
         "recipe": {
             "repo": "github.com/symfony/recipes",
+<<<<<<< HEAD
             "branch": "main",
             "version": "5.4",
             "ref": "bb2178c57eee79e6be0b297aa96fc0c0def81387"
+=======
+            "branch": "master",
+            "version": "5.4",
+            "ref": "bffbb8f1a849736e64006735afae730cb428b6ff"
+>>>>>>> 5a49d15 (add show func migration and update webpack)
         },
         "files": [
             "config/packages/twig.yaml",
@@ -410,11 +478,20 @@
         "version": "5.4",
         "recipe": {
             "repo": "github.com/symfony/recipes",
+<<<<<<< HEAD
             "branch": "main",
             "version": "5.3",
             "ref": "c32cfd98f714894c4f128bb99aa2530c1227603c"
         },
         "files": [
+=======
+            "branch": "master",
+            "version": "4.3",
+            "ref": "3eb8df139ec05414489d55b97603c5f6ca0c44cb"
+        },
+        "files": [
+            "config/packages/test/validator.yaml",
+>>>>>>> 5a49d15 (add show func migration and update webpack)
             "config/packages/validator.yaml"
         ]
     },
@@ -428,6 +505,7 @@
         "version": "5.4",
         "recipe": {
             "repo": "github.com/symfony/recipes",
+<<<<<<< HEAD
             "branch": "main",
             "version": "5.3",
             "ref": "24bbc3d84ef2f427f82104f766014e799eefcc3e"
@@ -444,6 +522,25 @@
             "branch": "main",
             "version": "1.10",
             "ref": "eff2e505d4557c967b6710fe06bd947ba555cae5"
+=======
+            "branch": "master",
+            "version": "3.3",
+            "ref": "6bdfa1a95f6b2e677ab985cd1af2eae35d62e0f6"
+        },
+        "files": [
+            "config/packages/dev/web_profiler.yaml",
+            "config/packages/test/web_profiler.yaml",
+            "config/routes/dev/web_profiler.yaml"
+        ]
+    },
+    "symfony/webpack-encore-bundle": {
+        "version": "1.14",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "1.9",
+            "ref": "1723ab94a3ba021bcd69f6b907492668821c857f"
+>>>>>>> 5a49d15 (add show func migration and update webpack)
         },
         "files": [
             "assets/app.js",
@@ -460,7 +557,11 @@
         "version": "v5.4.3"
     },
     "twig/extra-bundle": {
+<<<<<<< HEAD
         "version": "v3.6.0"
+=======
+        "version": "v3.3.7"
+>>>>>>> 5a49d15 (add show func migration and update webpack)
     },
     "twig/string-extra": {
         "version": "v3.3.5"

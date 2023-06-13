@@ -2,6 +2,10 @@ liip_imagine:
     loaders:
         default:
             filesystem:
+<<<<<<< HEAD
+=======
+                data_root: '%kernel.project_dir%/public'
+>>>>>>> 5a49d15 (add show func migration and update webpack)
     filter_sets:
 
         # the name of the "filter set"

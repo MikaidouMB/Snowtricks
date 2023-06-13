@@ -11,14 +11,22 @@ Encore
     .setOutputPath('public/build/')
     // public path used by the web server to access the output path
     .setPublicPath('/build')
+<<<<<<< HEAD
     // only needed for CDN's or subdirectory deploy
+=======
+    // only needed for CDN's or sub-directory deploy
+>>>>>>> 5a49d15 (add show func migration and update webpack)
     //.setManifestKeyPrefix('build/')
 
     /*
      * ENTRY CONFIG
      *
      * Each entry will result in one JavaScript file (e.g. app.js)
+<<<<<<< HEAD
      * and one CSS file (e.g. app.css) if your JavaScript imports CSS.
+=======
+     * and one CSS file (e.g. app.scss) if your JavaScript imports CSS.
+>>>>>>> 5a49d15 (add show func migration and update webpack)
      */
     .addEntry('app', './assets/app.js')
 
@@ -45,6 +53,7 @@ Encore
     // enables hashed filenames (e.g. app.abc123.css)
     .enableVersioning(Encore.isProduction())
 
+<<<<<<< HEAD
     // configure Babel
     // .configureBabel((config) => {
     //     config.plugins.push('@babel/a-babel-plugin');
@@ -58,6 +67,20 @@ Encore
 
     // enables Sass/SCSS support
     //.enableSassLoader()
+=======
+    .configureBabel((config) => {
+        config.plugins.push('@babel/plugin-proposal-class-properties');
+    })
+
+    // enables @babel/preset-env polyfills
+    .configureBabelPresetEnv((config) => {
+        config.useBuiltIns = 'usage';
+        config.corejs = 3;
+    })
+
+    // enables Sass/SCSS support
+    .enableSassLoader()
+>>>>>>> 5a49d15 (add show func migration and update webpack)
 
     // uncomment if you use TypeScript
     //.enableTypeScriptLoader()

@@ -1,6 +1,11 @@
 twig:
     default_path: '%kernel.project_dir%/templates'
+<<<<<<< HEAD
 
+=======
+    form_themes:
+        - 'bootstrap_4_layout.html.twig'
+>>>>>>> 5a49d15 (add show func migration and update webpack)
 when@test:
     twig:
         strict_variables: true

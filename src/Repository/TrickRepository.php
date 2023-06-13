@@ -20,6 +20,7 @@ class TrickRepository extends ServiceEntityRepository
         parent::__construct($registry, Trick::class);
     }
 
+<<<<<<< HEAD
     // /**
     //  * @return Trick[] Returns an array of Trick objects
     //  */
@@ -36,6 +37,15 @@ class TrickRepository extends ServiceEntityRepository
         ;
     }
     */
+=======
+    public function countTricks(): int
+    {
+        return $this->createQueryBuilder('t')
+            ->select('COUNT(t.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+>>>>>>> 5a49d15 (add show func migration and update webpack)
 
 
 

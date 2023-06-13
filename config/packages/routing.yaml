@@ -10,3 +10,8 @@ when@prod:
     framework:
         router:
             strict_requirements: null
+<<<<<<< HEAD
+=======
+            _liip_imagine:
+                resource: "@LiipImagineBundle/Resources/config/routing.yaml"
+>>>>>>> 5a49d15 (add show func migration and update webpack)

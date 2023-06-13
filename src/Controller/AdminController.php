@@ -127,4 +127,8 @@ class AdminController extends AbstractController
         $entityManager->flush();
         return $this->redirectToRoute('admin_comments',[],Response::HTTP_SEE_OTHER);
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 5a49d15 (add show func migration and update webpack)

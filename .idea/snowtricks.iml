@@ -103,9 +103,13 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+<<<<<<< HEAD
     <orderEntry type="library" name="bootstrap" level="application" />
     <orderEntry type="library" name="bootstrap-icons" level="application" />
     <orderEntry type="library" name="jquery" level="application" />
+=======
+    <orderEntry type="library" name="bootstrap-icons" level="application" />
+>>>>>>> 5a49d15 (add show func migration and update webpack)
     <orderEntry type="library" name="jquery-3.2.1" level="application" />
     <orderEntry type="library" name="jquery-3.2.1.slim" level="application" />
     <orderEntry type="library" name="jquery-3.3.1.slim" level="application" />
@@ -118,6 +122,9 @@
     <orderEntry type="library" name="vquery" level="application" />
     <orderEntry type="library" name="axios" level="application" />
     <orderEntry type="library" name="a076d05399" level="application" />
+<<<<<<< HEAD
     <orderEntry type="library" name="font-awesome" level="application" />
+=======
+>>>>>>> 5a49d15 (add show func migration and update webpack)
   </component>
 </module>

@@ -1,3 +1,9 @@
 framework:
     mailer:
         dsn: '%env(MAILER_DSN)%'
+<<<<<<< HEAD
+=======
+      # envelope:
+       #     recipients:
+        #        '%env(MAILER_SENDER_EMAIL)%'
+>>>>>>> 5a49d15 (add show func migration and update webpack)

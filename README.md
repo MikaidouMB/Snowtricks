@@ -108,6 +108,9 @@ Dependencies should be installed in your project (check _vendor_ directory).
 * Write Services
 * Notification developpement
 * Medias(photo) management
+<<<<<<< HEAD
 # Snowtricks
 # Snowtricks
 # Snowtricks
+=======
+>>>>>>> 5a49d15 (add show func migration and update webpack)
