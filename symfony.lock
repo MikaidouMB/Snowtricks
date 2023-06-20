@@ -1,12 +1,9 @@
 {
-    "bheller/images-generator": {
-        "version": "1.0.1"
-    },
     "doctrine/annotations": {
-        "version": "1.13",
+        "version": "1.14",
         "recipe": {
             "repo": "github.com/symfony/recipes",
-            "branch": "master",
+            "branch": "main",
             "version": "1.0",
             "ref": "a2759dd6123694c8d901d0ec80006e044c2e6457"
         },
@@ -14,27 +11,8 @@
             "config/routes/annotations.yaml"
         ]
     },
-    "doctrine/cache": {
-        "version": "2.1.1"
-    },
-    "doctrine/collections": {
-        "version": "1.6.8"
-    },
-    "doctrine/common": {
-        "version": "3.2.1"
-    },
-    "doctrine/data-fixtures": {
-        "version": "1.5.2"
-    },
-    "doctrine/dbal": {
-        "version": "3.3.1"
-    },
-    "doctrine/deprecations": {
-        "version": "v0.5.3"
-    },
     "doctrine/doctrine-bundle": {
-<<<<<<< HEAD
-        "version": "2.9",
+        "version": "2.10",
         "recipe": {
             "repo": "github.com/symfony/recipes",
             "branch": "main",
@@ -43,19 +21,6 @@
         },
         "files": [
             "config/packages/doctrine.yaml",
-=======
-        "version": "2.5",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "master",
-            "version": "2.4",
-            "ref": "f98f1affe028f8153a459d15f220ada3826b5aa2"
-        },
-        "files": [
-            "config/packages/doctrine.yaml",
-            "config/packages/prod/doctrine.yaml",
-            "config/packages/test/doctrine.yaml",
->>>>>>> 5a49d15 (add show func migration and update webpack)
             "src/Entity/.gitignore",
             "src/Repository/.gitignore"
         ]
@@ -64,7 +29,7 @@
         "version": "3.4",
         "recipe": {
             "repo": "github.com/symfony/recipes",
-            "branch": "master",
+            "branch": "main",
             "version": "3.0",
             "ref": "1f5514cfa15b947298df4d771e694e578d4c204d"
         },
@@ -76,96 +41,29 @@
         "version": "3.2",
         "recipe": {
             "repo": "github.com/symfony/recipes",
-<<<<<<< HEAD
             "branch": "main",
             "version": "3.1",
             "ref": "1d01ec03c6ecbd67c3375c5478c9a423ae5d6a33"
-=======
-            "branch": "master",
-            "version": "3.1",
-            "ref": "ee609429c9ee23e22d6fa5728211768f51ed2818"
->>>>>>> 5a49d15 (add show func migration and update webpack)
         },
         "files": [
             "config/packages/doctrine_migrations.yaml",
             "migrations/.gitignore"
         ]
     },
-    "doctrine/event-manager": {
-        "version": "1.1.1"
-    },
-    "doctrine/inflector": {
-        "version": "2.0.4"
-    },
-    "doctrine/instantiator": {
-        "version": "1.4.0"
-    },
-    "doctrine/lexer": {
-        "version": "1.2.2"
-    },
-    "doctrine/migrations": {
-        "version": "3.4.1"
-    },
-    "doctrine/orm": {
-        "version": "2.11.1"
-    },
-    "doctrine/persistence": {
-        "version": "2.3.0"
-    },
-    "doctrine/sql-formatter": {
-        "version": "1.1.2"
-    },
-    "egulias/email-validator": {
-        "version": "3.1.2"
-    },
-    "friendsofphp/proxy-manager-lts": {
-        "version": "v1.0.5"
-    },
-    "fzaninotto/faker": {
-        "version": "v1.5.0"
-    },
-    "imagine/imagine": {
-        "version": "1.3.1"
-    },
-    "laminas/laminas-code": {
-        "version": "4.5.1"
-    },
     "liip/imagine-bundle": {
-        "version": "2.7",
+        "version": "2.11",
         "recipe": {
             "repo": "github.com/symfony/recipes-contrib",
-            "branch": "master",
+            "branch": "main",
             "version": "1.8",
             "ref": "d1227d002b70d1a1f941d91845fcd7ac7fbfc929"
-        },
-        "files": [
-            "config/packages/liip_imagine.yaml",
-            "config/routes/liip_imagine.yaml"
-        ]
-    },
-    "nikic/php-parser": {
-        "version": "v4.13.2"
-    },
-    "phpstan/phpstan": {
-        "version": "1.4.3"
-    },
-    "psr/cache": {
-        "version": "1.0.1"
-    },
-    "psr/container": {
-        "version": "1.1.2"
-    },
-    "psr/event-dispatcher": {
-        "version": "1.0.0"
-    },
-    "psr/log": {
-        "version": "1.1.4"
+        }
     },
     "sensio/framework-extra-bundle": {
         "version": "6.2",
         "recipe": {
             "repo": "github.com/symfony/recipes",
-            "branch": "master",
+            "branch": "main",
             "version": "5.2",
             "ref": "fb7e19da7f013d0d422fa9bce16f5c510e27609b"
         },
@@ -173,23 +71,11 @@
             "config/packages/sensio_framework_extra.yaml"
         ]
     },
-    "symfony/asset": {
-        "version": "v5.4.3"
-    },
-    "symfony/cache": {
-        "version": "v5.4.3"
-    },
-    "symfony/cache-contracts": {
-        "version": "v2.5.0"
-    },
-    "symfony/config": {
-        "version": "v5.4.3"
-    },
     "symfony/console": {
         "version": "5.4",
         "recipe": {
             "repo": "github.com/symfony/recipes",
-            "branch": "master",
+            "branch": "main",
             "version": "5.3",
             "ref": "da0c8be8157600ad34f10ff0c9cc91232522e047"
         },
@@ -197,8 +83,6 @@
             "bin/console"
         ]
     },
-<<<<<<< HEAD
-=======
     "symfony/debug-bundle": {
         "version": "5.4",
         "recipe": {
@@ -211,66 +95,23 @@
             "config/packages/debug.yaml"
         ]
     },
->>>>>>> 5a49d15 (add show func migration and update webpack)
-    "symfony/dependency-injection": {
-        "version": "v5.4.3"
-    },
-    "symfony/deprecation-contracts": {
-        "version": "v2.5.0"
-    },
-    "symfony/doctrine-bridge": {
-        "version": "v5.4.3"
-    },
-    "symfony/dotenv": {
-        "version": "v5.4.3"
-    },
-    "symfony/error-handler": {
-        "version": "v5.4.3"
-    },
-    "symfony/event-dispatcher": {
-        "version": "v5.4.3"
-    },
-    "symfony/event-dispatcher-contracts": {
-        "version": "v2.5.0"
-    },
-    "symfony/expression-language": {
-        "version": "v5.4.3"
-    },
-    "symfony/filesystem": {
-        "version": "v5.4.3"
-    },
-    "symfony/finder": {
-        "version": "v5.4.3"
-    },
     "symfony/flex": {
-<<<<<<< HEAD
         "version": "1.20",
         "recipe": {
             "repo": "github.com/symfony/recipes",
             "branch": "main",
             "version": "1.0",
             "ref": "146251ae39e06a95be0fe3d13c807bcf3938b172"
-=======
-        "version": "1.18",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "master",
-            "version": "1.0",
-            "ref": "c0eeb50665f0f77226616b6038a9b06c03752d8e"
->>>>>>> 5a49d15 (add show func migration and update webpack)
         },
         "files": [
             ".env"
         ]
     },
-    "symfony/form": {
-        "version": "v5.4.3"
-    },
     "symfony/framework-bundle": {
         "version": "5.4",
         "recipe": {
             "repo": "github.com/symfony/recipes",
-            "branch": "master",
+            "branch": "main",
             "version": "5.4",
             "ref": "3cd216a4d007b78d8554d44a5b1c0a446dab24fb"
         },
@@ -289,158 +130,62 @@
         "version": "5.4",
         "recipe": {
             "repo": "github.com/symfony/recipes",
-            "branch": "master",
+            "branch": "main",
             "version": "4.4",
             "ref": "f8fd4ddb9b477510f8f4bce2b9c054ab428c0120"
         }
-    },
-    "symfony/http-foundation": {
-        "version": "v5.4.3"
-    },
-    "symfony/http-kernel": {
-        "version": "v5.4.4"
     },
     "symfony/mailer": {
         "version": "5.4",
         "recipe": {
             "repo": "github.com/symfony/recipes",
-<<<<<<< HEAD
             "branch": "main",
             "version": "4.3",
             "ref": "2bf89438209656b85b9a49238c4467bff1b1f939"
-=======
-            "branch": "master",
-            "version": "4.3",
-            "ref": "bbfc7e27257d3a3f12a6fb0a42540a42d9623a37"
->>>>>>> 5a49d15 (add show func migration and update webpack)
         },
         "files": [
             "config/packages/mailer.yaml"
         ]
     },
     "symfony/maker-bundle": {
-        "version": "1.36",
+        "version": "1.49",
         "recipe": {
             "repo": "github.com/symfony/recipes",
-            "branch": "master",
+            "branch": "main",
             "version": "1.0",
             "ref": "fadbfe33303a76e25cb63401050439aa9b1a9c7f"
         }
-    },
-    "symfony/mime": {
-        "version": "v5.4.3"
-    },
-    "symfony/options-resolver": {
-        "version": "v5.4.3"
-    },
-    "symfony/password-hasher": {
-        "version": "v5.4.3"
-    },
-    "symfony/polyfill-intl-grapheme": {
-        "version": "v1.24.0"
-    },
-    "symfony/polyfill-intl-icu": {
-        "version": "v1.24.0"
-    },
-    "symfony/polyfill-intl-idn": {
-        "version": "v1.24.0"
-    },
-    "symfony/polyfill-intl-normalizer": {
-        "version": "v1.24.0"
-    },
-    "symfony/polyfill-mbstring": {
-        "version": "v1.24.0"
-    },
-    "symfony/polyfill-php73": {
-        "version": "v1.24.0"
-    },
-    "symfony/polyfill-php80": {
-        "version": "v1.24.0"
-    },
-    "symfony/polyfill-php81": {
-        "version": "v1.24.0"
-    },
-    "symfony/process": {
-        "version": "v5.4.5"
-    },
-    "symfony/property-access": {
-        "version": "v5.4.3"
-    },
-    "symfony/property-info": {
-        "version": "v5.4.3"
-    },
-    "symfony/proxy-manager-bridge": {
-        "version": "v5.4.3"
     },
     "symfony/routing": {
         "version": "5.4",
         "recipe": {
             "repo": "github.com/symfony/recipes",
-<<<<<<< HEAD
             "branch": "main",
             "version": "5.3",
             "ref": "85de1d8ae45b284c3c84b668171d2615049e698f"
-=======
-            "branch": "master",
-            "version": "5.3",
-            "ref": "44633353926a0382d7dfb0530922c5c0b30fae11"
->>>>>>> 5a49d15 (add show func migration and update webpack)
         },
         "files": [
             "config/packages/routing.yaml",
             "config/routes.yaml"
         ]
     },
-    "symfony/runtime": {
-        "version": "v5.4.3"
-    },
     "symfony/security-bundle": {
         "version": "5.4",
         "recipe": {
             "repo": "github.com/symfony/recipes",
-<<<<<<< HEAD
             "branch": "main",
             "version": "5.3",
             "ref": "98f1f2b0d635908c2b40f3675da2d23b1a069d30"
-=======
-            "branch": "master",
-            "version": "5.3",
-            "ref": "09b5e809bd7a992061febd05b797c64a2d93b5cd"
->>>>>>> 5a49d15 (add show func migration and update webpack)
         },
         "files": [
             "config/packages/security.yaml"
         ]
     },
-    "symfony/security-core": {
-        "version": "v5.4.3"
-    },
-    "symfony/security-csrf": {
-        "version": "v5.4.3"
-    },
-    "symfony/security-guard": {
-        "version": "v5.4.3"
-    },
-    "symfony/security-http": {
-        "version": "v5.4.3"
-    },
-    "symfony/serializer": {
-        "version": "v5.4.7"
-    },
-    "symfony/service-contracts": {
-        "version": "v2.5.0"
-    },
-    "symfony/stopwatch": {
-        "version": "v5.4.3"
-    },
-    "symfony/string": {
-        "version": "v5.4.3"
-    },
     "symfony/translation": {
         "version": "5.4",
         "recipe": {
             "repo": "github.com/symfony/recipes",
-            "branch": "master",
+            "branch": "main",
             "version": "5.3",
             "ref": "da64f5a2b6d96f5dc24914517c0350a5f91dee43"
         },
@@ -449,25 +194,13 @@
             "translations/.gitignore"
         ]
     },
-    "symfony/translation-contracts": {
-        "version": "v2.5.0"
-    },
-    "symfony/twig-bridge": {
-        "version": "v5.4.3"
-    },
     "symfony/twig-bundle": {
         "version": "5.4",
         "recipe": {
             "repo": "github.com/symfony/recipes",
-<<<<<<< HEAD
             "branch": "main",
             "version": "5.4",
             "ref": "bb2178c57eee79e6be0b297aa96fc0c0def81387"
-=======
-            "branch": "master",
-            "version": "5.4",
-            "ref": "bffbb8f1a849736e64006735afae730cb428b6ff"
->>>>>>> 5a49d15 (add show func migration and update webpack)
         },
         "files": [
             "config/packages/twig.yaml",
@@ -478,34 +211,18 @@
         "version": "5.4",
         "recipe": {
             "repo": "github.com/symfony/recipes",
-<<<<<<< HEAD
             "branch": "main",
             "version": "5.3",
             "ref": "c32cfd98f714894c4f128bb99aa2530c1227603c"
         },
         "files": [
-=======
-            "branch": "master",
-            "version": "4.3",
-            "ref": "3eb8df139ec05414489d55b97603c5f6ca0c44cb"
-        },
-        "files": [
-            "config/packages/test/validator.yaml",
->>>>>>> 5a49d15 (add show func migration and update webpack)
             "config/packages/validator.yaml"
         ]
-    },
-    "symfony/var-dumper": {
-        "version": "v5.4.3"
-    },
-    "symfony/var-exporter": {
-        "version": "v5.4.3"
     },
     "symfony/web-profiler-bundle": {
         "version": "5.4",
         "recipe": {
             "repo": "github.com/symfony/recipes",
-<<<<<<< HEAD
             "branch": "main",
             "version": "5.3",
             "ref": "24bbc3d84ef2f427f82104f766014e799eefcc3e"
@@ -522,25 +239,6 @@
             "branch": "main",
             "version": "1.10",
             "ref": "eff2e505d4557c967b6710fe06bd947ba555cae5"
-=======
-            "branch": "master",
-            "version": "3.3",
-            "ref": "6bdfa1a95f6b2e677ab985cd1af2eae35d62e0f6"
-        },
-        "files": [
-            "config/packages/dev/web_profiler.yaml",
-            "config/packages/test/web_profiler.yaml",
-            "config/routes/dev/web_profiler.yaml"
-        ]
-    },
-    "symfony/webpack-encore-bundle": {
-        "version": "1.14",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "master",
-            "version": "1.9",
-            "ref": "1723ab94a3ba021bcd69f6b907492668821c857f"
->>>>>>> 5a49d15 (add show func migration and update webpack)
         },
         "files": [
             "assets/app.js",
@@ -553,20 +251,7 @@
             "webpack.config.js"
         ]
     },
-    "symfony/yaml": {
-        "version": "v5.4.3"
-    },
     "twig/extra-bundle": {
-<<<<<<< HEAD
-        "version": "v3.6.0"
-=======
-        "version": "v3.3.7"
->>>>>>> 5a49d15 (add show func migration and update webpack)
-    },
-    "twig/string-extra": {
-        "version": "v3.3.5"
-    },
-    "twig/twig": {
-        "version": "v3.3.7"
+        "version": "v3.6.1"
     }
 }

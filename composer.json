@@ -4,17 +4,12 @@
     "minimum-stability": "stable",
     "prefer-stable": true,
     "require": {
-<<<<<<< HEAD
         "php": ">=7.4",
-=======
-        "php": ">=8.0",
->>>>>>> 5a49d15 (add show func migration and update webpack)
         "ext-ctype": "*",
         "ext-iconv": "*",
         "ext-json": "*",
         "bheller/images-generator": "^1.0",
         "doctrine/annotations": "^1.13",
-<<<<<<< HEAD
         "doctrine/collections": "^2.1",
         "doctrine/doctrine-bundle": "^2.5",
         "doctrine/doctrine-fixtures-bundle": "^3.4",
@@ -22,27 +17,19 @@
         "doctrine/orm": "^2.11",
         "fzaninotto/faker": "^1.5",
         "liip/imagine-bundle": "^2.7",
-=======
-        "doctrine/doctrine-bundle": "^2.5",
-        "doctrine/doctrine-migrations-bundle": "^3.2",
-        "doctrine/orm": "^2.11",
-        "fzaninotto/faker": "^1.5",
-        "liip/imagine-bundle": "^2.11",
->>>>>>> 5a49d15 (add show func migration and update webpack)
         "sensio/framework-extra-bundle": "^6.2",
         "symfony/asset": "5.4.*",
         "symfony/console": "5.4.*",
+        "symfony/debug-bundle": "5.4.*",
         "symfony/dotenv": "5.4.*",
         "symfony/expression-language": "5.4.*",
         "symfony/flex": "^1.18",
         "symfony/form": "5.4.*",
         "symfony/framework-bundle": "5.4.*",
         "symfony/google-mailer": "5.4.*",
+        "symfony/http-client": "5.4.*",
         "symfony/mailer": "5.4.*",
-<<<<<<< HEAD
         "symfony/maker-bundle": "^1.48",
-=======
->>>>>>> 5a49d15 (add show func migration and update webpack)
         "symfony/proxy-manager-bridge": "5.4.*",
         "symfony/runtime": "5.4.*",
         "symfony/security-bundle": "5.4.*",
@@ -51,30 +38,19 @@
         "symfony/translation": "5.4.*",
         "symfony/twig-bundle": "5.4.*",
         "symfony/validator": "5.4.*",
-<<<<<<< HEAD
+        "symfony/web-link": "5.4.*",
         "symfony/web-profiler-bundle": "5.4.*",
-=======
->>>>>>> 5a49d15 (add show func migration and update webpack)
         "symfony/webpack-encore-bundle": "^1.14",
         "symfony/yaml": "5.4.*",
+        "twbs/bootstrap": "5.0.2",
         "twig/extra-bundle": "^3.3",
         "twig/string-extra": "^3.3",
         "twig/twig": "^2.12|^3.0"
     },
     "require-dev": {
-<<<<<<< HEAD
         "phpstan/phpstan": "^1.6",
         "symfony/stopwatch": "5.4.*",
         "symfony/var-dumper": "5.4.*"
-=======
-        "doctrine/doctrine-fixtures-bundle": "^3.4",
-        "phpstan/phpstan": "^1.6",
-        "symfony/debug-bundle": "5.4.*",
-        "symfony/maker-bundle": "^1.48",
-        "symfony/stopwatch": "5.4.*",
-        "symfony/var-dumper": "5.4.*",
-        "symfony/web-profiler-bundle": "5.4.*"
->>>>>>> 5a49d15 (add show func migration and update webpack)
     },
     "config": {
         "allow-plugins": {

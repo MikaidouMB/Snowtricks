@@ -10,15 +10,9 @@
     {% endfor %}
     {% if images is empty %}
         <div class="container-fluid">
-            <div class="img-ajust">
-                <img class="img-fluid" src="{{ asset('assets/snowboarding.jpg')| imagine_filter('welcome6') }}" alt="..." />
-            </div>
-<<<<<<< HEAD
             <div class="img-full">
                 <img class="img-fluid" src="{{ asset('assets/snowboarding.jpg')| imagine_filter('welcome7') }}" alt="..." />
             </div>
-=======
->>>>>>> 5a49d15 (add show func migration and update webpack)
             {% if app.user %}
                 {% if (app.user.roles.0 == "ROLE_ADMIN") or  (app.user.roles.0 == "ROLE_EDITOR")or (app.user.id == trick.user.id) %}
                     <div class="edit-btn btn-xs">
@@ -30,15 +24,8 @@
     {% endif %}
     {% if images is not empty %}
         <div class="container-fluid">
-            <div class="img-ajust">
-<<<<<<< HEAD
-=======
-
->>>>>>> 5a49d15 (add show func migration and update webpack)
+            <div class="d-flex justify-content-center">
                 <img class="img-fluid" src="{{ asset('uploads/' ~ trick.images.0.name)| imagine_filter('welcome6') }}" alt="">
-            </div>
-            <div class="img-full">
-                <img class="img-fluid" src="{{ asset('uploads/' ~ trick.images.0.name)| imagine_filter('welcome7') }}" alt="">
             </div>
             {% if app.user %}
                 {% if (app.user.roles.0 == "ROLE_ADMIN")or (app.user.roles.0 == "ROLE_EDITOR") or (app.user.id == trick.user.id) %}
@@ -59,12 +46,7 @@
                 {% for image in trick.images %}
                     <div class="d-inline-block " >
                         <h5 class="fw-bolder"></h5>
-<<<<<<< HEAD
                         <img class="gallery-index" src=" {{ asset('/uploads/' ~ image.name)| imagine_filter('imgs') }}" alt="Image" />
-=======
-
-                        <img class="gallery-index" src=" {{ asset('uploads/' ~ image.name)| imagine_filter('imgs') }}" alt="Image" />
->>>>>>> 5a49d15 (add show func migration and update webpack)
                         <br/>
                         {% if app.user %}
                             {% if (app.user.roles.0 == "ROLE_ADMIN")or (app.user.roles.0 == "ROLE_EDITOR") or (app.user.id == trick.user.id) %}
@@ -80,8 +62,8 @@
                         {% endif %}
                     </div>
                 {% endfor %}
-            </div>
-            <div class="videos mt-3">
+                <div class"hiding">
+                <div class="videos mt-3">
                 {% for video in trick.videos %}
                     <div class="d-inline-block" >
                         <iframe class="trick-media" id="{{ loop.index + trick.images|length }}"
@@ -104,8 +86,13 @@
                             {% endif %}
                         {% endif %}
                     </div>
+
                 {% endfor %}
+
             </div>
+            </div>
+            </div>
+
         </div>
     </div>
     <div class="container">

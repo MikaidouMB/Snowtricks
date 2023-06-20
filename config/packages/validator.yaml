@@ -6,11 +6,8 @@ framework:
         # For instance, basic validation constraints will be inferred from Doctrine's metadata.
         #auto_mapping:
         #    App\Entity\: []
-<<<<<<< HEAD
 
 when@test:
     framework:
         validation:
             not_compromised_password: false
-=======
->>>>>>> 5a49d15 (add show func migration and update webpack)
