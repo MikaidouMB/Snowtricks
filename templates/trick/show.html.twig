@@ -29,11 +29,8 @@
             </div>
             {% if app.user %}
                 {% if (app.user.roles.0 == "ROLE_ADMIN")or (app.user.roles.0 == "ROLE_EDITOR") or (app.user.id == trick.user.id) %}
-                    <div class="edit-btn btn-xs">
+                    <div class="text-center edit-btn btn-xs mt-4">
                         {{ include('trick/_edit_form_trick.html.twig') }}
-                        <a href= "{{ path('trick_delete_image_show', {'slug': trick.slug | slug, id: images.0.id, _csrf_token: csrf_token('delete-image')}) }}" onclick="return confirm('Etes-vous sure de vouloir supprimer cette image?')"
-                           class="btn btn-danger">Supprimer
-                        </a>
                     </div>
                 {% endif %}
             {% endif %}
@@ -48,51 +45,22 @@
                         <h5 class="fw-bolder"></h5>
                         <img class="gallery-index" src=" {{ asset('/uploads/' ~ image.name)| imagine_filter('imgs') }}" alt="Image" />
                         <br/>
-                        {% if app.user %}
-                            {% if (app.user.roles.0 == "ROLE_ADMIN")or (app.user.roles.0 == "ROLE_EDITOR") or (app.user.id == trick.user.id) %}
-                                <span>
-                                    <a href= "{{ path('trick_delete_image_show', {'slug': trick.slug | slug, id: images.0.id,
-                                        csrf_token: csrf_token('delete-image')}) }}"
-                                       onclick="return confirm('Etes-vous sure de vouloir supprimer cette image?')"
-                                       class="btn btn-danger">Supprimer
-                                    </a>
-                                     {{ include('trick/_edit_form_trick.html.twig') }}
-                                </span>
-                            {% endif %}
-                        {% endif %}
                     </div>
                 {% endfor %}
                 <div class"hiding">
-                <div class="videos mt-3">
-                {% for video in trick.videos %}
-                    <div class="d-inline-block" >
-                        <iframe class="trick-media" id="{{ loop.index + trick.images|length }}"
-                                src="{{ video.name }}" width="250vw" frameborder="0"
-                                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                                allowfullscreen>
-                        </iframe>
-                        <br/>
-                        {% if app.user %}
-                            {% if (app.user.roles.0 == "ROLE_ADMIN")or (app.user.roles.0 == "ROLE_EDITOR") or (app.user.id == trick.user.id) %}
-                                <span>
-                                    <a href= "{{ path('trick_delete_video',
-                                        {'slug': trick.slug | slug, video_id: video.id,
-                                        _csrf_token:csrf_token('delete-video')}) }}"
-                                       onclick="return confirm('Etes vous sur de vouloir supprimer cette vidéo?')"
-                                       class="btn btn-danger">Supprimer
-                                    </a>
-                                    {{ include('trick/_edit_form_trick.html.twig') }}
-                                </span>
-                            {% endif %}
-                        {% endif %}
+                    <div class="videos mt-3">
+                        {% for video in trick.videos %}
+                            <div class="d-inline-block" >
+                                <iframe class="trick-media" id="{{ loop.index + trick.images|length }}"
+                                    src="{{ video.name }}" width="250vw" frameborder="0"
+                                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen>
+                                </iframe><br/>
+                            </div>
+                        {% endfor %}
                     </div>
-
-                {% endfor %}
-
+                </div>
             </div>
-            </div>
-            </div>
-
         </div>
     </div>
     <div class="container">
