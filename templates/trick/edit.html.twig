@@ -53,14 +53,29 @@
                             <p>Vous ne pouvez enregistrer plus de 6 vidéos, supprimez-en avant d'en rajouter</p>
                         </div>
                 {% endif %}
-                    <div id="videos"
+                {#
+                <div id="videos"
                          class="video-edit"
                             data-prototype="{{ include("trick/_delete_form_video.html.twig", {form: form.videos.vars.prototype})|e("html_attr")}}"
                             data-index="{{ form.videos|length > 0 ? form.videos|last.vars.name + 1 : 0 }}">
-                        {% for video in form.videos %}
-                            <div class="col-4">
-                                {{ include("trick/_delete_form_video.html.twig", {form: video}) }}
-                            </div><br>
+                #}    
+                </div>
+                    <div class="videos ml-3">
+                        {% for video in trick.videos %}
+                            <div class="text-center">
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control col-6" name="video_url" value="{{ video.name }}">
+                                    <div class="input-group-append">
+                                        <a href="{{ path('trick_delete_video', {
+                                            'slug': trick.slug | slug,
+                                            'video_id': video.id,
+                                            '_csrf_token': csrf_token('delete-video')
+                                        }) }}"
+                                        onclick="return confirm('Etes vous sûr de vouloir supprimer cette vidéo?')"
+                                        class="btn btn-danger">Supprimer</a>
+                                    </div>
+                                </div>
+                            </div>
                         {% endfor %}
                     </div>
                 </div>
