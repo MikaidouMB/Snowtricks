@@ -26,8 +26,9 @@ class HomeController extends AbstractController
     /**
      * @Route("/home/{page?1}/{nbre?15}", name="app_home",requirements={"page"="\d+"})
      */
-    public function index(ManagerRegistry $doctrine, $page, $nbre): Response
+    public function index(Request $request,ManagerRegistry $doctrine,$page = 1, $nbre = 15): Response
     {
+        
         $repository = $doctrine->getRepository(Trick::class);
         $tricks = $repository->findBy( [],['createdAt' => 'DESC'],$nbre,($page -1) * $nbre);
         $nbTricks = $repository->count([]);

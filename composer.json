@@ -18,6 +18,7 @@
         "fzaninotto/faker": "^1.5",
         "liip/imagine-bundle": "^2.7",
         "sensio/framework-extra-bundle": "^6.2",
+        "symfony/apache-pack": "^1.0",
         "symfony/asset": "5.4.*",
         "symfony/console": "5.4.*",
         "symfony/debug-bundle": "5.4.*",
