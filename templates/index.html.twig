@@ -9,9 +9,17 @@
                 {{ message}}
             </div>
         {% endfor %}
-    <div class="col-12 d-flex justify-content-center">
-        <img class="img-fluid" src="{{ asset('assets/877546.jpg')| imagine_filter('welcome6') }}"  alt="">
-    </div>
+        <div class="col-12 d-flex justify-content-center">
+            <div class="image-container">
+            <img class="img-fluid image-reduced-height" src="{{ asset('assets/877546.jpg') }}" alt="">
+                <div class="image-text">
+                    <h2>Bienvenue sur Snowtricks !</h2>
+                    <p>Découvrez les figures de snowboard les plus incroyables et rejoignez la communauté pour partager vos expériences.</p>
+                    <p>Explorez, découvrez, discutez ! Faites défiler &nbsp; <a href="#sec-2" class="bottom"><i class="fa fa-arrow-down" aria-hidden="true"></i></a></p>
+                <p>pour plonger dans l'univers passionnant des figures de snowboard !"</p>
+                </div>
+            </div>
+        </div>
     <a href="#sec-2">
         <div class="scroll-down"></div>
     </a>

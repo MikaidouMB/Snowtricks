@@ -1,0 +1,22 @@
+body {
+    background-color: lightgray;
+}
+
+.image-container {
+    position: relative;
+}
+
+.image-text {
+    position: absolute;
+    top: 45%;
+    left: 60%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: black;
+    font-size: 24px;
+}
+
+.image-reduced-height {
+    height: 700px;
+    width: 2000px;
+}
