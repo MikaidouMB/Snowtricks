@@ -20,3 +20,51 @@ body {
     height: 700px;
     width: 2000px;
 }
+
+.thumbnail {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+
+.thumbnail .gallery-index {
+    width: 100%;
+    height: auto;
+}
+
+.caption {
+    background-color: white;
+    padding: 15px;
+}
+
+.custom-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.custom-grid .thumbnail {
+    flex-basis: calc((100% / 5) - 10px); /* Subtract some for margin */
+    margin-bottom: 20px;
+}
+.gallery-index {
+    width: 100%;
+    height: 200px; /* Adjust as needed */
+    object-fit: cover; /* This will ensure the aspect ratio of images is preserved */
+}
+.caption {
+    position: relative;
+}
+.caption .button-container {
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+    overflow: hidden;
+}
+.caption .button-container .btn {
+    margin-right: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
