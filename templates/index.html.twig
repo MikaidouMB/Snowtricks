@@ -16,7 +16,7 @@
                     <h2>Bienvenue sur Snowtricks !</h2>
                     <p>Découvrez les figures de snowboard les plus incroyables et rejoignez la communauté pour partager vos expériences.</p>
                     <p>Explorez, découvrez, discutez ! Faites défiler &nbsp; <a href="#sec-2" class="bottom"><i class="fa fa-arrow-down" aria-hidden="true"></i></a></p>
-                <p>pour plonger dans l'univers passionnant des figures de snowboard !"</p>
+                <p>et plonger dans l'univers passionnant des figures de snowboard !"</p>
                 </div>
             </div>
         </div>
@@ -29,7 +29,7 @@
                 {% for trick in tricks %}
                 <div class="thumbnail mt-3 mb-5">
                     <div class="image-container">
-                        {% if trick.images|length > 1 %}
+                        {% if trick.images|length > 0 %}
                             {% for image in trick.images %}
                                 {% if loop.index0 < 1 %}
                                     <a href="{{ path('trick_show', {'slug': trick.slug|slug}) }}">
@@ -50,7 +50,7 @@
                             <a href="{{ path('trick_show', {'slug': trick.slug|slug}) }}" class="btn btn-primary btn-sm" role="button" title="En savoir plus sur {{ trick.nameFigure }}">En savoir +</a>
                             {% if app.user %}
                                 {% if (app.user.roles.0 == "ROLE_ADMIN") or (app.user.roles.0 == "ROLE_MODO") or (app.user.id == trick.user.id) %}
-                                    <a href="{{ path('trick_edit', {'slug': trick.slug|slug, _csrf_token: csrf_token('edit-trick-update')}) }}" class="btn btn-warning btn-sm" role="button" title="Modifier la figure {{ trick.nameFigure }}">
+                                    <a href="{{ path('trick_edit', {'slug': trick.slug|slug, _csrf_token: csrf_token('edit-trick-update')}) }}" class="btn btn-warning btn-sm" role="button" title="Modifier {{ trick.nameFigure }}">
                                         <i class="fas fa-pen"></i> Editer
                                     </a>
                                     <a href="{{ path('trick_delete', {'slug': trick.slug|slug, _csrf_token: csrf_token('delete-trick')}) }}" onclick="return confirm('Etes vous sûr ?')" class="btn btn-danger btn-sm" role="button" title="Supprimer la figure {{ trick.nameFigure }}">

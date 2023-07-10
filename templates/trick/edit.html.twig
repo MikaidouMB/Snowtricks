@@ -41,7 +41,7 @@
                     <strong>{{ form_row(form.categories) }}</strong>
                 </div>
             </div>
-            <div class="text-center">
+            {#<div class="text-center">
                 {% if form.videos|length <= 5 %}
                     <div class="mt-4">
                         <div class="mt-4">
@@ -53,13 +53,13 @@
                             <p>Vous ne pouvez enregistrer plus de 6 vidéos, supprimez-en avant d'en rajouter</p>
                         </div>
                 {% endif %}
-                {#
+                
                 <div id="videos"
                          class="video-edit"
                             data-prototype="{{ include("trick/_delete_form_video.html.twig", {form: form.videos.vars.prototype})|e("html_attr")}}"
                             data-index="{{ form.videos|length > 0 ? form.videos|last.vars.name + 1 : 0 }}">
-                #}    
-                </div>
+                  
+                </div> #} 
                     <div class="videos ml-3">
                         {% for video in trick.videos %}
                             <div class="text-center">
@@ -79,11 +79,23 @@
                         {% endfor %}
                     </div>
                 </div>
-                <div class="text-center">
-                    {{ include('trick/_delete_trick_form.html.twig') }}
-                </div>
+                 <div class="text-center">
+                {{ include('trick/_submit_form.html.twig') }}
+            </div>
+            <div class="text-center">
+                 <div class="m-3">
+                    <div class="text-right">
+                       {{ include('trick/_delete_trick_form.html.twig') }}
+                    </div>
+                 </div>
+            </div>
         {{ form_end(form, {render_rest:false}) }}
         </div>
     </div>
-    <div class="text-center m-3"><a href="{{ path('trick_show', {'slug': trick.slug}) }}">Retour à la figure</a></div>
+<div class="text-left m-3">
+    <a href="{{ path('trick_show', {'slug': trick.slug}) }}" class="btn btn-info btn-sm">
+        <i class="fas fa-arrow-left"></i> Retour à la figure
+    </a>
+</div>
+
 {% endblock %}
