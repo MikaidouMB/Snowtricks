@@ -25,44 +25,44 @@
     </a>
     <div class="container">
         <div id="sec-2" >
-
-<div class="custom-grid">
-    {% for trick in tricks %}
-    <div class="thumbnail mt-3 mb-5">
-        {% if trick.images|length > 1 %}
-            {% for image in trick.images %}
-                {% if loop.index0 < 1 %}
-                    <img class="gallery-index" src="{{ asset('uploads/' ~ image.name) | imagine_filter('imgs') }}" alt="Image de la figure {{ trick.nameFigure }}"/>
-                {% endif %}
-            {% endfor %}
-        {% else %}
-            <img class="gallery-index" src="{{ asset('assets/snowboarding.jpg')}}" alt="Image par défaut" />
-        {% endif %}
-        <div class="caption">
-            <h6>{{ trick.nameFigure }}</h6> <!-- Using h5 instead of h4 -->
-            <div class="button-container">
-                <a href="{{ path('trick_show', {'slug': trick.slug|slug}) }}" class="btn btn-primary btn-sm" role="button" title="En savoir plus sur {{ trick.nameFigure }}">En savoir +</a>
-                {% if app.user %}
-                    {% if (app.user.roles.0 == "ROLE_ADMIN") or (app.user.roles.0 == "ROLE_MODO") or (app.user.id == trick.user.id) %}
-                        <a href="{{ path('trick_edit', {'slug': trick.slug|slug, _csrf_token: csrf_token('edit-trick-update')}) }}" class="btn btn-warning btn-sm" role="button" title="Modifier la figure {{ trick.nameFigure }}">
-                            <i class="fas fa-pen"></i> Editer
-                        </a>
-                        <a href="{{ path('trick_delete', {'slug': trick.slug|slug, _csrf_token: csrf_token('delete-trick')}) }}" onclick="return confirm('Etes vous sûr ?')" class="btn btn-danger btn-sm" role="button" title="Supprimer la figure {{ trick.nameFigure }}">
-                            <i class="fas fa-trash"></i>
-                        </a>
-                    {% endif %}
-                {% endif %}
+            <div class="custom-grid">
+                {% for trick in tricks %}
+                <div class="thumbnail mt-3 mb-5">
+                    <div class="image-container">
+                        {% if trick.images|length > 1 %}
+                            {% for image in trick.images %}
+                                {% if loop.index0 < 1 %}
+                                    <a href="{{ path('trick_show', {'slug': trick.slug|slug}) }}">
+                                        <img class="gallery-index" src="{{ asset('uploads/' ~ image.name) | imagine_filter('imgs') }}" alt="Image de la figure {{ trick.nameFigure }}"/>
+                                    </a>
+                                {% endif %}
+                            {% endfor %}
+                        {% else %}
+                            <a href="{{ path('trick_show', {'slug': trick.slug|slug}) }}">
+                                <img class="gallery-index" src="{{ asset('assets/snowboarding.jpg')}}" alt="Image par défaut" />
+                            </a>
+                        {% endif %}
+                    </div>
+                    <div class="caption">
+                        <h6>{{ trick.nameFigure }}</h6>
+                        <h6><span class="author">De {{ trick.user.username }}</span></h6>
+                        <div class="button-container">
+                            <a href="{{ path('trick_show', {'slug': trick.slug|slug}) }}" class="btn btn-primary btn-sm" role="button" title="En savoir plus sur {{ trick.nameFigure }}">En savoir +</a>
+                            {% if app.user %}
+                                {% if (app.user.roles.0 == "ROLE_ADMIN") or (app.user.roles.0 == "ROLE_MODO") or (app.user.id == trick.user.id) %}
+                                    <a href="{{ path('trick_edit', {'slug': trick.slug|slug, _csrf_token: csrf_token('edit-trick-update')}) }}" class="btn btn-warning btn-sm" role="button" title="Modifier la figure {{ trick.nameFigure }}">
+                                        <i class="fas fa-pen"></i> Editer
+                                    </a>
+                                    <a href="{{ path('trick_delete', {'slug': trick.slug|slug, _csrf_token: csrf_token('delete-trick')}) }}" onclick="return confirm('Etes vous sûr ?')" class="btn btn-danger btn-sm" role="button" title="Supprimer la figure {{ trick.nameFigure }}">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
             </div>
-        </div>
-    </div>
-    {% endfor %}
-</div>
-
-
-
-
-
-
 
             {% if tricks|length >= 15%}
                 <a href="#" class="top"><i class="fa fa-arrow-up" aria-hidden="true"></i>
