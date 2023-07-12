@@ -49,27 +49,24 @@ class HomeController extends AbstractController
      * @param \App\Repository\ImageRepository $imageRepository
      * @param Request $request
      * @param EntityManagerInterface $entityManager
-     * @param ManagerRegistry $doctrine
+     * @param PaginatorInterface $paginator
      * @param $page
      * @param $nbre
      * @return Response
      */
     public function show(Trick $trick,
-                         ImageRepository  $imageRepository,
-                         Request $request,
-                         EntityManagerInterface $entityManager,
-                         ManagerRegistry $doctrine,
-                         $page, $nbre): Response
+                        ImageRepository $imageRepository,
+                        Request $request,
+                        EntityManagerInterface $entityManager,
+                        PaginatorInterface $paginator,
+                        $page, $nbre): Response
     {
         $message = new Message();
         $message->setUser($this->getUser());
         $message->setTrick($trick);
 
-        $messagesPaginatedByTrick = $doctrine->getRepository(Message::class);
-        $messages = $messagesPaginatedByTrick->findBy( ['trick'=> $trick->getId()],['createdAt' => 'DESC'],10,($page -1) * $nbre);
-        $allMessagesByFigure = $messagesPaginatedByTrick->findBy(['trick'=> $trick->getId()]);
-        $nbMessages = count($allMessagesByFigure);
-        $nbrePage = ceil($nbMessages / $nbre);
+        $messagesQuery = $entityManager->getRepository(Message::class)->queryAllByTrick($trick);
+        $messages = $paginator->paginate($messagesQuery, $page, $nbre);
 
         $form = $this->createForm(MessageType::class, $message)->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -82,13 +79,10 @@ class HomeController extends AbstractController
             'messages'=>$messages,
             'images'=> $imageRepository->findImagesByTrick($trick),
             'trick' => $trick,
-            'isPaginated' => true,
-            'nbrePage' => (string)$nbrePage,
-            'page' => $page,
-            'nbre' => $nbre,
             'form' => $form->createView()
         ]);
     }
+
 
     /**
      * @Route("/home/account/{id}", name="user_account", methods={"GET","POST"}, priority = 2)
