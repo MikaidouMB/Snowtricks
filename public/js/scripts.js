@@ -26,4 +26,14 @@ deleteButtons.forEach(function(button) {
 
     });
 
-
+    function scrollToSection(event) {
+      event.preventDefault();
+      
+      const targetId = event.currentTarget.getAttribute('href');
+      const targetElement = document.querySelector(targetId);
+      
+      targetElement.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+      });
+  }

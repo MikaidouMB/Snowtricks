@@ -8,7 +8,9 @@ use App\Entity\User;
 use App\Form\MessageType;
 use App\Form\UserType;
 use App\Repository\ImageRepository;
+use App\Repository\TrickRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -25,24 +27,25 @@ class HomeController extends AbstractController
 {
 
     /**
-     * @Route("/home/{page?1}/{nbre?15}", name="app_home",requirements={"page"="\d+"})
+     * @Route("/home/{page<\d+>?1}/}", name="app_home")
      */
-    public function index(Request $request,ManagerRegistry $doctrine,$page = 1, $nbre = 15): Response
+    public function index(
+        Request $request, ManagerRegistry $doctrine,
+        TrickRepository $trickRepository,
+        PaginatorInterface $paginator): Response
     {
-        
-        $repository = $doctrine->getRepository(Trick::class);
-        $tricks = $repository->findBy( [],['createdAt' => 'DESC'],$nbre,($page -1) * $nbre);
-        $nbTricks = $repository->count([]);
-        $nbrePage = ceil($nbTricks / $nbre);
+
+        $tricks = $trickRepository->findAllOrderedByNewest();
+        $numberOfTricks = count($tricks);
+        $tricks = $paginator->paginate($tricks,$request->query->getInt('page', 1),14);
 
         return $this->render('index.html.twig',[
             'tricks' => $tricks,
             'isPaginated' => true,
-            'nbrePage' => (string)$nbrePage,
-            'page' => $page,
-            'nbre' => $nbre
+            'numberOfTricks' => $numberOfTricks,
         ]);
     }
+
 
     /**
      * @Route("trick/{slug}/{page?1}/{nbre?10}", name="trick_show", methods={"GET","POST"},requirements={"page"="\d+"})
