@@ -37,7 +37,7 @@ class HomeController extends AbstractController
 
         $tricks = $trickRepository->findAllOrderedByNewest();
         $numberOfTricks = count($tricks);
-        $tricks = $paginator->paginate($tricks,$request->query->getInt('page', 1),14);
+        $tricks = $paginator->paginate($tricks,$request->query->getInt('page', 1),12);
 
         return $this->render('index.html.twig',[
             'tricks' => $tricks,

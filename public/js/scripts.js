@@ -37,3 +37,20 @@ deleteButtons.forEach(function(button) {
           block: 'start'
       });
   }
+  function handleScroll() {
+    const scrollToTopButton = document.getElementById('scrollToTopButton');
+    if (window.pageYOffset > 100) {
+      scrollToTopButton.classList.add('show');
+    } else {
+      scrollToTopButton.classList.remove('show');
+    }
+  }
+
+  // Fonction pour effectuer un défilement fluide vers le haut
+  function scrollToTop() {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  }
+

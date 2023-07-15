@@ -5,7 +5,7 @@
 {% block body %}
     {% for message in app.flashes('success') %}
         <div class="alert alert-success" role="alert">
-            {{ message}}
+            {{ message }}
         </div>
     {% endfor %}
     {% if images is empty %}
@@ -14,7 +14,7 @@
                 <img class="img-fluid" src="{{ asset('assets/snowboarding.jpg')| imagine_filter('welcome7') }}" alt="..." />
             </div>
             {% if app.user %}
-                {% if (app.user.roles.0 == "ROLE_ADMIN") or  (app.user.roles.0 == "ROLE_EDITOR")or (app.user.id == trick.user.id) %}
+                {% if (app.user.roles.0 == "ROLE_ADMIN") or (app.user.roles.0 == "ROLE_EDITOR") or (app.user.id == trick.user.id) %}
                     <div class="edit-btn btn-xs">
                         {{ include('trick/_edit_form_trick.html.twig') }}
                     </div>
@@ -23,12 +23,12 @@
         </div>
     {% endif %}
     {% if images is not empty %}
-        <div class="container-fluid">
+        <div class="image-container">
             <div class="d-flex justify-content-center">
-                <img class="img-fluid" src="{{ asset('uploads/' ~ trick.images.0.name)| imagine_filter('welcome6') }}" alt="">
+                <img class="img-fluid image-reduced-height" src="{{ asset('uploads/' ~ trick.images.0.name)| imagine_filter('welcome6') }}" alt="">
             </div>
             {% if app.user %}
-                {% if (app.user.roles.0 == "ROLE_ADMIN")or (app.user.roles.0 == "ROLE_EDITOR") or (app.user.id == trick.user.id) %}
+                {% if (app.user.roles.0 == "ROLE_MODO") or (app.user.roles.0 == "ROLE_EDITOR") or (app.user.id == trick.user.id) %}
                     <div class="text-center edit-btn btn-xs mt-4">
                         {{ include('trick/_edit_form_trick.html.twig') }}
                     </div>
@@ -39,18 +39,18 @@
     <div class="container-fluid">
         <div class="text-center mb-4 media-hide-show">
             <button type="button" id="show" class="btn btn-secondary mt-5">Voir/masquer les media</button>
-            <div class="wrapper" >
+            <div class="wrapper">
                 {% for image in trick.images %}
-                    <div class="d-inline-block " >
+                    <div class="d-inline-block">
                         <h5 class="fw-bolder"></h5>
-                        <img class="gallery-index" src=" {{ asset('/uploads/' ~ image.name)| imagine_filter('imgs') }}" alt="Image" />
+                        <img class="gallery-index" src="{{ asset('/uploads/' ~ image.name)| imagine_filter('imgs') }}" alt="Image" />
                         <br/>
                     </div>
                 {% endfor %}
                 <div class"hiding">
                     <div class="videos mt-3">
                         {% for video in trick.videos %}
-                            <div class="d-inline-block" >
+                            <div class="d-inline-block">
                                 <iframe class="trick-media" id="{{ loop.index + trick.images|length }}"
                                     src="{{ video.name }}" width="250vw" frameborder="0"
                                     allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
@@ -65,20 +65,27 @@
     </div>
     <div class="container">
         <div class="row text-center mt-5">
-            <strong>{{ trick.nameFigure }}</strong>
+            <div class="col">
+                <h2>{{ trick.nameFigure }}</h2>
+            </div>
         </div>
         <div class="row text-center mt-5 m-lg-5">
-            <strong>Description:</strong>
-            {{ trick.description }}
+            <div class="col">
+                <strong>Description:</strong>
+                <p>{{ trick.description }}</p>
+            </div>
         </div>
-        <div class="col border text-center mt-5 mb-4 m-lg-5">
-            <strong>  Créer par </strong>{{ trick.user.username }}<br>
-            <strong>Le : </strong>
+        <div class="row mt-5 mb-4 m-lg-5">
+            <div class="col border bg-white rounded text-center">
+                <strong>Créé par:</strong><br>
+                {{ trick.user.username }}<br>
+                <strong>Le:</strong>
                 {{ trick.createdAt ? trick.createdAt|date('d/m/Y') }} à {{ trick.createdAt|date('H:i:s') }}
-        </div>
-        <div class="col border text-center mb-4 m-lg-5">
-            <strong> Categorie: </strong>
-            {{ trick.categories.0.label}}
+            </div>
+            <div class="col border bg-white rounded text-center">
+                <strong>Catégorie:</strong><br>
+                {{ trick.categories.0.label }}
+            </div>
         </div>
         <hr>
         {% if app.user %}
@@ -93,18 +100,18 @@
                         <div class="wrapper-message">
                             <div class="chat-message-right pb-4">
                                 <div>
-                                    {% if message.user.photo is not null%}
+                                    {% if message.user.photo is not null %}
                                         <img src="{{ asset('uploads/' ~ message.user.photo) }}" class="rounded-circle mr-1" alt="Chris Wood" width="40" height="40">
                                     {% else %}
                                         <img src="{{ '../assets/avatar.jpg' }}" class="rounded-circle mr-1" alt="Chris Wood" width="40" height="40">
                                     {% endif %}
-                                    <div class="text-muted small text-nowrap mt-2" >{{ message.createdAt|date ('d/m/Y') }} à {{ message.createdAt|date ('H:i:s') }}</div>
+                                    <div class="text-muted small text-nowrap mt-2">{{ message.createdAt|date ('d/m/Y') }} à {{ message.createdAt|date ('H:i:s') }}</div>
                                 </div>
                                 <div class="flex-shrink-1 bg-light rounded py-2 px-3 mr-3" data-message-id="{{ loop.index0 }}">
                                     <strong>
                                         <div class="font-weight-bold mb-1">De {{ message.user.username }}</div>
                                     </strong>
-                                    <p>{{message.content}}</p>
+                                    <p>{{ message.content }}</p>
                                 </div>
                             </div>
                         </div>
@@ -113,7 +120,7 @@
             </div>
         {% endif %}
         {% if is_granted('ROLE_ADMIN') %}
-            <div class="text-center m-3"><a href="{{ path('admin_trick_index') }}">Retour à l'index d'administration des figures </a></div>
+            <div class="text-center m-3"><a href="{{ path('admin_trick_index') }}">Retour à l'index d'administration des figures</a></div>
         {% endif %}
     </div>
 {% endblock %}
