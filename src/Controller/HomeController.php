@@ -69,7 +69,7 @@ class HomeController extends AbstractController
         $message->setUser($this->getUser());
         $message->setTrick($trick);
 
-        $messagesQuery = $entityManager->getRepository(Message::class)->queryAllByTrick($trick);
+        $messagesQuery = $entityManager->getRepository(Message::class)->findByTrick($trick);
         $messages = $paginator->paginate($messagesQuery, $page, $nbre);
 
         $form = $this->createForm(MessageType::class, $message)->handleRequest($request);

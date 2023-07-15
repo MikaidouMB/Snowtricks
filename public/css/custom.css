@@ -38,6 +38,7 @@ body {
 
 .scroll-down .arrow-button {
     animation: arrowBlink 1.5s infinite;
+        justify-content: center;
 }
 
 .arrow-button {
@@ -60,7 +61,12 @@ body {
     font-size: 24px;
 }
 
-
+.scroll-top {
+    text-decoration: none;
+    animation: arrowBlink 1.5s infinite;
+  }
+  
+  
 
 
 /* Styles pour les écrans de plus de 1200px de largeur */

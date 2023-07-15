@@ -18,33 +18,36 @@
     </head>
     <body>
     <!-- Navigation-->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="{{ path('app_home') }}">
-            <img src="{{ asset('assets/1.png') }}" width="100" height="100" alt="">
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item"><a class="nav-link active" aria-current="page" href="{{ path('app_home') }}">Home</a></li>
-                {% if is_granted('ROLE_ADMIN')%}
-                    <li class="nav-item"><a class="nav-link" href="{{ path('admin_users') }}">Administration</a></li>
-                {% endif %}
-                {% if is_granted('ROLE_MODO')%}
-                    <li class="nav-item"><a class="nav-link" href="{{ path('admin_comments') }}">Gestion des commentaires</a></li>
-                {% endif %}
-                {% if not app.user %}
-                    <li class="nav-item"><a class="nav-link" href="{{ path('app_login') }}">Connexion</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ path('app_register')}}">Inscription</a></li>
-                {% else %}
-                    <li class="nav-item"><a class="nav-link" href="{{ path('trick_new',{_csrf_token: csrf_token('new-trick')}) }}">Créer Trick</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ path('user_account',{id :app.user.id, _csrf_token: csrf_token('account-edit')})}}">Mon compte</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ path('app_logout') }}">Déconnexion</a></li>
-                {% endif %}
-            </ul>
-        </div>
-    </nav>
+    <div id="sec-1">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="{{ path('app_home') }}">
+                <img src="{{ asset('assets/1.png') }}" width="100" height="100" alt="">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="{{ path('app_home') }}">Home</a></li>
+                    {% if is_granted('ROLE_ADMIN')%}
+                        <li class="nav-item"><a class="nav-link" href="{{ path('admin_users') }}">Administration</a></li>
+                    {% endif %}
+                    {% if is_granted('ROLE_MODO')%}
+                        <li class="nav-item"><a class="nav-link" href="{{ path('admin_comments') }}">Gestion des commentaires</a></li>
+                    {% endif %}
+                    {% if not app.user %}
+                        <li class="nav-item"><a class="nav-link" href="{{ path('app_login') }}">Connexion</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ path('app_register')}}">Inscription</a></li>
+                    {% else %}
+                        <li class="nav-item"><a class="nav-link" href="{{ path('trick_new',{_csrf_token: csrf_token('new-trick')}) }}">Créer Trick</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ path('user_account',{id :app.user.id, _csrf_token: csrf_token('account-edit')})}}">Mon compte</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ path('app_logout') }}">Déconnexion</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </nav>
+    </div>
+
     {% block body %}{% endblock %}
 <!-- Footer-->
 <footer class="py-5 bg-dark">
@@ -89,13 +92,12 @@
             </div>
         </div>
         <div class="row mt-3">
-            <div class="col-md-12">
-                <p class="m-0">Snowtricks &copy; 2021</p>
+            <div class="col-12">
+                <p class="m-0 text-primary">Snowtricks &copy; 2021</p>
             </div>
         </div>
     </div>
 </footer>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://www.youtube.com/player_api"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>

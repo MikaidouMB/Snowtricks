@@ -26,31 +26,3 @@ deleteButtons.forEach(function(button) {
 
     });
 
-    function scrollToSection(event) {
-      event.preventDefault();
-      
-      const targetId = event.currentTarget.getAttribute('href');
-      const targetElement = document.querySelector(targetId);
-      
-      targetElement.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start'
-      });
-  }
-  function handleScroll() {
-    const scrollToTopButton = document.getElementById('scrollToTopButton');
-    if (window.pageYOffset > 100) {
-      scrollToTopButton.classList.add('show');
-    } else {
-      scrollToTopButton.classList.remove('show');
-    }
-  }
-
-  // Fonction pour effectuer un défilement fluide vers le haut
-  function scrollToTop() {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    });
-  }
-
