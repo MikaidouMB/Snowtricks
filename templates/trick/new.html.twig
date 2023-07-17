@@ -23,7 +23,9 @@
             <div class="mt-4 col-6">
                 <strong>{{ form_row(form.categories) }}</strong>
             </div>
-            <div class="mt-4">
+
+       {#
+        <div class="mt-4">
                 <button type="button" class="btn btn-warning btn-new mb-4" id="btn-add" data-collection="#videos">Ajouter une video</button>
             </div>
             <div id="videos" class="video-edit"
@@ -35,11 +37,16 @@
                     </div>
                 {% endfor %}
             </div>
+       #}    
             <div class="text-center">
                 {{ include('trick/_submit_form.html.twig') }}
             </div>
             {{ form_end(form, {render_rest:false}) }}
         </div>
     </div>
-    <a href="{{ path('app_home') }}">Retour à l'accueil</a>
+    <div class="text-left m-3">
+      <a href="{{ path('app_home') }}" class="btn btn-info btn-sm">
+        <i class="fas fa-arrow-left"></i> Retour à l'accueil
+      </a>
+</div>
 {% endblock %}

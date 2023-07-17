@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 {% block title %}Mon espace utilisateur{% endblock %}
 {% block body %}
-    <div class="container mt-3 mb-4">
+    <div class="container  mt-3 mb-4">
         {{ form_errors(formUserProfil) }}
         <h1>Editer Profil</h1>
         {{ form_start(formUserProfil) }}
@@ -14,7 +14,9 @@
                  alt="Generic placeholder image" width="140" height="140">
         {% endif %}
         <span>
-            <strong>{{ form_row(formUserProfil.photos) }}</strong>
+            <div class=" col-4 mt-4">
+              <strong>{{ form_row(formUserProfil.photos) }}</strong>
+            </div>
         </span>
         <div class="col-12 mt-4">
             {{ form_start(formUserProfil) }}
